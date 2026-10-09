@@ -1,0 +1,141 @@
+{
+  "normalization": "strip only leading source-file:line prefix from lines matching 'Test failed:'",
+  "patched": {
+    "diagnostic_lines": 37,
+    "unique_messages": 25
+  },
+  "baseline": {
+    "diagnostic_lines": 37,
+    "unique_messages": 25
+  },
+  "shared_messages": 25,
+  "patched_only": [],
+  "baseline_only": [],
+  "shared": [
+    {
+      "message": "Test failed: Failed to delete file, error 5",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: IoGetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 2,
+      "baseline_count": 2
+    },
+    {
+      "message": "Test failed: WaitForSingleObject failed, error 258",
+      "patched_count": 4,
+      "baseline_count": 4
+    },
+    {
+      "message": "Test failed: deviceprops[0]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: deviceprops[1]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: deviceprops[2]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: deviceprops[3]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: deviceprops[4]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: deviceprops[5]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: deviceprops[6]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: deviceprops[7]: IoSetDeviceInterfacePropertyData failed: 0xc0000034",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: expected SERVICE_STOPPED, got 4",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: expected failure",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: failed to get interface, error 0x103",
+      "patched_count": 2,
+      "baseline_count": 2
+    },
+    {
+      "message": "Test failed: got 0 bus device object removals",
+      "patched_count": 3,
+      "baseline_count": 3
+    },
+    {
+      "message": "Test failed: got 0 new bus device objects",
+      "patched_count": 5,
+      "baseline_count": 5
+    },
+    {
+      "message": "Test failed: got error 0",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: got flags 0",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: got req_size 0",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: got req_size = 0",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: got type 0",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: got type = 0",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: got val -1",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: got val 0",
+      "patched_count": 1,
+      "baseline_count": 1
+    },
+    {
+      "message": "Test failed: wrong class {00000000-0000-0000-0000-000000000000}",
+      "patched_count": 2,
+      "baseline_count": 2
+    }
+  ]
+}

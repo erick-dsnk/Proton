@@ -1,0 +1,325 @@
+wine: created the configuration directory '/build/vanguard-test-prefix-no-mono'
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+002c:fixme:actctx:parse_depend_manifests Could not find dependent assembly L"Microsoft.Windows.Common-Controls" (6.0.0.0)
+004c:fixme:actctx:parse_depend_manifests Could not find dependent assembly L"Microsoft.Windows.Common-Controls" (6.0.0.0)
+004c:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+004c:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+004c:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+005c:err:ole:com_get_class_object class {e22ad333-b25f-460c-83d0-0581107395c9} not registered
+005c:err:ole:com_get_class_object no class object {e22ad333-b25f-460c-83d0-0581107395c9} could be created for context 0x1
+005c:err:tabtip:add_uia_event_handler Failed to create IUIAutomation interface, hr 0x80040154
+wine: failed to start L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+002c:fixme:msg:pack_message msg 14 (WM_ERASEBKGND) not supported yet
+002c:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+00ec:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\winebth": c00000e5
+002c:err:setupapi:SetupDiInstallDevice Failed to start service L"winebth" for device L"ROOT\\WINE\\WINEBTH", error 1359.
+002c:err:setupapi:SetupDiInstallDevice Failed to control service L"winebth" for device L"ROOT\\WINE\\WINEBTH", error 1062.
+002c:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+0108:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+0108:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+002c:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+ntoskrnl.c:2490: Subtest driver
+0024:fixme:mssign:SignerSign 000000000031F060 000000000031F000 000000000031F0A0 0000000000000000 (null) 0000000000000000 0000000000000000 stub
+ntoskrnl.c:283: Test marked todo: Failed to sign, hr 0x80004001
+ntoskrnl.c:324: Trying to load driver L"C:\\users\\steamuser\\AppData\\Local\\Temp\\drie362.tmp"
+0168:fixme:ntoskrnl:ObReferenceObjectByName Unhandled ObjectType
+0024:fixme:mssign:SignerSign 000000000031F060 000000000031F000 000000000031F0A0 0000000000000000 (null) 0000000000000000 0000000000000000 stub
+ntoskrnl.c:283: Test marked todo: Failed to sign, hr 0x80004001
+ntoskrnl.c:324: Trying to load driver L"C:\\users\\steamuser\\AppData\\Local\\Temp\\drie373.tmp"
+016c:fixme:ntoskrnl:MmProbeAndLockPages (000000000003DF20, 0, 0): stub
+016c:fixme:ntoskrnl:MmUnmapLockedPages (0000000000C1F810 000000000003DF20_
+016c:fixme:ntoskrnl:MmMapLockedPagesSpecifyCache (000000000003DF20, 0, 1, 0000000000000000, 0, 16): stub
+016c:fixme:ntoskrnl:MmUnmapLockedPages (0000000000000000 000000000003DF20_
+016c:fixme:ntoskrnl:MmUnlockPages (000000000003DF20): stub
+016c:fixme:ntoskrnl:PsSetLoadImageNotifyRoutineEx routine 00006FFFFD6AA990, flags 0 semi-stub.
+016c:fixme:ntoskrnl:PsSetLoadImageNotifyRoutineEx routine 00006FFFFD6AA990, flags 0 semi-stub.
+016c:fixme:ntoskrnl:KeInitializeDpc dpc 0000000000C1F740, deferred_routine 00006FFFFD6B36F0, deferred_context 0000000000C1F624 semi-stub.
+016c:fixme:ntoskrnl:KeInitializeDpc dpc 0000000000C1F7F0, deferred_routine 00006FFFFD6A9960, deferred_context 0000000000C1F7C0 semi-stub.
+016c:fixme:ntoskrnl:MmCopyVirtualMemory fromprocess 0000000000C215D0, fromaddress 000000014001AA00, toprocess 0000000000C215D0, toaddress 0000000000C1F7D0, bufsize 24, mode 1, copied 0000000000C1F7C8 stub.
+016c:fixme:ntoskrnl:MmCopyVirtualMemory fromprocess 0000000000C215D0, fromaddress 000000014001AA00, toprocess 0000000000C215D0, toaddress 0000000000C1F7D0, bufsize 24, mode 0, copied 0000000000C1F7C8 stub.
+016c:fixme:ntoskrnl:IoAllocateDriverObjectExtension stub: 0000000000C21400, 0000000000000000, 100, 0000000000C1F900
+016c:fixme:ntoskrnl:IoGetDriverObjectExtension stub: 0000000000C21400, 0000000000000000
+016c:fixme:ntoskrnl:IoAllocateDriverObjectExtension stub: 0000000000C21400, 0000000000000000, 100, 0000000000C1F900
+016c:fixme:ntoskrnl:IoGetDriverObjectExtension stub: 0000000000C21400, 000000000000DEAD
+ntoskrnl.c:2507: Test marked todo: Got unexpected value 0.
+ntoskrnl.c:626: Test marked todo: Thread already terminated
+ntoskrnl.c:899: Test marked todo: return 0x00000000, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000000, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000000, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000000, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000000, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000000, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000000, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000000, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000000, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000000, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000000, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000000, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:868: Test marked todo: return 0x00000103, iosb 0x00000103, pending 1, method 0: got 0
+ntoskrnl.c:872: Test marked todo: return 0x00000103, iosb 0x00000103, pending 1, method 0: got error 997
+ntoskrnl.c:868: Test marked todo: return 0x00000103, iosb 0x00000103, pending 1, method 2: got 0
+ntoskrnl.c:872: Test marked todo: return 0x00000103, iosb 0x00000103, pending 1, method 2: got error 997
+ntoskrnl.c:868: Test marked todo: return 0x00000103, iosb 0x00000103, pending 1, method 3: got 0
+ntoskrnl.c:872: Test marked todo: return 0x00000103, iosb 0x00000103, pending 1, method 3: got error 997
+ntoskrnl.c:899: Test marked todo: return 0x00000103, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000103, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000103, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000103, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000103, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000103, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000103, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000103, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000103, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000103, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000103, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000103, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000102, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000102, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000102, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000102, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000102, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000102, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000102, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000102, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000102, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000102, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x00000102, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x00000102, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x0eadbeef, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x0eadbeef, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x0eadbeef, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x0eadbeef, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x0eadbeef, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x0eadbeef, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x0eadbeef, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x0eadbeef, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x0eadbeef, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x0eadbeef, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x0eadbeef, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x0eadbeef, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x4eadbeef, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x4eadbeef, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x4eadbeef, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x4eadbeef, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x4eadbeef, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x4eadbeef, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x4eadbeef, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x4eadbeef, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x4eadbeef, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x4eadbeef, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x4eadbeef, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x4eadbeef, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x80000005, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x80000005, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x80000005, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x80000005, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x80000005, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x80000005, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x80000005, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x80000005, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x80000005, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x80000005, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x80000005, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x80000005, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x8eadbeef, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x8eadbeef, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x8eadbeef, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x8eadbeef, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x8eadbeef, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x8eadbeef, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x8eadbeef, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x8eadbeef, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x8eadbeef, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x8eadbeef, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0x8eadbeef, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0x8eadbeef, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xc0000002, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xc0000002, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xc0000002, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xc0000002, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xc0000002, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xc0000002, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xc0000002, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xc0000002, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xc0000002, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xc0000002, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xc0000002, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xc0000002, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xceadbeef, iosb 0xc0000002, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xceadbeef, iosb 0xc0000002, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xceadbeef, iosb 0xc0000002, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xceadbeef, iosb 0xc0000002, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xceadbeef, iosb 0xc0000002, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xceadbeef, iosb 0xc0000002, pending 1, method 3: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xceadbeef, iosb 0xceadbeef, pending 1, method 0: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xceadbeef, iosb 0xceadbeef, pending 1, method 0: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xceadbeef, iosb 0xceadbeef, pending 1, method 2: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xceadbeef, iosb 0xceadbeef, pending 1, method 2: got size 3735941133
+ntoskrnl.c:899: Test marked todo: return 0xceadbeef, iosb 0xceadbeef, pending 1, method 3: got 0xdeadf00d
+ntoskrnl.c:903: Test marked todo: return 0xceadbeef, iosb 0xceadbeef, pending 1, method 3: got size 3735941133
+0024:fixme:file:server_get_file_info Unsupported info class 9
+ntoskrnl.c:1206: Test marked todo: got 0xc0000002
+ntoskrnl.c:1209: Test marked todo: got 0
+ntoskrnl.c:1212: Test marked todo: got error 2
+ntoskrnl.c:1334: Test marked todo: got iosb status 0xdeadf00d
+ntoskrnl.c:1336: Test marked todo: got information 0xdeadf00d
+driver.c:299: Test marked todo: MmMapLockedPagesSpecifyCache failed
+driver.c:377: Test marked todo: Got unexpected status 0xc000003b.
+driver.c:955: Test marked todo: DPC was not called.
+driver.c:960: Test marked todo: DPC was not called.
+driver.c:2538: Test marked todo: Got unexpected Dpc Type 0.
+driver.c:2539: Test marked todo: Got unexpected Dpc Importance 0.
+driver.c:2634: Test marked todo: Got unexpected status 0xc0000002.
+driver.c:2644: Test marked todo: Got unexpected status 0xc0000002.
+driver.c:2645: Test marked todo: Got unexpected size 0.
+driver.c:2646: Test marked todo: Got unexpected test string.
+driver.c:2731: Test marked todo: got 0xc0000002
+driver.c:2732: Test marked todo: got NULL
+driver.c:2735: Test marked todo: got 0000000000000000 != 0000000000000000
+driver.c:2738: Test marked todo: got 0xc0000002
+driver.c:1100: Test marked todo: Unexpected thread_id 000000000000016C
+driver.c:1100: Test marked todo: Unexpected thread_id 000000000000016C
+driver.c:1100: Test marked todo: Unexpected thread_id 000000000000016C
+driver.c:1100: Test marked todo: Unexpected thread_id 000000000000016C
+driver.c:1100: Test marked todo: Unexpected thread_id 000000000000016C
+015c:ntoskrnl: 9118 tests executed (19 marked as todo, 0 as flaky, 0 failures), 0 skipped.
+0024:fixme:mssign:SignerSign 000000000031F060 000000000031F000 000000000031F0A0 0000000000000000 (null) 0000000000000000 0000000000000000 stub
+ntoskrnl.c:283: Test marked todo: Failed to sign, hr 0x80004001
+ntoskrnl.c:324: Trying to load driver L"C:\\users\\steamuser\\AppData\\Local\\Temp\\driea5a.tmp"
+0234:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\WineTestDriver3": c0000002
+ntoskrnl.c:2533: Subtest driver_netio
+0024:fixme:mssign:SignerSign 000000000031F060 000000000031F000 000000000031F0A0 0000000000000000 (null) 0000000000000000 0000000000000000 stub
+ntoskrnl.c:283: Test marked todo: Failed to sign, hr 0x80004001
+ntoskrnl.c:324: Trying to load driver L"C:\\users\\steamuser\\AppData\\Local\\Temp\\driea6a.tmp"
+0254:fixme:winsock:GetAddrInfoExW Unsupported namespace 0
+0254:fixme:winsock:GetAddrInfoExW Unsupported namespace 0
+024c:fixme:ntoskrnl:MmBuildMdlForNonPagedPool stub: 000000000003DF20
+024c:fixme:ntoskrnl:MmBuildMdlForNonPagedPool stub: 000000000003DFE0
+023c:ntoskrnl: 102 tests executed (0 marked as todo, 0 as flaky, 0 failures), 0 skipped.
+ntoskrnl.c:2536: Subtest driver_pnp
+0024:fixme:wintrust:CryptCATPutCatAttrInfo catalog 0000000000034AB0, name L"HWID1", flags 0x10010001, size 34, data 0000000140019DA0, stub!
+ntoskrnl.c:2348: Test marked todo: failed to add attribute, error 0x78
+0024:fixme:wintrust:CryptCATPutCatAttrInfo catalog 0000000000034AB0, name L"OS", flags 0x10010001, size 18, data 0000000140019DF4, stub!
+ntoskrnl.c:2353: Test marked todo: failed to add attribute, error 0x78
+0024:fixme:crypt:CryptSIPRetrieveSubjectGuidForCatalogFile (L"winetest.sys" 0000000000000000 000000000031EFF0)
+ntoskrnl.c:1536: Test marked todo: Failed to get subject guid, error 87
+ntoskrnl.c:1543: Test marked todo: Failed to get indirect data size, error 87
+ntoskrnl.c:1547: Test marked todo: Failed to get indirect data, error 87
+0024:fixme:crypt:CryptSIPRetrieveSubjectGuidForCatalogFile (L"winetest.inf" 0000000000000000 000000000031EFF0)
+ntoskrnl.c:1536: Test marked todo: Failed to get subject guid, error 87
+ntoskrnl.c:1543: Test marked todo: Failed to get indirect data size, error 87
+ntoskrnl.c:1547: Test marked todo: Failed to get indirect data, error 87
+0024:fixme:wintrust:CryptCATPersistStore catalog 0000000000034AB0, stub!
+ntoskrnl.c:2359: Test marked todo: Failed to write catalog, error 120
+0024:fixme:mssign:SignerSign 000000000031F110 000000000031F0B0 000000000031F150 0000000000000000 (null) 0000000000000000 0000000000000000 stub
+ntoskrnl.c:283: Test marked todo: Failed to sign, hr 0x80004001
+0024:fixme:setupapi:UpdateDriverForPlugAndPlayDevicesW Unhandled flags 0x1.
+0024:fixme:setupapi:SetupDiGetINFClassW class name lookup via guid not implemented
+0278:fixme:oleacc:find_class_data unhandled window class: L"#32769"
+0278:fixme:uiautomation:uia_get_providers_for_hwnd Override provider callback currently unimplemented.
+0278:fixme:uiautomation:default_uia_provider_callback Default ProviderType_NonClientArea provider unimplemented.
+0024:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+0278:fixme:oleacc:find_class_data unhandled window class: L"#32769"
+0024:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+0024:err:setupapi:do_file_copyW Unsupported style(s) 0x10
+0278:fixme:uiautomation:base_hwnd_fragment_get_FragmentRoot 0000000000B12818, 000000000031F9F0: stub!
+0278:fixme:uiautomation:base_hwnd_fragment_GetEmbeddedFragmentRoots 0000000000B12818, 000000000031FA00: stub!
+ntoskrnl.c:1737: { DevQueryResultStateChange { DevQueryStateEnumCompleted } }
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoSetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+0298:err:plugplay:IoGetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+ntoskrnl.c:1586: device arrival \\?\ROOT#WINETEST#0#{deadbeef-29ef-4538-a5fd-b69573a362c1}
+ntoskrnl.c:1737: { DevQueryResultStateChange { DevQueryStateAborted } }
+ntoskrnl.c:1998: Test failed: WaitForSingleObject failed, error 258
+ntoskrnl.c:1999: Test failed: got 0 new bus device objects
+ntoskrnl.c:2006: Test failed: failed to get interface, error 0x103
+ntoskrnl.c:2007: Test failed: wrong class {00000000-0000-0000-0000-000000000000}
+ntoskrnl.c:2009: Test failed: got flags 0
+0298:err:plugplay:IoGetDeviceInterfacePropertyData Failed to open device interface, error 3758096933.
+ntoskrnl.c:1614: device removal \\?\ROOT#WINETEST#0#{deadbeef-29ef-4538-a5fd-b69573a362c1}
+02a0:fixme:setupapi:devnotify_callback CM_NOTIFY_ACTION_DEVICEREMOVECOMPLETE not implemented
+ntoskrnl.c:2021: Test failed: WaitForSingleObject failed, error 258
+ntoskrnl.c:2022: Test failed: got 0 new bus device objects
+ntoskrnl.c:2023: Test failed: got 0 bus device object removals
+ntoskrnl.c:2029: Test failed: failed to get interface, error 0x103
+ntoskrnl.c:2030: Test failed: wrong class {00000000-0000-0000-0000-000000000000}
+0298:fixme:plugplay:PoSetPowerState device 0000000000C23320, type 1, state 1, stub!
+ntoskrnl.c:1586: device arrival \\?\Wine#Test#1#{deadbeef-29ef-4538-a5fd-b69573a362c2}
+ntoskrnl.c:2054: Test failed: WaitForSingleObject failed, error 258
+ntoskrnl.c:2055: Test failed: got 0 new bus device objects
+ntoskrnl.c:2072: Test marked todo: got error 0xd
+ntoskrnl.c:2082: Test marked todo: expected failure
+ntoskrnl.c:2127: Test marked todo: got error 0xd
+ntoskrnl.c:2136: Test marked todo: Got error 0xd.
+ntoskrnl.c:2191: Test marked todo: Got error 0x490.
+ntoskrnl.c:1614: device removal \\?\Wine#Test#1#{deadbeef-29ef-4538-a5fd-b69573a362c2}
+02a0:fixme:setupapi:devnotify_callback CM_NOTIFY_ACTION_DEVICEREMOVECOMPLETE not implemented
+ntoskrnl.c:2264: Test failed: WaitForSingleObject failed, error 258
+ntoskrnl.c:2265: Test failed: got 0 new bus device objects
+ntoskrnl.c:2266: Test failed: got 0 bus device object removals
+ntoskrnl.c:2270: Test marked todo: got error 5
+ntoskrnl.c:2273: Test marked todo: got 0xc0000034
+ntoskrnl.c:2291: Test failed: got 0 new bus device objects
+ntoskrnl.c:2292: Test failed: got 0 bus device object removals
+ntoskrnl.c:2407: Test failed: expected failure
+ntoskrnl.c:2408: Test failed: got error 0
+0294:err:ntoskrnl:ZwUnloadDriver cannot unload driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\winetest" which still has running PnP devices
+ntoskrnl.c:298: Test failed: expected SERVICE_STOPPED, got 4
+driver_pnp.c:553: Test marked todo: got DeviceState[PowerSystemWorking] 0
+driver_pnp.c:556: Test marked todo: got DeviceState[2] 0
+driver_pnp.c:556: Test marked todo: got DeviceState[3] 0
+driver_pnp.c:556: Test marked todo: got DeviceState[4] 0
+driver_pnp.c:556: Test marked todo: got DeviceState[5] 0
+driver_pnp.c:556: Test marked todo: got DeviceState[6] 0
+driver_pnp.c:600: Test marked todo: got DeviceState[PowerSystemUnspecified] 4294967295
+driver_pnp.c:602: Test marked todo: got DeviceState[PowerSystemWorking] 4294967295
+driver_pnp.c:605: Test marked todo: got DeviceState[2] 4294967295
+driver_pnp.c:605: Test marked todo: got DeviceState[3] 4294967295
+driver_pnp.c:605: Test marked todo: got DeviceState[4] 4294967295
+driver_pnp.c:605: Test marked todo: got DeviceState[5] 4294967295
+driver_pnp.c:605: Test marked todo: got DeviceState[6] 4294967295
+driver_pnp.c:836: Test marked todo: got unexpected status 0
+driver_pnp.c:875: Test marked todo: got unexpected status 0
+driver_pnp.c:784: Test failed: deviceprops[0]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:784: Test failed: deviceprops[1]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:784: Test failed: deviceprops[2]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:784: Test failed: deviceprops[3]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:784: Test failed: deviceprops[4]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:784: Test failed: deviceprops[5]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:784: Test failed: deviceprops[6]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:784: Test failed: deviceprops[7]: IoSetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:822: Test failed: IoGetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:823: Test failed: got req_size 0
+driver_pnp.c:824: Test failed: got type 0
+driver_pnp.c:825: Test failed: got val 0
+driver_pnp.c:971: Test failed: IoGetDeviceInterfacePropertyData failed: 0xc0000034
+driver_pnp.c:972: Test failed: got req_size = 0
+driver_pnp.c:973: Test failed: got type = 0
+driver_pnp.c:974: Test failed: got val -1
+driver_pnp.c:278: Test marked todo: Expected locale to be set.
+driver_pnp.c:327: Test marked todo: expected no IRP_MN_QUERY_ID
+driver_pnp.c:339: Test marked todo: got previous state 1
+driver_pnp.c:343: Test marked todo: Failed to wait for child plug event, status 0x102.
+driver_pnp.c:347: Test marked todo: Failed to wait for child plug event, status 0x102.
+driver_pnp.c:750: Test marked todo: expected no IRP_MN_QUERY_ID
+driver_pnp.c:755: Test marked todo: expected no IRP_MN_QUERY_ID
+driver_pnp.c:763: Test marked todo: expected no IRP_MN_QUERY_ID
+driver_pnp.c:856: Test marked todo: expected no IRP_MN_QUERY_ID
+driver_pnp.c:916: Test marked todo: expected no IRP_MN_QUERY_ID
+driver_pnp.c:356: Test marked todo: expected no IRP_MN_SURPRISE_REMOVAL
+driver_pnp.c:1068: Test marked todo: Failed to set event, status 0xc0000008.
+driver_pnp.c:1070: Test marked todo: Failed to wait for child plug event, status 0xc0000008.
+driver_pnp.c:1076: Test marked todo: Got 1 remove events.
+ntoskrnl.c:2448: Test failed: Failed to delete file, error 5
+0024:fixme:crypt:ProvStore_release Unimplemented flags 2
+0024:fixme:crypt:CRYPT_RegCloseStore Unimplemented flags: 00000002
+0024:fixme:crypt:ProvStore_release Unimplemented flags 2
+0024:fixme:crypt:CRYPT_RegCloseStore Unimplemented flags: 00000002
+0020:ntoskrnl: 34156 tests executed (161 marked as todo, 0 as flaky, 21 failures), 0 skipped.

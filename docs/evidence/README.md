@@ -3,11 +3,15 @@
 This directory defines the evidence convention for the open source Vanguard
 compatibility effort. The [implementation register](../vanguard-implementation-progress.md)
 contains the initial experiment; the [feasibility study](../vanguard-linux-feasibility.md)
-preserves the original source/package/host snapshot. Raw initial build/runtime
-logs remain local and are not shipped with this repository.
+preserves the original source/package/host snapshot. The
+[initial rundown evidence bundle](2026-10-10-rundown-protection/README.md)
+publishes the exact original patched and fresh-prefix baseline generic-runtime
+logs, source provenance, result metadata and reproducible failure comparison.
+The full SDK build log and remaining initial artifacts are retained locally.
 
 Use a dated Markdown record named `YYYY-MM-DD-short-experiment-name.md` for a
-new material result. Copy the [experiment template](experiment-template.md),
+new material result, or a dated directory when public logs and comparison
+artifacts accompany it. Copy the [experiment template](experiment-template.md),
 fill the relevant fields and remove unused prompts. A normal small code change
 can place equivalent evidence in its PR rather than create redundant paperwork.
 Link durable records from the implementation register.

@@ -1,0 +1,58 @@
+{
+  "experiment": "ordinary Wine rundown protection generic ntoskrnl driver tests",
+  "date": "2026-10-10",
+  "scope": "x86_64 Wine build and generic ntoskrnl.exe test suite; no Vanguard execution",
+  "source": {
+    "proton_baseline": "bc896217ffcd67f892f952b010f898fe7bd0f0a1",
+    "proton_checkpoint": "b5a134a8de15ad94a3af5b792314d6c700762727",
+    "wine_baseline": "e60892cc2398b0a83c332a2078c7b85e47bdb42b",
+    "wine_implementation": "2990a75de24c57ab0a8ff2dc3caab7d075d4df40"
+  },
+  "environment": {
+    "sdk_image": "registry.gitlab.steamos.cloud/proton/steamrt4/sdk/x86_64:4.0.20260331.220802-0",
+    "sdk_digest": "sha256:97526b794ce1a9bed5f891084462260b3a02399569f7438a3a57b5a253001db9",
+    "architecture": "x86_64",
+    "complete_wine_build_exit_status": 0,
+    "complete_proton_build_performed": false
+  },
+  "patched": {
+    "tests_executed": 34156,
+    "todo": 161,
+    "failures": 21,
+    "skipped": 0,
+    "runner_exit_status": null,
+    "runner_exit_status_note": "not retained; unknown, not inferred from the suite summary",
+    "log": "patched.log",
+    "log_bytes": 29112,
+    "log_sha256": "0e9907ea8bd25032734f3fdff2888b2f8b831e93e2412e9a2bc1542f8ce334e7"
+  },
+  "baseline": {
+    "tests_executed": 26023,
+    "todo": 161,
+    "failures": 21,
+    "skipped": 0,
+    "runner_exit_status": null,
+    "runner_exit_status_note": "not retained; unknown, not inferred from the suite summary",
+    "log": "baseline.log",
+    "log_bytes": 29113,
+    "log_sha256": "b40167b0d2c6b36e54ec0c8896ec5d2a22fc3603b20a7f35a89f81d2b27e447c"
+  },
+  "failure_comparison": {
+    "method": "strip only source-file:line prefixes from lines beginning with Test failed:",
+    "patched_diagnostic_lines": 37,
+    "baseline_diagnostic_lines": 37,
+    "shared_unique_messages": 25,
+    "patched_only": 0,
+    "baseline_only": 0,
+    "additional_tests_executed_with_patch": 8133,
+    "comparison_file": "failure-comparison.json",
+    "generator": "compare_failures.py"
+  },
+  "limitations": [
+    "No native Windows reference run",
+    "No i386 build or run",
+    "No complete Proton integration build",
+    "No Vanguard session or Linux acceptance evidence",
+    "No League gameplay evidence"
+  ]
+}

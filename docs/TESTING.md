@@ -55,6 +55,12 @@ Inspect all eight ordinary rundown names separately from the runtime result.
 
 ## Baseline and current observed result
 
+The [initial rundown evidence bundle](evidence/2026-10-10-rundown-protection/README.md)
+contains the exact original valid-run logs, source provenance, result metadata
+and a reproducible comparison script. The runner exit statuses were not retained
+for those historical runs; the complete log summaries support the comparison
+below without establishing an overall green suite.
+
 | Initial experiment | Runner count | Todo | Failures | Skipped |
 |---|---:|---:|---:|---:|
 | Wine base `e60892cc2398b0a83c332a2078c7b85e47bdb42b` | 26,023 | 161 | 21 | 0 |

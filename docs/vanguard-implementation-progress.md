@@ -45,9 +45,13 @@ Docker runner status immediately, as the [test recipe](TESTING.md) does.
 
 The historical commands and hashes below are the implementation record.
 Their absolute paths are local provenance, not requirements for contributors.
-Raw build/runtime logs remain in the original local build directory and are
-**not distributed in this repository**; their hashes allow later supplied
-copies to be checked but do not make them publicly retrievable. Use the portable
+The exact original generic-runtime test logs for the valid patched and
+fresh-prefix baseline runs are now published with their hashes, source
+provenance, results and reproducible comparison in the
+[rundown evidence bundle](evidence/2026-10-10-rundown-protection/README.md).
+The large full SDK build log and remaining local artifacts stay in the original
+build directory and are not distributed; their hashes identify bytes but do
+not make those artifacts publicly retrievable. Use the portable
 [build](BUILDING.md) and [test](TESTING.md) recipes for new runs and record their
 actual results with the [experiment template](evidence/experiment-template.md).
 
