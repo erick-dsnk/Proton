@@ -2,7 +2,26 @@
 Rebasing Proton onto new upstream releases
 ---
 
-We maintain a lot of patches on top of upstream releases. When cherry-picking
+## Fork upstream synchronization
+
+The experimental open source [Proton Vanguard compatibility effort](README.md)
+aims to support Riot's Vanguard and bring League of Legends back to Linux. Keep
+Valve Proton and Wine provenance intact when updating the base; these upstream
+recipes remain useful, but their historical tags are examples, not the fork's
+current baseline.
+
+Follow [CONTRIBUTING.md](../CONTRIBUTING.md) for the fork's review, Wine patch
+publication, and submodule conventions. Publish the Wine commit to the configured
+fork remote before updating its parent gitlink, so a fresh recursive clone can
+retrieve the exact source. Record both parent and Wine revisions, the SDK image,
+any conflicts and resolutions, and before/after results using
+[TESTING.md](TESTING.md). Re-run the generic driver regression suite and assess
+Vanguard work separately; a clean rebase or passing Wine tests does not establish
+Riot acceptance or playable League.
+
+## Retained upstream rebase recipe
+
+Upstream Proton maintains many patches on top of upstream Wine releases. When cherry-picking
 stuff from upstream into Proton, *always* use the `-x` parameter so the
 original commit ID is retained in the log message. Contrarily, *never* use `-x`
 when picking things that are not upstreamed. This lets us use the cherry-picked

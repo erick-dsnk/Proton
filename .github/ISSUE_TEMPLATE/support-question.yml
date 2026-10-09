@@ -1,0 +1,21 @@
+name: Contributor support question
+description: Ask about building, testing, reproducing evidence, or contributing.
+title: "[Question]: "
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read SUPPORT.md first. This is an experimental engineering effort, with no release recommended for normal League play and no demonstrated accepted Vanguard session. For a reproducible bug or contract gap, use the corresponding form.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question and relevant documentation
+      description: Explain the contributor task, link the guide you followed, and describe what you already tried.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Reproduction context
+      description: If relevant, include exact source revisions, host/architecture, SDK/build mode, commands, and sanitized output. Do not include credentials, personal account data, or proprietary binaries.

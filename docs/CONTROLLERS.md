@@ -2,6 +2,15 @@
 How controllers work in Proton
 ---
 
+## Fork context
+
+This guide retains upstream Proton's controller architecture for contributors to
+the **Proton Vanguard compatibility effort**, an experimental open source attempt
+to support Riot's Vanguard and bring League of Legends back to Linux. Controller
+compatibility is supporting runtime work; it does not establish Vanguard
+acceptance or playable League. See the [project documentation](README.md) and
+[testing requirements](TESTING.md) before reporting compatibility.
+
 There are five methods that Windows games can use to access controllers:
 dinput, xinput, winmm, hid, and rawinput. Games can use any combination of all
 of these APIs.

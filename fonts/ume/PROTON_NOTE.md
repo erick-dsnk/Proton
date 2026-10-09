@@ -1,5 +1,13 @@
 # UmeFont (version 670)
 
+## Fork context and provenance
+
+This bundled font provenance note is retained from upstream Proton for the
+experimental open source [Proton Vanguard compatibility effort](../../README.md),
+which aims to bring League of Legends back to Linux. The effort does not change
+the font's origin, version, or license. Font availability provides no evidence
+of Vanguard acceptance or playable League.
+
 https://osdn.net/projects/ume-font/
 
 ## Fonts

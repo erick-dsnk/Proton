@@ -1,6 +1,15 @@
-# Vanguard on Eric's Ubuntu: feasibility, gaps, and implementation plan
+# Vanguard Linux feasibility: frozen research baseline
 
 Research baseline: **9 October 2026**. Target: **Ubuntu 24.04.4 LTS (Noble), x86-64, installed kernel 7.0.0-38-generic**, on the laptop described below. Target vendor artifacts: **Vanguard 1.19.1.18**. This document lives in the [erick-dsnk/Proton fork](https://github.com/erick-dsnk/Proton) and describes compatibility engineering for unmodified Vanguard and League of Legends.
+
+This is the preserved research snapshot that founded the **Proton Vanguard
+compatibility effort**, an open source attempt to bring League of Legends back
+to Linux through genuine Vanguard compatibility. Its source inventories and
+"not performed" statements describe the research baseline, not current project
+status. Subsequent work is recorded in the [implementation register](vanguard-implementation-progress.md),
+with contributor priorities in the [roadmap](ROADMAP.md) and architecture
+decisions in the [architecture guide](ARCHITECTURE.md). No accepted Vanguard or
+League session has been demonstrated by this effort.
 
 ## Contents
 
@@ -12,7 +21,7 @@ Research baseline: **9 October 2026**. Target: **Ubuntu 24.04.4 LTS (Noble), x86
 6. [Confirmed static interface gaps](#6-confirmed-static-interface-gaps)
 7. [Lifecycle, platform and conditional gaps](#7-lifecycle-platform-and-conditional-gaps)
 8. [Structured implementation backlog](#8-structured-implementation-backlog)
-9. [Validation and handoff state](#9-validation-and-handoff-state)
+9. [Research snapshot validation and handoff state](#9-research-snapshot-validation-and-handoff-state)
 10. [Complete static import inventory](#appendix-a-complete-static-import-inventory)
 
 ## 1. Engineering conclusion and the first decision
@@ -49,7 +58,7 @@ The first sprint should start G0/G1 and a minimum G2/G3 harness. G1 must remain 
 
 ## 2. Frozen target and reproducibility
 
-### 2.1 Current Ubuntu machine
+### 2.1 Research host snapshot
 
 Read-only observations on 9 October 2026; these are measured host facts, not evidence that Vanguard or a custom Proton build works.
 
@@ -387,13 +396,13 @@ G1 + G2 + E07 + E08 + E10 --------------------> E11 --> E12
 
 There is no evidence-based calendar estimate or percentage completion for actual Vanguard playability. API counts are interface inventory, not outcome progress. Keep generic compatibility improvements independently useful while reporting G4/G5 as unachieved until directly tested.
 
-## 9. Validation and handoff state
+## 9. Research snapshot validation and handoff state
 
 Completed: official public-package acquisition and static extraction; hashes/versions/encoded imports; independent import-parser agreement; selected pinned-Wine source investigations; primary-source web research; read-only current Ubuntu/build/hardware observations; this engineering document.
 
 Not performed: full Authenticode trust verification, build, conformance-driver execution, installer or Vanguard execution, runtime tracing, firmware changes, platform attestation provisioning, genuine anti-cheat session or gameplay. No compatibility patch, commit, push, PR or deployment is delivered by this document.
 
-Web sources were researched/accessed **9 October 2026** and can change; source-code links use immutable revisions. Host/package/update observations are snapshots. This document must be refreshed when any frozen baseline or actual requirement changes. It is self-contained for review; raw binaries and scratch reports are not prerequisites for understanding its claims.
+Web sources were researched/accessed **9 October 2026** and can change; source-code links use immutable revisions. Host/package/update observations are snapshots. Preserve this baseline when inputs change and record the new experiment and current status in the [implementation register](vanguard-implementation-progress.md), following the [evidence convention](evidence/README.md). It is self-contained for review; raw binaries and scratch reports are not prerequisites for understanding its claims.
 
 ## Appendix A. Complete static import inventory
 

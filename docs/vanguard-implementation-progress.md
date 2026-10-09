@@ -1,8 +1,55 @@
 # Vanguard Linux implementation progress
 
-This file tracks implementation evidence after the feasibility study in
+This file tracks the open source Proton Vanguard compatibility effort after the feasibility study in
 [`vanguard-linux-feasibility.md`](vanguard-linux-feasibility.md). It is a
 working register, not a claim of Vanguard or League compatibility.
+
+## Current project checkpoint — 10 October 2026
+
+The first compatibility increment is ordinary Wine rundown protection. It
+implements `ExInitializeRundownProtection`, `ExAcquireRundownProtection`,
+`ExAcquireRundownProtectionEx`, `ExReleaseRundownProtection`,
+`ExReleaseRundownProtectionEx`, `ExWaitForRundownProtectionRelease`,
+`ExRundownCompleted`, and `ExReInitializeRundownProtection`. Public declarations,
+PE exports, runtime synchronization, and generic driver tests changed together.
+Review corrected the x86 FASTCALL declarations and test cleanup/lifetime behavior.
+
+The implementation is published in Wine commit
+[`2990a75de24c57ab0a8ff2dc3caab7d075d4df40`](https://github.com/erick-dsnk/wine/commit/2990a75de24c57ab0a8ff2dc3caab7d075d4df40),
+based on `e60892cc2398b0a83c332a2078c7b85e47bdb42b`. Proton's initial
+implementation/documentation checkpoint is
+[`b5a134a8de15ad94a3af5b792314d6c700762727`](https://github.com/erick-dsnk/Proton/commit/b5a134a8de15ad94a3af5b792314d6c700762727).
+The observed build used the original Wine base plus the exact four-file patch,
+before those files were committed. Their recorded hashes below match the
+published Wine tree; the publication did not rerun or broaden validation.
+
+| Evidence | Result and limit |
+|---|---|
+| Isolated x64 Wine runtime | Full configured Wine `make -j8 all` completed successfully; no complete Proton integration build |
+| PE exports | All eight ordinary rundown exports present in the built x64 image |
+| Generic driver test, patched | 34,156 assertions/tests counted by the runner; 161 todo; 21 failures; 0 skipped |
+| Generic driver test, unpatched baseline | 26,023 counted by the runner; 161 todo; 21 failures; 0 skipped |
+| Comparison | Same 37 normalized failure diagnostics, 25 unique messages; 8,133 additional checks and no added failure or skip |
+| Reference scope | No ordinary Windows comparison or i386 execution yet |
+| Target outcome | No Vanguard execution, accepted session, or playable League evidence |
+
+The full Wine build's exit status was directly observed as **0**. The exact
+runner exit statuses for the valid patched and fresh-prefix baseline runs were
+not retained before their execution sessions expired and are **unknown**.
+Their retained logs contain complete suite summaries and the failure comparison
+reported here; those establish execution of the new block and no added failure
+or skip in that comparison, not an overall green suite or an inferred runner
+exit status. The exit status from an earlier excluded baseline attempt must not
+be attributed to the valid fresh-prefix run. Future runs should persist the
+Docker runner status immediately, as the [test recipe](TESTING.md) does.
+
+The historical commands and hashes below are the implementation record.
+Their absolute paths are local provenance, not requirements for contributors.
+Raw build/runtime logs remain in the original local build directory and are
+**not distributed in this repository**; their hashes allow later supplied
+copies to be checked but do not make them publicly retrievable. Use the portable
+[build](BUILDING.md) and [test](TESTING.md) recipes for new runs and record their
+actual results with the [experiment template](evidence/experiment-template.md).
 
 ## First steps
 
@@ -39,6 +86,10 @@ process-attachment acceptance, genuine Linux verifier acceptance, and
 Vanguard execution remain unresolved.
 
 ## Frozen build inputs
+
+These are the pre-publication experiment inputs. They intentionally retain the
+original branch and base SHAs rather than being rewritten as current checkout
+state. See the checkpoint above for the published implementation revisions.
 
 | Input | Value |
 |---|---|
@@ -265,3 +316,24 @@ The changed `ntoskrnl.exe` source and test driver compiled without a diagnostic.
   before using the Wine generic-driver run to make target-specific claims.
 - Keep code signing, firmware state, accepted Vanguard session, League gameplay,
   and production deployment as separate claims requiring separate evidence.
+
+## Next bounded implementation work
+
+1. Add a benign E05 process-attachment experiment that directly dereferences a
+   target-only mapping. Include the same-virtual-address/different-bytes negative
+   control in two target processes and test restoration after detach. Report
+   exceptions and skips explicitly. This determines whether the proposed Wine
+   architecture supplies the claimed address-space behavior.
+2. Obtain ordinary Windows x64 rundown reference results and independently build
+   and execute the i386 path. The corrected FASTCALL declarations are reviewed
+   source, not observed 32-bit conformance.
+3. Select and observe the actual Vanguard mode and returned platform restrictions
+   on a suitable Windows reference; record Linux verifier acceptance as unknown
+   until directly established.
+4. Define a coherent processor/execution and user-address model before adding
+   processor-count or address-boundary data exports. Then continue small API
+   families with native reference, lifetime, race, and failure tests.
+
+The [roadmap](ROADMAP.md) maps these tasks to the preserved E00–E12 backlog and
+G0–G6 gates. Record new source/build results here or in a linked experiment;
+do not replace the initial comparison with results from different inputs.

@@ -1,1 +1,8 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Read project status and support guidance
+    url: https://github.com/erick-dsnk/Proton/blob/main/SUPPORT.md
+    about: This experimental effort has no demonstrated accepted Vanguard or playable League session.
+  - name: Security reporting
+    url: https://github.com/erick-dsnk/Proton/blob/main/SECURITY.md
+    about: Review the reporting policy before sharing sensitive security findings.

@@ -1,5 +1,11 @@
 # ICMP ECHO requests (ping)
 
+This upstream Proton networking guide is retained for the experimental open
+source [Proton Vanguard compatibility effort](README.md), which aims to bring
+League of Legends back to Linux. Enabling ping only changes ICMP availability;
+it provides no evidence of Vanguard acceptance or playable League. Record the
+host configuration with any results using the [testing requirements](TESTING.md).
+
 Some games rely on ICMP ECHO requests to detect network connectivity,
 or to measure connection ping.
 

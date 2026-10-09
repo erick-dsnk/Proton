@@ -1,6 +1,17 @@
 International Components for Unicode
 ------------------------------------
 
+Fork context and provenance
+---------------------------
+
+This dependency provenance and checksum record is retained from upstream Proton
+for the experimental open source
+[Proton Vanguard compatibility effort](../README.md), which aims to bring League
+of Legends back to Linux. The effort does not change ICU's origin, license, or
+recorded binaries. Dependency availability does not establish Vanguard acceptance
+or playable League. Follow [CONTRIBUTING.md](../CONTRIBUTING.md) when proposing
+dependency updates, and preserve source and checksum evidence.
+
 **Project URL:** https://github.com/unicode-org/icu
 
 **License:** https://github.com/unicode-org/icu/blob/main/LICENSE

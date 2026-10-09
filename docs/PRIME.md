@@ -2,6 +2,14 @@
 How to make Proton work with PRIME
 ---
 
+## Fork context
+
+This upstream Proton GPU guide supports the experimental open source
+[Proton Vanguard compatibility effort](README.md), which aims to bring League of
+Legends back to Linux. Successful GPU offloading is a graphics result; Vanguard
+acceptance and playable League remain unproven. Include the GPU, driver, and
+selected adapter in [test evidence](TESTING.md).
+
 # Setup
 
 ## Context

@@ -1,3 +1,14 @@
+# Symbol debugging in this fork
+
+This upstream Proton guide is retained for the experimental open source
+[Proton Vanguard compatibility effort](../README.md), which aims to bring League
+of Legends back to Linux. Use binaries and symbols from the exact fork build
+that produced the dump, and record revisions and hashes following
+[TESTING.md](../docs/TESTING.md). Valve's symbol archive serves upstream builds;
+this fork does not promise matching symbols there or published symbol packages.
+Debugging evidence alone does not establish Vanguard acceptance or playable
+League.
+
 This small note to describe how a windows developer can inject
 minidump files generated from a crash of a game running under Proton
 Steam (desktop or Deck).
@@ -20,10 +31,12 @@ information, and your setup must be fixed before going any further.
 
 # Installing on dev machine
 
-Each new released proton version (starting at Proton 8.0-4) will also be
-available as a zip package to be installed inside symbol store.
+The retained upstream procedure describes symbol-store zip packages for Valve
+Proton releases starting at Proton 8.0-4. For a local fork build, generate the
+matching package using [guidelines-deploy.md](guidelines-deploy.md).
 
-The .zip file is available as a part of GitHub release and is named
+Where published by upstream, the .zip file is part of its GitHub release and is
+named
 <BUILD_NAME>-symstore.zip.
 
 You must create a top directory (referred as <SYMSTORE> below) and
@@ -65,7 +78,7 @@ configuration as described above for MS tools.
 
 # Public store
 
-A Proton symbol store is available at <https://proton-archive.steamos.cloud/>.
+Valve's upstream Proton symbol store is described at <https://proton-archive.steamos.cloud/>.
 
 Then no local installation is required, only setting the
 ```

@@ -1,6 +1,17 @@
 Proton Debugging Tips For Windows Developers
 ============================================
 
+Fork debugging context
+----------------------
+
+This guide retains upstream Proton debugging recipes for the experimental open
+source [Proton Vanguard compatibility effort](README.md), which aims to bring
+League of Legends back to Linux. Debug the exact local fork build under test,
+with matching binaries and symbols, following [BUILDING.md](BUILDING.md) and
+[TESTING.md](TESTING.md). The Steam debug beta and Valve symbol archive described
+below are upstream options; neither supplies matching symbols for this fork's
+patches. Vanguard acceptance and playable League remain unproven.
+
 *This document is intended for people who are used to working with games natively
 running on Windows and want to use familiar tools.*
 
@@ -20,8 +31,9 @@ Analyzing Minidumps
 
 ### Introduction
 
-Starting Proton 9 every released build (includes stable and experimental) the
-build is uploaded to a symbol store. Any tool that can understand those (e.g.
+The upstream guide describes Valve Proton 9 stable and experimental releases
+as published to a symbol store. This is not a publication guarantee for fork
+builds. Any tool that can understand those (e.g.
 Visual Studio, WinDbg) can be pointed to
 <https://proton-archive.steamos.cloud/>.
 
@@ -80,7 +92,9 @@ or use a debug build of Proton.
 
 ### Getting A Debug Build Of Proton
 
-Debug builds contain symbols and should be used for live debugging session.
+Debug builds contain symbols and should be used for live debugging sessions.
+The following Steam steps apply to upstream Valve Proton releases; for this
+fork, build locally with matching symbols using [BUILDING.md](BUILDING.md).
 
 1. Locate the version of proton you are using in your Steam Library (e.g. Proton
 Experimental), click on a cog and select properties.

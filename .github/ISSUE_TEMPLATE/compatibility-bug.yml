@@ -1,0 +1,46 @@
+name: Compatibility bug
+description: Report a reproducible regression or observed behavior in this fork.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project attempts genuine Vanguard support in Proton to bring League back to Linux. Support is not demonstrated. Report observations; a launch failure alone does not identify the missing contract. Remove credentials and personal account data from logs. Do not attach proprietary vendor binaries.
+  - type: input
+    id: revision
+    attributes:
+      label: Exact source and build
+      description: Proton SHA, Wine/component SHAs, experimental build name, and local patches.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Linux distribution/kernel, CPU architecture, GPU/driver, SDK digest/build mode, runtime/prefix, and relevant software versions.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and expected contract
+      description: Minimal steps or benign fixture, exact commands, expected behavior and its source, actual behavior/error, and repeatability.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and comparison
+      description: Attach sanitized logs and an experiment record. Include the unpatched baseline, failures/todo/skips, native Windows result or not run, relevant E/G identifiers, and the last known working revision if available.
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope and duplicate check
+      options:
+        - label: I searched existing issues and read SUPPORT.md and CONTRIBUTING.md.
+          required: true
+        - label: This report does not request bypassing checks, fabricating security evidence, or concealing host state.
+          required: true

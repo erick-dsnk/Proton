@@ -1,0 +1,37 @@
+name: Repository checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repository-checks:
+    name: Documentation and conventions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out this revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          submodules: false
+          fetch-depth: 2
+      - name: Install YAML validator
+        run: |
+          python3 -m venv .ci-venv
+          .ci-venv/bin/python -m pip install --disable-pip-version-check PyYAML==6.0.3
+      - name: Check first-party documentation and project structure
+        run: .ci-venv/bin/python scripts/check_repository.py
+      - name: Check configure script syntax
+        run: bash -n configure.sh
+      - name: Check patch whitespace
+        run: git diff-tree --check --root HEAD

@@ -1,5 +1,11 @@
 # Thread priorities
 
+This upstream Proton scheduling guide is retained for the experimental open
+source [Proton Vanguard compatibility effort](README.md), which aims to bring
+League of Legends back to Linux. Priority configuration does not demonstrate
+Vanguard acceptance or playable League. Include any host scheduling changes in
+[test evidence](TESTING.md), so contributors can reproduce the same conditions.
+
 Proton supports fine-grained thread priority control using `setpriority(2)` to
 set thread niceness values corresponding to the game threads' Windows base
 priority levels. However, most default Linux configurations don't allow

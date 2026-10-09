@@ -1,6 +1,17 @@
 Proton Debugging Tips For Linux / Wine Developers
 =================================================
 
+Fork debugging context
+----------------------
+
+This guide retains upstream Proton debugging recipes for the experimental open
+source [Proton Vanguard compatibility effort](README.md), which aims to bring
+League of Legends back to Linux. Debug the exact local fork build under test,
+with matching binaries and symbols, following [BUILDING.md](BUILDING.md) and
+[TESTING.md](TESTING.md). The Steam debug beta and Valve symbol archive described
+below are upstream options; neither supplies matching symbols for this fork's
+patches. Vanguard acceptance and playable League remain unproven.
+
 Table Of Contents
 -----------------
 
@@ -16,7 +27,9 @@ Table Of Contents
 Debug Proton Builds
 -------------------
 
-Debug builds contain symbols and should be used for live debugging session.
+Debug builds contain symbols and should be used for live debugging sessions.
+The following Steam steps apply to upstream Valve Proton releases; for this
+fork, build locally with matching symbols using [BUILDING.md](BUILDING.md).
 
 1. Locate the version of proton you are using in your Steam Library (e.g. Proton
 Experimental), click on a cog and select properties.
@@ -31,7 +44,7 @@ Experimental), click on a cog and select properties.
 available.
 
 For instruction on how to make a custom debug build see
-[README.md#debug-builds](../README.md#debug-builds).
+[BUILDING.md](BUILDING.md).
 
 
 Attaching A Debugger
@@ -53,7 +66,7 @@ Attaching to process 2263566
 0x000075dce0cd788d in ?? ()
 ```
 
-With Proton Experimental (and >= 9.0-2), GDB should be able to load the symbols right
+With upstream Proton Experimental (and >= 9.0-2), GDB should be able to load the symbols right
 away. However, for the most seamless experience you will want to use a
 custom version of GDB with a couple of patches to better integrate with
 Wine.
@@ -105,7 +118,7 @@ Attaching Before The Program Starts
 -----------------------------------
 
 Launch the software with `PROTON_WAIT_ATTACH=1 %command%` set as the launch
-command in game's properties. Our `steam.exe` shim will then wait for debugger
+command in game's properties. The Proton `steam.exe` shim will then wait for debugger
 and only then exec the proper executable.
 
 Make sure that you follow child processes:
@@ -191,7 +204,7 @@ or the original binary.
 can be accomplished by setting `PRESSURE_VESSEL_SHELL=instead`. The easiest way
 is to set the launch option to:
 
-[pv]: (https://gitlab.steamos.cloud/steamrt/steam-runtime-tools/-/tree/main/pressure-vessel)
+[pv]: https://gitlab.steamos.cloud/steamrt/steam-runtime-tools/-/tree/main/pressure-vessel
 
 `PRESSURE_VESSEL_SHELL=instead %command%`
 

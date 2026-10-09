@@ -1,0 +1,33 @@
+name: Generic contract or conformance gap
+description: Track a documented Windows contract and a benign testable compatibility gap.
+title: "[Conformance]: "
+labels: [conformance]
+body:
+  - type: input
+    id: contract
+    attributes:
+      label: Contract and primary reference
+      description: API/behavior, official specification or native reference, and the relevant source paths.
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Benign reproduction and results
+      description: Fixture/source, exact revisions and commands, architecture/build mode, expected/actual behavior, baseline failures/todo/skips, and native Windows result or not run.
+    validations:
+      required: true
+  - type: textarea
+    id: relevance
+    attributes:
+      label: Roadmap relevance and acceptance criteria
+      description: Link E/G identifiers. Separate generic correctness from evidence that Vanguard reaches this path. Specify observable success, lifetime/concurrency/error cases, architecture dependencies, and upstream review path.
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Project scope
+      options:
+        - label: I read CONTRIBUTING.md and propose real compatibility semantics, with no fabricated security evidence or disabled anti-cheat checks.
+          required: true

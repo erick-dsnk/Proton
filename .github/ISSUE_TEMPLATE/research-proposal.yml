@@ -1,0 +1,31 @@
+name: Research or architecture proposal
+description: Propose a bounded experiment, architectural change, or documentation finding.
+title: "[Research]: "
+labels: [research]
+body:
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Question, evidence, and relevance
+      description: State the hypothesis and primary sources. Link the roadmap E/G identifiers and distinguish confirmed facts from inference and unknowns.
+    validations:
+      required: true
+  - type: textarea
+    id: experiment
+    attributes:
+      label: Bounded experiment and decision criteria
+      description: Inputs/revisions, benign fixture, native reference, commands or method, expected observations, falsification criteria, limitations, and what next decision the result informs.
+    validations:
+      required: true
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Dependencies, resources, and ownership
+      description: Required tools/hardware/access, architecture tradeoffs, proposed owner, upstream relationship, and any genuine vendor/platform acceptance dependency. Do not post private credentials or proprietary artifacts.
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Project scope
+      options:
+        - label: I read CONTRIBUTING.md and this proposal does not disable anti-cheat checks, fabricate security evidence, or conceal the host state.
+          required: true
