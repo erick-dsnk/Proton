@@ -55,7 +55,7 @@ not make those artifacts publicly retrievable. Use the portable
 [build](BUILDING.md) and [test](TESTING.md) recipes for new runs and record their
 actual results with the [experiment template](evidence/experiment-template.md).
 
-## First steps
+## Current work and next steps
 
 1. **Freeze G0 inputs.** Keep the feasibility baseline pinned to Proton
    `bc896217ffcd67f892f952b010f898fe7bd0f0a1` and Wine
@@ -68,26 +68,259 @@ actual results with the [experiment template](evidence/experiment-template.md).
    behavior; it cannot establish Linux acceptance. Genuine Linux verifier
    acceptance remains unresolved and is a dependency of any Vanguard session
    claim.
-3. **Establish E02 with a generic driver.** Build this checkout's x64
-   `ntoskrnl.exe`, the existing NT kernel test executable and its five driver
-   fixtures in an isolated build directory. Compare failures with an ordinary
-   Windows reference when available. Existing Wine `todo_wine` cases and
-   attachment skips are recorded as gaps, not passes.
-4. **Start E03 with ordinary rundown.** Implement acquire/release/wait
-   semantics and test admission, in-flight references, waiting, rejection
-   after rundown begins, and object release. Keep the first code increment
-   narrow while the API contract is understood.
-5. **Run E05's address-space falsifier before broad memory exports.** A benign
-   driver must attach to another process and dereference a target-only mapping.
-   Repeat with two processes mapping different bytes at the same virtual
-   address; the implementation must observe each process's own bytes. Until
-   that architecture is coherent, defer MDL/data-export expansion that
-   depends on it. This is an architecture test, not a target-specific claim.
+3. **E02 and the first E03 increment are established.** The isolated x64
+   generic driver suite exercised the ordinary rundown patch against an
+   unpatched Wine baseline. It added 8,133 checks without adding a normalized
+   failure or skip; the full suite retained 21 baseline failures. Native
+   Windows comparison and i386 execution remain open.
+4. **E05 falsified attach behavior in the current A1 implementation.** The
+   benign x64 test kept two child processes alive, mapped different bytes at
+   the same address, confirmed a target-only mapping, and observed access
+   violations in all five read phases around attach/detach. Eight new
+   assertions remain `todo_wine`; the existing 21 suite failures were
+   unchanged. This is a test-only result for the tested Wine build, not a
+   Vanguard call-path finding or a verdict on all user-space architectures.
+   See the [E05 experiment record](evidence/2026-10-10-e05-attachment-falsifier.md).
+5. **A1b shared-region and raw-continuation prototype passed; broader G2 remains.** The cooperative fixture
+   mapped shared RX code, RW data/control and RW stack regions at identical
+   addresses in the caller and two live child processes. Five serial fresh leaf
+   invocations observed coherent shared mutation, per-process private bytes,
+   mapped RIP/RSP, restored native stacks and preserved RBX/RBP sentinels. An
+   occupied-address collision preserved its allocation. The original E05
+   driver IOCTL remained unchanged and its eight attachment expectations stayed
+   `todo_wine`. See the [separate experiment record](evidence/2026-10-10-a1b-shared-regions.md).
+   The separate [raw-continuation experiment](evidence/2026-10-10-a1b-continuation-migration.md)
+   then started one mapped root, suspended it four times, and resumed it on the
+   caller/A/B/A/caller host sequence. Its nested shared-stack frames and mutable
+   local survived; all 4 live register snapshots and 95 native-bridge
+   preservation checks passed. Admission controls rejected malformed and
+   wrong-owner checkpoints. The original E05 IOCTL remained unchanged and
+   retained its eight attachment `todo_wine` expectations. This is a bounded
+   serial raw-code result, not Wine attach/detach behavior. OS thread identity,
+   TEB/TLS, table SEH/unwind, concurrency, target-lifetime races, native Windows
+   and i386 remain open; G1 remains an independent platform-acceptance
+   dependency. The follow-up [caught-fault experiment](evidence/2026-10-10-a1b-caught-fault-recovery.md)
+   induced one genuine read AV on the migrated stack in process B. A scoped VEH
+   consumed that exact fault and redirected to the current native bridge; the
+   handler was removed, the fault allocation released, and TEB bounds remained
+   unchanged. An unrelated native AV reached its ordinary catcher, a terminal
+   restart was rejected, and a fresh healthy continuation passed afterward.
+   The unchanged E05 IOCTL retained its eight attachment todos. The strict run
+   reported 34,546 tests / 169 todos / 21 failures / 0 skips, exit 21, with all
+   37 normalized failure lines / 25 unique diagnostics matching the retained
+   continuation baseline. This is VEH abort/cleanup evidence only, not table
+   SEH, frame unwinding, or Wine attach behavior. The follow-up
+   [frame-unwind experiment](evidence/2026-10-10-a1b-frame-unwind.md) then
+   registered function-table entries for three mapped frames. A real B read
+   AV ran search handlers inner/outer/root, invoked actual `RtlUnwindEx`,
+   consumed three frame-owned resources through unwind handlers, landed at
+   the root target and returned through B's native bridge. Scoped TEB stack
+   bounds were restored before native execution; function table, handlers,
+   fault page and TLS state were cleaned. The later healthy continuation and
+   unchanged E05 IOCTL passed, with all eight attach todos retained. This adds
+   47 checks to the prior suite and preserves the same 37 normalized failure
+   lines / 25 unique messages. It establishes only the described cooperative
+   x64 frame path; compiler `finally`/destructor behavior, helper-range faults,
+   collisions, async/concurrent switching, native Windows/i386 and Wine attach
+   semantics remain open.
+
+### A1b compiler-generated finally result
+
+The [compiler-finally experiment](evidence/2026-10-10-a1b-compiler-finally.md)
+used Clang 19 with `USE_COMPILER_EXCEPTIONS` and genuine linked PE scope
+metadata. A linked helper entered only after the continuation arrived in B;
+its single parent function contained nested `__try`/`__finally` scopes and two
+outlined compiler funclets. Each funclet ran once on normal return and once
+with abnormal termination during the deliberate shared-stack access
+violation. Their stack-owned resource locals were consumed before the raw
+mapped frames unwound through `RtlUnwindEx` to the root. The current native
+bridge returned to B with 57 ABI checks, and the fixture verified TEB bound
+restoration, identity, table/handler/page/TLS cleanup, and a later healthy
+continuation.
+
+The scratch build used the pinned SteamRT4 SDK plus a disposable derived image
+containing Debian `lld-19` `1:19.1.7-3+b1`, because the base SDK had Clang 19 but
+no `lld-link`. The final Clang-built `ntoskrnl.exe` module and test PE were run
+with retained ntdll, wineserver and launcher. This was not a fresh complete
+Wine or Proton build. Three intermediate candidate snapshots are retained:
+each produced two extra assertions when the exception PC overlapped an
+adjacent compiler cleanup range. The final inspected scope table excludes that
+adjacent range for the recorded call return PC; this does not prove a general
+scope-boundary rule.
+
+The same-Clang baseline reported **34,593 tests / 169 todos / 21 failures / 0
+skipped**, runner exit 21. The final candidate reported **34,650 / 169 / 21 /
+0**, exit 21: 57 added checks, with the same 37 normalized failure lines / 25
+unique diagnostics as baseline. E05 still reports eight attachment
+`todo_wine` expectations. This bounded result covers compiler cleanup only
+for the exact x64 Clang scope table and cooperative helper path; compiler
+frames themselves were not migrated. General compiler-boundary behavior,
+helper-range faults, collisions, concurrency, native Windows, i386, Wine
+attachment and Vanguard acceptance remain open.
+
+The default GCC configuration also built the final source and explicitly
+skipped only this fixture because native compiler `__try`/`__finally` support
+is unavailable there; its suite reported **34,593 / 169 / 21 / 1 skipped**,
+exit 21. An earlier `win_skip` guard caused one extra Wine failure and was
+replaced with `skip`. Both compiler paths and the failed guard attempt are
+recorded in the evidence bundle.
+
+### A1b process-local kernel allocation result
+
+The [kernel allocation experiment](evidence/2026-10-10-a1b-kernel-arena.md)
+adds an explicitly opt-in, 64 MiB section-backed allocator in the
+driver-hosting `ntoskrnl.exe` process. With `WINE_SHARED_KERNEL_MEMORY=1`, the
+fixture covers pool/IRP/device-object backing, invalid arguments, zeroing and
+reuse, alignment, executable and NX pages, bounded exhaustion/recovery and
+concurrent allocation/free. The normal run added 349 checks and reported
+**34,942 tests / 169 todos / 21 failures / 1 skip**, exit 21; the default-off
+run reported **34,593 / 169 / 21 / 1**, exit 21. Both retained the same 37
+normalized failure lines / 25 unique diagnostics as the GCC baseline. The
+single skip is the compiler-finally fixture, unavailable in the default GCC
+build.
+
+The host `/proc` capture showed real memfd-backed ranges, with a distinct inode
+for each sampled process. It does not show shared views between an executor and
+target, a parent and child, or two `ntoskrnl.exe` instances. The section handle,
+arena base and initialization state are process-local. The unchanged E05
+fixture retains eight attachment `todo_wine` expectations. An earlier
+186-failure opt-in snapshot lacked the environment variable in the Windows
+service host and did not exercise this allocator; the rebuilt service host now
+passes it through. Exact test-runner and outer build invocations were not
+recovered from retained tool metadata and are recorded with the local manifest;
+they are not part of the committed evidence record.
+
+### A1b private-mapping backing result
+
+The [focused private-backing run](evidence/2026-10-10-a1b-private-backing.md)
+reports 2,418 / 104 / 0 / 0 with the Linux x64 opt-in and 2,340 / 104 / 0 / 0
+with the option unset. A post-fix injected mapping `ENOMEM` returned
+`STATUS_NO_MEMORY` and retried successfully; an unrecoverable decommit rollback
+terminated its child process while the parent fixture passed. The full
+`ntoskrnl.exe` run reports 34,593 / 169 / 21 / 1, with E05's eight attachment
+expectations still `todo_wine` and the attach/detach routines still stubs. The
+candidate's 37 ordered failure payloads match the retained GCC baseline's 37
+exactly, with no missing or extra entries. The explicit semantic normalizer
+produces 18 distinct templates; it does not reproduce the historical
+25-message grouping. This validates only the focused local backing path; no
+foreign alias or ordinary attached pointer behavior has been demonstrated.
+
+### A1b combined backing and arena integration
+
+The [combined integration record](evidence/2026-10-10-a1b-backing-arena-integration.md)
+reports a default-off run of **34,593 / 169 / 21 / 1** and a run with both
+backing and arena options enabled of **34,942 / 169 / 21 / 1**; each runner
+exited 21. Both options were absent in five monitored default-off
+`winedevice.exe` environments and present in all five monitored opt-in
+environments. Under the retained GCC baseline's normalization, both runs
+matched its 37 failure lines / 25 distinct diagnostics with no added or
+missing diagnostics. The one skip is the existing GCC `__try`/`__finally`
+fixture limitation.
+
+This was an assembled-artifact integration using separate existing artifact
+trees with identical `config.status` hashes; no compilation occurred during
+integration and it is not a full current-source Wine build. The E05 block
+still has eight attachment todos, attach probes still fault, and
+`KeStackAttachProcess`/`KeUnstackDetachProcess` remain stubs. This establishes
+that both options reach the service host and coexist in the generic test run;
+it does not establish shared arena aliases, foreign mapping access, or attach
+semantics. Its 37-line / 25-diagnostic comparison uses the GCC-baseline rule;
+it is not the distinct 18-template normalization in the standalone backing
+record.
+
+### A1b managed TARGET layout result
+
+The [managed-layout experiment](evidence/2026-10-10-a1b-managed-target-layout.md)
+implements Linux AMD64 TARGET admission with
+`WINE_MANAGED_LAYOUT=v1:target:400000000000`, guest range
+`[0x10000, 0x400000000000)` and truthful highest user address
+`0x3fffffffffff`. The corrected focused Wine run passed 3 preloader-child and
+29 parent assertions; the separate injection run passed 3 child and 39 parent
+assertions, including eight active reserved-mmap `ENOMEM` markers and one
+child `setenv` marker. Admission/rejection passed 14/14, and a conflicting
+reservation returned `EEXIST` without modifying occupied mappings or a
+64-byte sentinel. The default-off virtual suite reported 2,338 / 104 / 0 / 0;
+this observed count is not normalized to the 2,340 count in the earlier
+backing run.
+
+In the final combined E05 opt-in run, six actual `winedevice.exe` processes
+showed the expected `TARGET` descriptor, guest bounds, process limit and
+continuous guest coverage. The off and three-option-on E05 runs reported
+34,593 / 169 / 21 / 1 and 34,942 / 169 / 21 / 1 respectively; both matched
+the retained GCC baseline's 37 diagnostic lines / 25 unique messages. The
+eight attachment todos remained. This is an x64 generic suite comparison,
+not an attach pass.
+
+The mode rejects executor role and is not an executor implementation. It
+does not reserve executor-private runtime slots, boot canonical host ntdll,
+create cross-process kernel aliases, or change the attach/detach stubs. The
+bounded builds eventually passed after two generated-input setup failures;
+the assembled runtime is not a complete current-tree Wine or Proton build.
+The frozen manifest contains the complete source/artifact hashes, exact
+commands, retained failed attempts and runtime evidence.
+
+### A1b managed EXECUTOR bootstrap result
+
+The [managed-EXECUTOR experiment](evidence/2026-10-10-a1b-managed-executor.md)
+now validates a separate Linux AMD64 Wine process using the
+`v2:executor:400000000000:410000000000` handoff. The 96-byte, layout-ID-2
+descriptor keeps TARGET's version-1 ABI unchanged, reserves the same bounded
+guest range and a disjoint 1-TiB host range, and places the actual Wine AMD64
+`ntdll.dll` at `0x400000000000`. The 16-case admission matrix passed. The
+native fixture exited cleanly; the PE parent and child reported 209 and 201
+checks with no failures. The read-only observer captured two separate Wine
+processes holding different bytes at the same private allocation VA and
+recorded four complete snapshots of the physical TEB, stacks, syscall state,
+host mappings and cleanup. Four intermediate reads raised AssertionError
+with empty diagnostics; their causes remain unlocalized and are preserved in
+the evidence bundle.
+
+The default-off virtual suite reported 2,340 / 104 / 0 / 0. The final E05
+baseline-style and TARGET+backing+arena runs reported 34,593 / 169 / 21 / 1
+and 34,942 / 169 / 21 / 1, runner exit 21 in each. Both retained the same
+ordered 37 failure payloads and 25 unique diagnostics as the GCC baseline;
+the eight attachment expectations remain `todo_wine`. This is not an
+attachment pass. The experiment rebuilt the loader, native ntdll and fixtures
+serially, assembling other compatible artifacts from prior checked trees; it
+is not a full current-source Wine or Proton build.
+
+This closes the clean host-runtime bootstrap gate only. It does not create
+target aliases, share a kernel arena or driver image across processes, migrate
+an initialized driver/import closure, or give the executor logical attached-
+target identity. `KeStackAttachProcess` and `KeUnstackDetachProcess` remain
+stubs. Native Windows and 32-bit validation, real Vanguard execution, session
+acceptance and gameplay remain open.
 
 The implementation checkpoint now reaches E02 build and runtime evidence for
-the first E03 x64 patch. A native Windows reference, i386 build,
-process-attachment acceptance, genuine Linux verifier acceptance, and
-Vanguard execution remain unresolved.
+the first E03 x64 patch, the test-only E05 failure on current Wine A1 attach
+behavior, the A1b shared-region prerequisite, a narrow x64 raw-continuation
+prototype, a caught-fault VEH/native-cleanup experiment, table-based search
+plus `RtlUnwindEx`/cleanup for three described mapped frames, compiler-
+generated finally execution in a linked x64 helper, process-local section-
+backed kernel allocations, focused wineserver backing for eligible private
+mappings, a managed TARGET guest layout, and a clean managed EXECUTOR
+host-runtime bootstrap. None of these results supplies live cross-process
+aliases or ordinary Wine attach behavior. Broader G2
+execution-context behavior, compiler scope-boundary generality, compiler-frame
+migration, native Windows reference, i386 build, genuine Linux verifier
+acceptance, and Vanguard execution remain unresolved.
+
+The next E05 architecture proposal is recorded in the
+[A1b attachment-backing decision](evidence/2026-10-10-a1b-attach-backing-design.md).
+It proposes first validating an opt-in wineserver backing primitive for
+eligible private mappings, then separately proving ordinary attached pointer
+access in a suitable execution model. The proposal does not change or validate
+the public attach/detach APIs. Architecture review narrowed the executor step
+to an explicit managed process cohort: establish a truthful guest-address
+limit and disjoint host-runtime slots in the preloader, reject collisions, and
+boot the host RTL through Wine's real loader before attempting driver handoff.
+The TARGET guest boundary and a separate canonical host-RTL executor boot are
+now validated in the [managed-layout](evidence/2026-10-10-a1b-managed-target-layout.md)
+and [managed-EXECUTOR](evidence/2026-10-10-a1b-managed-executor.md)
+experiments. Neither exports foreign target views, shares writable kernel
+state across processes, nor changes E05. The actual caller pointer load before
+and after attach, the migrated driver continuation and kernel-owned pointers
+remain the next unresolved behavior.
 
 ## Frozen build inputs
 
@@ -312,8 +545,14 @@ The changed `ntoskrnl.exe` source and test driver compiled without a diagnostic.
 
 - Build and test on ordinary x64 Windows to provide the reference behavior.
 - Validate x86/i386 calling conventions and data exports independently.
-- Run the E05 same-virtual-address/different-bytes negative control before
-  expanding address-space-dependent exports.
+- Extend the bounded A1b result only for a specified contract. The x64 VEH
+  abort/native-cleanup step, scoped three-frame table-unwind step, and exact
+  Clang compiler-finally fixture passed. Compiler scope-boundary generality,
+  migration of compiler-generated frames, arbitrary mapped helper faults,
+  collisions, logical identity beyond the tested process/thread/TLS sentinels,
+  concurrency and target lifetime remain open. Obtain native Windows and i386
+  observations, then cover those contracts in isolated increments before
+  considering address-space-dependent exports.
 - Select the Vanguard mode and obtain actual platform restrictions and verifier
   behavior. Linux acceptance remains unproven.
 - Compare the ordinary Windows reference and selected mode's restrictions
@@ -323,11 +562,14 @@ The changed `ntoskrnl.exe` source and test driver compiled without a diagnostic.
 
 ## Next bounded implementation work
 
-1. Add a benign E05 process-attachment experiment that directly dereferences a
-   target-only mapping. Include the same-virtual-address/different-bytes negative
-   control in two target processes and test restoration after detach. Report
-   exceptions and skips explicitly. This determines whether the proposed Wine
-   architecture supplies the claimed address-space behavior.
+1. Extend A1b only for a specified next contract. The x64 VEH abort and
+   three-frame table-unwind/native-cleanup steps and one Clang compiler-finally
+   fixture passed for their bounded scopes; general compiler-boundary handling,
+   migration of compiler frames, helper ranges, collisions, Wine attach
+   semantics, broader logical identity, concurrency and target lifetime remain
+   open. Keep memory exports gated until a coherent address-space model passes
+   the tests those contracts require. The E05 result applies to the current
+   Wine implementation only.
 2. Obtain ordinary Windows x64 rundown reference results and independently build
    and execute the i386 path. The corrected FASTCALL declarations are reviewed
    source, not observed 32-bit conformance.
@@ -341,3 +583,14 @@ The changed `ntoskrnl.exe` source and test driver compiled without a diagnostic.
 The [roadmap](ROADMAP.md) maps these tasks to the preserved E00–E12 backlog and
 G0–G6 gates. Record new source/build results here or in a linked experiment;
 do not replace the initial comparison with results from different inputs.
+
+### Publication checkpoint (2026-10-10)
+
+The accumulated E05/A1b prerequisites are published in Wine commit
+[`084fc093b4eaec9f66a942f5d902496318762abb`](https://github.com/erick-dsnk/wine/commit/084fc093b4eaec9f66a942f5d902496318762abb),
+on `vanguard-attachment-prerequisites`, and referenced by the Proton gitlink.
+A clean remote clone retrieved the component commit and matched all 28 source
+hashes in the final [executor manifest record](evidence/2026-10-10-a1b-managed-executor.md#publication-provenance).
+This publishes the tested source bytes; it adds no runtime or acceptance claim.
+Actual attach/detach remains unimplemented and all eight E05 attachment todos
+remain open.

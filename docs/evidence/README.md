@@ -8,6 +8,70 @@ preserves the original source/package/host snapshot. The
 publishes the exact original patched and fresh-prefix baseline generic-runtime
 logs, source provenance, result metadata and reproducible failure comparison.
 The full SDK build log and remaining initial artifacts are retained locally.
+The [E05 attachment falsifier](2026-10-10-e05-attachment-falsifier.md) records
+the x64 test-only result and its local log/artifact hashes; raw build outputs
+remain outside the repository. The
+[A1b shared-region experiment](2026-10-10-a1b-shared-regions.md) records gate 1
+and keeps the separate same-continuation gate open; raw logs and build
+artifacts also remain outside the repository. The
+[A1b continuation experiment](2026-10-10-a1b-continuation-migration.md) records
+the bounded serial raw-continuation result; its raw log/build artifacts remain
+outside the repository. The [A1b caught-fault experiment](2026-10-10-a1b-caught-fault-recovery.md)
+records one VEH-caught fault, native-host return, deterministic handler and
+allocation cleanup, and a subsequent healthy continuation; its raw log/build
+artifacts remain outside the repository. The follow-up
+[A1b frame-unwind experiment](2026-10-10-a1b-frame-unwind.md) records real
+table-handler search and `RtlUnwindEx` through three mapped frames, unwind
+callback cleanup, root landing, scoped TEB-bound restoration and native return.
+Its raw log/build artifacts remain outside the repository. Neither result
+establishes general compiler cleanup or Wine attachment semantics.
+The [A1b compiler-finally experiment](2026-10-10-a1b-compiler-finally.md)
+then observes compiler-generated nested x64 `__finally` funclets on the shared
+stack after arrival in B, normal and abnormal cleanup, `RtlUnwindEx` through
+the mapped parent frames, and native-host return. The result is specific to
+the inspected Clang PE scope table; other compiler PC-boundary arrangements
+remain unproven. Raw build and run artifacts remain local.
+
+The [process-local kernel allocation experiment](2026-10-10-a1b-kernel-arena.md)
+records an opt-in x64 section-backed allocator, 349 added generic checks with
+the same baseline diagnostics, and host map observations. The sampled memfd
+inodes differ between processes; this is not evidence of cross-process aliasing
+or E05 attachment. Exact commands and environment details are preserved in
+local metadata, whose manifest is linked from the record; raw artifacts remain
+outside the repository.
+
+The [private-mapping backing experiment](2026-10-10-a1b-private-backing.md)
+records focused opt-in `MEM_PRIVATE` backing, commit/protection/decommit and
+failure-cleanup runs. It preserves E05's eight attachment todos and does not
+demonstrate that another process can dereference the mapping.
+
+The [combined backing and kernel-arena integration](2026-10-10-a1b-backing-arena-integration.md)
+records a single generic x64 run with both options off and both options on.
+The enabled settings were observed in the actual service-host processes and
+the candidate retained the baseline failure diagnostics. The run used
+assembled artifacts and did not implement or validate cross-process attach;
+E05's eight attachment todos remain.
+
+The [managed TARGET layout experiment](2026-10-10-a1b-managed-target-layout.md)
+validates strict Linux AMD64 preloader admission, guest-range enforcement, and
+the descriptor in actual Wine driver-host processes. Its scope is TARGET only:
+it does not establish attach or cross-process kernel aliases.
+
+The [managed EXECUTOR bootstrap](2026-10-10-a1b-managed-executor.md) records
+the separate Linux AMD64 host-runtime process, canonical ntdll placement,
+admission matrix and concurrent private-address census. Its E05 comparison
+still has all eight attachment todos; no target aliases or attach semantics
+are implemented.
+
+The proposed [A1b attachment-backing architecture decision](2026-10-10-a1b-attach-backing-design.md)
+defines a gated Linux x64 wineserver mapping-backing experiment and the
+end-to-end prerequisites for implementing ordinary Wine process attachment.
+The decision now includes a managed guest/host address-space constraint and a
+real-loader executor boot gate. The focused backing run does not validate the
+full phase or E05. The executor boot gate is now validated in its own bounded
+experiment. The decision remains a design proposal for the unimplemented
+foreign-view and attach phases; it does not claim that public attach/detach
+APIs work.
 
 Use a dated Markdown record named `YYYY-MM-DD-short-experiment-name.md` for a
 new material result, or a dated directory when public logs and comparison

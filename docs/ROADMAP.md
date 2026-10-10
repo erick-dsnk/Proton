@@ -16,7 +16,7 @@ epic, source ownership, prerequisites, and exit evidence.
 |---|---|---|
 | G0: reproducible scope | Linux/source/vendor baseline and SDK digest recorded; mode and Windows reference missing | Exact inputs, selected mode, and ordinary Windows reference for each experiment |
 | G1: authentic platform acceptance | Unknown; Linux acceptance has not been demonstrated | Genuine platform evidence accepted by the selected mode's verifier |
-| G2: execution architecture | Wine user-space driver host is the initial model; attached-pointer behavior unresolved | Benign tests establish every required address-space/context/privileged-state contract |
+| G2: execution architecture | E05 falsified attach behavior in tested x64 Wine A1; A1b shared-region, serial raw-continuation, bounded VEH abort/native-cleanup, scoped three-frame table unwind, and one Clang compiler-finally fixture passed; broader context gates remain open | Benign tests establish required attach/detach behavior and each required address-space/context/privileged-state contract |
 | G3: generic conformance | First x64 rundown increment exercised; baseline has 21 failures; Windows/i386 comparisons pending | Required API families, loader and transport pass scoped native-reference and failure/race tests |
 | G4: local Vanguard operation | Not demonstrated | Unmodified driver entry, stable service/driver lifecycle and real device communication |
 | G5: session and gameplay | Not demonstrated | Accepted anti-cheat session and completed connected League match without anti-cheat disconnect |
@@ -31,10 +31,48 @@ cannot be closed merely by implementing more Wine exports.
    reference, select the Vanguard mode, and record actual configuration and
    restrictions. Keep generic driver development separate from observations of
    the unmodified installed product. Run this in parallel with bounded tests.
-2. **E05/G2: process-attachment falsifier.** A benign driver must directly read a
-   target-only mapping after attachment. Two processes must map different bytes
-   at the same virtual address and yield their own bytes; detach must restore
-   context. Record a failing architecture result before proposing a bridge.
+2. **E05/G2: follow up the attachment falsifier.** The current Wine A1 result
+   and its limitations are recorded in the [experiment](evidence/2026-10-10-e05-attachment-falsifier.md)
+   and [architecture guide](ARCHITECTURE.md#current-e05-result). Collision-safe
+   shared regions passed in the [A1b gate 1 experiment](evidence/2026-10-10-a1b-shared-regions.md).
+   A [bounded raw-continuation prototype](evidence/2026-10-10-a1b-continuation-migration.md)
+   then resumed one nested stack through caller/A/B/A/caller with the supported
+   register state preserved. A [caught-fault follow-up](evidence/2026-10-10-a1b-caught-fault-recovery.md)
+   then caught one exact read AV with a process-local VEH, returned through the
+   native bridge, cleaned up and passed a later healthy continuation. The
+   [frame-unwind follow-up](evidence/2026-10-10-a1b-frame-unwind.md) then
+   exercised registered frame handlers and actual `RtlUnwindEx` across three
+   mapped frames, consumed their resources through unwind callbacks, landed at
+   the root and returned through B's native bridge. A
+   [compiler-finally follow-up](evidence/2026-10-10-a1b-compiler-finally.md)
+   then ran Clang-generated nested cleanup scopes after arrival in B, through
+   normal and abnormal exits, before the same mapped-frame cleanup and native
+   return. It is specific to the inspected PE scope table; an earlier
+   candidate exposed an adjacent scope boundary that dispatched an extra
+   funclet. General compiler-boundary handling, compiler frames migrating
+   between processes, helper ranges, collisions, Wine attach behavior, logical
+   identity beyond tested sentinels, concurrency and target lifetime remain
+   open. The proposed [attachment-backing decision](evidence/2026-10-10-a1b-attach-backing-design.md)
+   gates opt-in wineserver private-mapping backing before any executor work.
+   The focused [backing experiment](evidence/2026-10-10-a1b-private-backing.md)
+   now passes its Linux x64 virtual-memory and failure-cleanup fixtures; it
+   does not establish foreign aliases, complete the phase-1 matrix, or change
+   attach behavior. The separate [kernel allocation experiment](evidence/2026-10-10-a1b-kernel-arena.md)
+   also validates process-local arena behavior but does not establish shared
+   kernel state across processes. Passing either prerequisite would not
+   implement attach: E05
+   also reads caller memory before the first attach and after detach, while
+   preserving the compiled driver continuation and kernel-owned pointers.
+   The [managed TARGET layout](evidence/2026-10-10-a1b-managed-target-layout.md)
+   now reserves and enforces one declared guest range, rejects collisions
+   before driver entry, and exposes the reduced address limit through the real
+   loader. The separate [managed EXECUTOR bootstrap](evidence/2026-10-10-a1b-managed-executor.md)
+   now boots canonical real ntdll in the disjoint host range, with two
+   explicitly owned low-page mappings. This validates a physical executor
+   layout only. The next gate is live revocable aliases for eligible target
+   mappings, followed by ordinary pointer loads through the unchanged E05
+   continuation and proof of shared kernel state and correct attached-process
+   identity. Native Windows and i386 remain unproven.
 3. **E02/E03/G3: rundown reference and i386.** Compare the published x64 increment
    on ordinary Windows and execute its 32-bit calling conventions and lifetime
    cases. Preserve baseline failures and todos, even when the new block passes.
