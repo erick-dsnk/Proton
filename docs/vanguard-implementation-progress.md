@@ -205,6 +205,69 @@ produces 18 distinct templates; it does not reproduce the historical
 25-message grouping. This validates only the focused local backing path; no
 foreign alias or ordinary attached pointer behavior has been demonstrated.
 
+#### Completed private-backing matrix follow-up
+
+The follow-up [private-backing matrix record](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md)
+extends that focused run with ordinary-pointer lifetime and protection checks.
+Using the same PE fixture, the candidate default-off and unmodified Wine
+baseline each reported **2,423 / 104 / 0 / 0**, while the candidate with
+`WINE_SHARED_PRIVATE_BACKING=1` reported **2,503 / 104 / 0 / 0**; all three
+runners exited 0. The matrix also passed six injected mapping, protection,
+decommit and rollback cases. Each of the nine final runs exited 0 with 104
+existing todos, zero failures and zero skips. The default-off candidate and
+baseline summaries and ordered unexpected-failure payloads match.
+
+The fixture covers initial/recommit/address-reuse zeroing, RW/RX/NX and
+read-only/no-access behavior, decommit and release faulting, neighboring-page
+preservation, retry after recoverable failures, fail-closed child exit after
+fatal rollback, and parent usability after same-address child exit. Runtime
+artifacts came from a fresh isolated copy of the checked managed-EXECUTOR
+source/object tree with the changed PE test rebuilt; this remains assembled
+Wine-only evidence, not a full Wine/Proton build. It supplies no native Windows
+or i386 comparison.
+
+Separate bounded fixtures pass for backing identity and owner lifetime on the
+phase-1 Wine `084fc093` snapshot: actual same-address parent/child memfd
+mappings were observed, the server backing FDs closed at child exit and final
+release, and an ENOSPC creation injection left neither candidate object in the
+server. An integrated real-owner lookup fixture on the later server source
+checks identity/page flags, generation and protection/decommit/recommit
+updates, stale requests, release lookup, and fresh identity after exact-address
+reuse. The current-runtime opt-in FD-lifetime observer also passed
+**2,503 / 104 / 0 / 0**, observing separate same-address parent/child memfd
+backings, child-FD closure while the parent remains, and release/exit closure.
+Together these runs close the documented phase-1 private-backing matrix for
+the bounded Wine AMD64 source snapshot. They do not establish an ordinary
+pointer into a foreign view.
+
+The managed TARGET to EXECUTOR live-view proof was not completed. Two fixture
+attempts ended before alias operations with helper `LoadLibrary` error 126; one
+also reported a storage-prefix setup failure. A later execution was stopped
+by the automated safety filter after it flagged a possible cybersecurity risk.
+No ordinary pointer read/write, acknowledgement, active-access revocation,
+consumer/target exit, or collision result is claimed. A1b remains incomplete.
+The opt-in private mapping work remains experimental; public attach/detach
+behavior and all eight E05 attachment todos remain unchanged.
+
+The selected-runtime fatal-decommit test first failed twice on separate
+initialized prefixes because the command omitted
+`PROTON_VM_FAIL_RESTORE_PROT=R`. The injected hole-punch returned
+`STATUS_NOT_SUPPORTED` (`0xc00000bb`), but the shim expected RW while the
+read-only fixture correctly rolled back to `PROT_READ`; each run reported
+**2,509 / 104 / 1 / 0**, runner exit 1 without reaching the intended rollback
+injection. An observer-only diagnostic confirmed that parameter mismatch.
+Adding only the missing `R` setting injected the actual read-protection
+rollback failure, the child exited `0xc0000001`, and the suite passed
+**2,509 / 104 / 0 / 0**, exit 0. This corrected result, together with default-
+off and baseline **2,423 / 104 / 0 / 0**, opt-in **2,503 / 104 / 0 / 0**, the
+other injection cases, real-owner lookup, and current-runtime FD-lifetime
+observer, closes the documented phase-1 matrix for the bounded Wine x64 scope.
+The older phase-1 observer result ran on Wine `084fc093`; the current-source
+rerun confirms the later owner-index and process-exit behavior at the recorded
+checkpoints. See the
+[fatal-decommit harness diagnosis](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md#final-runtime-fatal-decommit-harness-diagnosis)
+and local manifests.
+
 ### A1b combined backing and arena integration
 
 The [combined integration record](evidence/2026-10-10-a1b-backing-arena-integration.md)
@@ -588,9 +651,26 @@ do not replace the initial comparison with results from different inputs.
 
 The accumulated E05/A1b prerequisites are published in Wine commit
 [`084fc093b4eaec9f66a942f5d902496318762abb`](https://github.com/erick-dsnk/wine/commit/084fc093b4eaec9f66a942f5d902496318762abb),
-on `vanguard-attachment-prerequisites`, and referenced by the Proton gitlink.
+on `vanguard-attachment-prerequisites`, and was referenced by the Proton gitlink
+at that checkpoint. The current gitlink is recorded in the follow-up below.
 A clean remote clone retrieved the component commit and matched all 28 source
 hashes in the final [executor manifest record](evidence/2026-10-10-a1b-managed-executor.md#publication-provenance).
 This publishes the tested source bytes; it adds no runtime or acceptance claim.
 Actual attach/detach remains unimplemented and all eight E05 attachment todos
 remain open.
+
+### Private-backing matrix publication checkpoint (2026-10-10)
+
+The matrix fixtures and experimental managed-view implementation are published
+in Wine [`d262e37075efc5ce8c7be8e85a547fbb6c03ad3d`](https://github.com/erick-dsnk/wine/commit/d262e37075efc5ce8c7be8e85a547fbb6c03ad3d)
+on `vanguard-a1b-private-backing`, and referenced by the current Proton gitlink.
+A fresh remote clone retrieved the exact commit, matched all 22 changed source
+files, and matched all 13 runtime source hashes in the frozen rebuild2
+manifest. See the [publication provenance](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md#publication-provenance-2026-10-10).
+
+This publishes the existing tested source bytes and the unverified live-view
+fixture scaffolding. It adds no new runtime evidence. The bounded phase-1
+private-backing matrix passes; the ordinary TARGET to EXECUTOR pointer and
+revocation proof remains unverified, A1b remains incomplete, and all eight E05
+attachment todos remain open. Full Proton, native Windows, i386 runtime,
+Vanguard acceptance, and gameplay are not demonstrated by this publication.

@@ -54,13 +54,14 @@ cannot be closed merely by implementing more Wine exports.
    identity beyond tested sentinels, concurrency and target lifetime remain
    open. The proposed [attachment-backing decision](evidence/2026-10-10-a1b-attach-backing-design.md)
    gates opt-in wineserver private-mapping backing before any executor work.
-   The focused [backing experiment](evidence/2026-10-10-a1b-private-backing.md)
-   now passes its Linux x64 virtual-memory and failure-cleanup fixtures; it
-   does not establish foreign aliases, complete the phase-1 matrix, or change
-   attach behavior. The separate [kernel allocation experiment](evidence/2026-10-10-a1b-kernel-arena.md)
+   The follow-up [backing matrix and live-view record](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md)
+   completes the bounded Linux AMD64 private-memory matrix and authoritative
+   owner-metadata lookup after a corrected fatal-decommit injection command.
+   The current integrated source also passes an opt-in FD-lifetime observer
+   for same-address parent/child mappings, child exit, and final release. The separate [kernel allocation experiment](evidence/2026-10-10-a1b-kernel-arena.md)
    also validates process-local arena behavior but does not establish shared
-   kernel state across processes. Passing either prerequisite would not
-   implement attach: E05
+   kernel state across processes. These results do not implement or validate
+   ordinary attached pointer access. E05
    also reads caller memory before the first attach and after detach, while
    preserving the compiled driver continuation and kernel-owned pointers.
    The [managed TARGET layout](evidence/2026-10-10-a1b-managed-target-layout.md)
@@ -69,8 +70,10 @@ cannot be closed merely by implementing more Wine exports.
    loader. The separate [managed EXECUTOR bootstrap](evidence/2026-10-10-a1b-managed-executor.md)
    now boots canonical real ntdll in the disjoint host range, with two
    explicitly owned low-page mappings. This validates a physical executor
-   layout only. The next gate is live revocable aliases for eligible target
-   mappings, followed by ordinary pointer loads through the unchanged E05
+   layout only. The scoped live-view implementation remains unverified at
+   runtime: the fixture stopped before its ordinary pointer assertions. The
+   next gate is a completed and audited TARGET→EXECUTOR live view with safe
+   revocation, followed by ordinary pointer loads through the unchanged E05
    continuation and proof of shared kernel state and correct attached-process
    identity. Native Windows and i386 remain unproven.
 3. **E02/E03/G3: rundown reference and i386.** Compare the published x64 increment

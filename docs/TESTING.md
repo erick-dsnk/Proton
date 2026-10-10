@@ -224,6 +224,25 @@ empty-diagnostic AssertionErrors and remain unexplained. This run rebuilt
 selected Wine components and fixtures, not a full Wine or Proton tree; it does
 not demonstrate an attach, a target alias, Vanguard acceptance or gameplay.
 
+The [A1b backing-matrix and live-view record](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md)
+adds ordinary-pointer tests for private mapping zeroing, protection, decommit,
+release, address reuse and failure cleanup. Against the selected x64 Wine-only
+runtime, default-off and the unmodified baseline both passed **2,423 / 104 / 0
+/ 0**, while opt-in passed **2,503 / 104 / 0 / 0**. The corrected fatal-
+decommit rollback injection passed **2,509 / 104 / 0 / 0**; an earlier pair of
+attempts omitted `PROTON_VM_FAIL_RESTORE_PROT=R` and is retained as an excluded
+harness-parameter error. The phase-1 and current-source FD observers confirmed
+separate same-address memfd backing and its child-exit/release lifetime. A real-owner lookup fixture passed
+**87 parent + 6 child checks** off and **118 + 6** on, with no failures.
+
+These are targeted Linux AMD64 Wine results based on component `084fc093`, with
+the unmodified baseline `e60892cc`; the selected changes were built in targeted
+Wine components, not as a full Proton build. The ordinary managed
+TARGET-to-EXECUTOR pointer/revocation fixture did not reach its alias checks.
+Therefore this matrix does not demonstrate ordinary cross-process pointer
+loads/stores, revocation while access is active, public attach semantics, or
+E05 conformance. All eight E05 attachment expectations remain `todo_wine`.
+
 ## Record distinct outcomes
 
 1. Source/build identity and artifact export presence.

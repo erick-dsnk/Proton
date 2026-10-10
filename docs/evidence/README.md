@@ -45,6 +45,12 @@ records focused opt-in `MEM_PRIVATE` backing, commit/protection/decommit and
 failure-cleanup runs. It preserves E05's eight attachment todos and does not
 demonstrate that another process can dereference the mapping.
 
+The follow-up [A1b private-backing matrix and live-view record](2026-10-10-a1b-private-backing-matrix-and-live-view.md)
+records the completed ordinary-pointer lifetime/protection matrix, backing-FD
+identity/lifetime observations, and real-owner metadata lookup. The separate
+managed TARGET to EXECUTOR live-view fixture did not reach its pointer checks;
+no foreign-view revocation pass is claimed.
+
 The [combined backing and kernel-arena integration](2026-10-10-a1b-backing-arena-integration.md)
 records a single generic x64 run with both options off and both options on.
 The enabled settings were observed in the actual service-host processes and
