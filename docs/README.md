@@ -33,6 +33,7 @@ Valve, and Wine upstream.
 | [Evidence convention](evidence/README.md) | Reproducible records and decision templates |
 | [Process-local kernel allocation experiment](evidence/2026-10-10-a1b-kernel-arena.md) | Opt-in section-backed x64 kernel allocations; no cross-process alias or attach behavior |
 | [Private-mapping backing experiment](evidence/2026-10-10-a1b-private-backing.md) | Focused opt-in `MEM_PRIVATE` backing tests; no foreign aliases or E05 attach behavior |
+| [A1b backing matrix and live-view experiment](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md) | Private-backing matrix passed; managed TARGET to EXECUTOR live-view proof did not reach pointer checks |
 | [Combined backing and kernel-arena integration](evidence/2026-10-10-a1b-backing-arena-integration.md) | Both opt-ins reach the service host in one assembled-artifact run; E05 attachment remains unimplemented |
 | [Managed TARGET layout experiment](evidence/2026-10-10-a1b-managed-target-layout.md) | Strict Linux AMD64 guest-range admission and runtime descriptor; no executor role or attach behavior |
 | [Managed EXECUTOR bootstrap experiment](evidence/2026-10-10-a1b-managed-executor.md) | Canonical host ntdll in a separate Linux AMD64 process; no target aliases or attach behavior |

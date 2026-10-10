@@ -83,6 +83,18 @@ now validates an opt-in section-backed allocator within the driver-hosting
 process. Host maps show distinct backing in sampled processes, so this is not a
 shared executor arena and does not supply a kernel-state alias for attachment.
 
+The follow-up [A1b private-backing matrix and live-view record](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md)
+now records the broader private-memory lifetime/protection matrix, backing-FD
+observations on the phase-1 Wine snapshot, ENOSPC cleanup, and authoritative
+lookup of live TARGET allocation metadata on the integrated source. A current-
+source FD observer also confirms child-exit and final-release closure at the
+recorded checkpoints. These Linux AMD64 targeted Wine checks pass with the
+corrected fatal-decommit injection command. They provide a backing and metadata
+prerequisite, not an ordinary EXECUTOR pointer view. The proposed
+managed TARGET to EXECUTOR live-view proof did not run to its pointer
+assertions; A1b remains incomplete and all eight E05 attach expectations remain
+pending.
+
 ## A1b shared-region gate result
 
 The [A1b gate 1 experiment](evidence/2026-10-10-a1b-shared-regions.md)
