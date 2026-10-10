@@ -1,0 +1,818 @@
+wine: created the configuration directory '/fixture/prefix-apc-trace-cooperative-1925'
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+wine: failed to start L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: target wine_pid=312 linux_pid=115
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: target wine_pid=348 linux_pid=124
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: executor wine_pid=356 linux_pid=126
+a1b-live-private-view: pid=312 command=0 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target A reserves private bytes at original address
+a1b-live-private-view: pid=348 command=0 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target B reserves different private bytes at same address
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor guest address initially inaccessible
+a1b-live-private-view: pid=356 command=15 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: install separate benign native collision in reserved guest range
+a1b-live-private-view: pid=356 command=1 status=0 value=0xcc state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary executor pointer sees native collision sentinel
+private-lease event=queue mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=1 time=111006772800
+private-apc event=queued op=MAP id=1 apc=0x5d843f8d7970 lease=1 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=1 time=111006772800 result_type=0
+private-apc event=dequeued op=MAP id=1 apc=0x5d843f8d7970 lease=1 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=2 time=111006773130 result_type=0
+private-apc event=delivered op=MAP id=1 apc=0x5d843f8d7970 lease=1 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=3 time=111006773130 result_type=0
+private-lease event=confirm mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=c0000018 apc_count=1 mapping_leases=1 detail=client_status seq=2 time=111006773700
+private-lease event=revoking_complete mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=c0000018 apc_count=1 mapping_leases=1 detail=before_state_change seq=3 time=111006773700
+private-lease event=revoked mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000018 apc_count=1 mapping_leases=0 detail=after_list_remove seq=4 time=111006773700
+private-lease event=ready mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000018 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=5 time=111006773700
+private-apc event=completed op=MAP id=1 apc=0x5d843f8d7970 lease=1 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=4 time=111006773875 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000018 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=6 time=111006773875
+private-lease event=apc_count mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000018 apc_count=0 mapping_leases=0 detail=after_count_drop seq=7 time=111006773875
+private-lease event=ready mapping_id=16 lease=1 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000018 apc_count=0 mapping_leases=0 detail=apcs_drained seq=8 time=111006773875
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=4 result=0xc0000018 token=1 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: existing mapping collision rejects acquisition explicitly
+a1b-live-private-view: pid=356 command=1 status=0 value=0xcc state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed alias admission preserves existing collision bytes
+a1b-live-private-view: pid=312 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: collision rejection preserves original target bytes
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0xc0000018 token=1 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed collision lease cleans up without overwriting existing native mapping
+a1b-live-private-view: pid=356 command=1 status=0 value=0xcc state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed lease cleanup preserves existing collision mapping
+a1b-live-private-view: pid=356 command=16 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: remove owned native collision and restore noaccess reservation
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: removed collision leaves original guest range inaccessible
+private-lease event=queue mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=9 time=111006800122
+private-apc event=queued op=MAP id=2 apc=0x5d843f1ad850 lease=2 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=5 time=111006800122 result_type=0
+private-apc event=dequeued op=MAP id=2 apc=0x5d843f1ad850 lease=2 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=6 time=111006800696 result_type=0
+private-apc event=delivered op=MAP id=2 apc=0x5d843f1ad850 lease=2 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=7 time=111006800696 result_type=0
+private-lease event=confirm mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=c0000017 apc_count=1 mapping_leases=1 detail=client_status seq=10 time=111006802476
+private-lease event=revoking_complete mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=c0000017 apc_count=1 mapping_leases=1 detail=before_state_change seq=11 time=111006802476
+private-lease event=revoked mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000017 apc_count=1 mapping_leases=0 detail=after_list_remove seq=12 time=111006802476
+private-lease event=ready mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000017 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=13 time=111006802476
+private-apc event=completed op=MAP id=2 apc=0x5d843f1ad850 lease=2 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=8 time=111006802648 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000017 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=14 time=111006802648
+private-lease event=apc_count mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000017 apc_count=0 mapping_leases=0 detail=after_count_drop seq=15 time=111006802648
+private-lease event=ready mapping_id=16 lease=2 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=c0000017 apc_count=0 mapping_leases=0 detail=apcs_drained seq=16 time=111006802648
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=4 result=0xc0000017 token=2 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: native injected alias mmap failure is explicit and never admits a live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed native mmap restores inaccessible executor reservation
+a1b-live-private-view: pid=312 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed alias mmap preserves owning target contents
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0xc0000017 token=2 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=26 status=0xc0000022 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: insufficient target process handle rights deny alias admission
+a1b-live-private-view: PASS: ordinary default-mode consumer cannot acquire managed target alias
+private-lease event=queue mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=17 time=111006833314
+private-apc event=queued op=MAP id=3 apc=0x5d843f182260 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=9 time=111006833314 result_type=0
+private-apc event=dequeued op=MAP id=3 apc=0x5d843f182260 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=10 time=111006833608 result_type=0
+private-apc event=delivered op=MAP id=3 apc=0x5d843f182260 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=11 time=111006833608 result_type=0
+private-lease event=confirm mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=18 time=111006834650
+private-lease event=ready mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=19 time=111006834650
+private-apc event=completed op=MAP id=3 apc=0x5d843f182260 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=12 time=111006834753 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=20 time=111006834753
+private-lease event=apc_count mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=21 time=111006834753
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=27 status=0xc000000d value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: stale lease token is rejected
+a1b-live-private-view: pid=356 command=27 status=0xc000000d value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: stale lease generation is rejected
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected stale requests preserve the acknowledged live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary executor pointer sees A's live byte
+a1b-live-private-view: pid=356 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary alias read reaches final backing byte
+a1b-live-private-view: pid=356 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary alias write reaches final backing byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x63 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target final byte sees executor store
+a1b-live-private-view: pid=348 command=1 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: other target final byte stays private
+a1b-live-private-view: pid=356 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary executor store writes A's backing
+a1b-live-private-view: pid=312 command=1 status=0 value=0x61 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: A immediately sees executor store
+a1b-live-private-view: pid=348 command=1 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: same-VA B remains private after executor store
+a1b-live-private-view: pid=312 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: A stores through its original pointer
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor immediately sees A's later store
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: pid=356 command=25 status=0xc000000d value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: COMMIT
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=356 command=25 status=0xc000000d value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: RESET
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=356 command=25 status=0xc0000022 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: EXECUTE protection
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=356 command=25 status=0xc0000018 value=0x3 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: overlapping section
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=356 command=25 status=0xc00000bb value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: dirty-state reset
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=356 command=25 status=0xc0000022 value=0x5 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: RELEASE
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=356 command=25 status=0xc0000022 value=0x6 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: DECOMMIT
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=356 command=25 status=0xc0000022 value=0x7 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: unmap
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+private-lease event=revoking mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=22 time=111006982936
+private-lease event=queue mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=23 time=111006982936
+private-apc event=queued op=REVOKE id=4 apc=0x5d843f1ad850 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=13 time=111006982936 result_type=0
+private-apc event=dequeued op=REVOKE id=4 apc=0x5d843f1ad850 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=14 time=111006983138 result_type=0
+private-apc event=delivered op=REVOKE id=4 apc=0x5d843f1ad850 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=15 time=111006983138 result_type=0
+private-lease event=ack mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=24 time=111006983541
+private-lease event=revoking_complete mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=25 time=111006983541
+private-lease event=revoked mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=26 time=111006983541
+private-lease event=ready mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=27 time=111006983541
+private-apc event=completed op=REVOKE id=4 apc=0x5d843f1ad850 lease=3 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=16 time=111006983656 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=28 time=111006983656
+private-lease event=apc_count mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=29 time=111006983656
+private-lease event=ready mapping_id=16 lease=3 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=30 time=111006983656
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+private-lease event=queue mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=31 time=111006999869
+private-apc event=queued op=MAP id=5 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=17 time=111006999869 result_type=0
+private-apc event=dequeued op=MAP id=5 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=18 time=111007000126 result_type=0
+private-apc event=delivered op=MAP id=5 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=19 time=111007000126 result_type=0
+private-lease event=confirm mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=32 time=111007001111
+private-lease event=ready mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=33 time=111007001111
+private-apc event=completed op=MAP id=5 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=20 time=111007001272 result_type=16
+private-lease event=apc_finished mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=34 time=111007001272
+private-lease event=apc_count mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=35 time=111007001272
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=4 generation=3 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: switching lease sees B's distinct live contents
+a1b-live-private-view: pid=356 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor writes B's backing
+a1b-live-private-view: pid=348 command=1 status=0 value=0x62 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: B sees executor store
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: A remains isolated from B's store
+private-lease event=revoking mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=36 time=111007017102
+private-lease event=queue mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=37 time=111007017102
+private-apc event=queued op=REVOKE id=6 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=21 time=111007017102 result_type=0
+private-apc event=dequeued op=REVOKE id=6 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=22 time=111007017308 result_type=0
+private-apc event=delivered op=REVOKE id=6 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=23 time=111007017308 result_type=0
+private-lease event=ack mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=38 time=111007017658
+private-lease event=revoking_complete mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=39 time=111007017658
+private-lease event=revoked mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=40 time=111007017658
+private-lease event=ready mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=41 time=111007017658
+private-apc event=completed op=REVOKE id=6 apc=0x5d843f1ad850 lease=4 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=24 time=111007017762 result_type=16
+private-lease event=apc_finished mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=42 time=111007017762
+private-lease event=apc_count mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=43 time=111007017762
+private-lease event=ready mapping_id=17 lease=4 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=44 time=111007017762
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=4 generation=3 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+private-lease event=queue mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=45 time=111007034384
+private-apc event=queued op=MAP id=7 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=25 time=111007034384 result_type=0
+private-apc event=dequeued op=MAP id=7 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=26 time=111007034647 result_type=0
+private-apc event=delivered op=MAP id=7 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=27 time=111007034647 result_type=0
+private-lease event=confirm mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=46 time=111007035583
+private-lease event=ready mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=47 time=111007035583
+private-apc event=completed op=MAP id=7 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=28 time=111007035678 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=48 time=111007035678
+private-lease event=apc_count mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=49 time=111007035678
+a1b-live-private-view: pid=356 command=7 status=0 value=0x1 state=2 result=0 token=5 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only admitted lease reads ordinary memory
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only lease rejects ordinary write
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed read-only alias write preserves target bytes
+private-lease event=revoking mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=50 time=111007048447
+private-lease event=queue mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=51 time=111007048447
+private-apc event=queued op=REVOKE id=8 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=29 time=111007048447 result_type=0
+private-apc event=dequeued op=REVOKE id=8 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=30 time=111007048613 result_type=0
+private-apc event=delivered op=REVOKE id=8 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=31 time=111007048613 result_type=0
+private-lease event=ack mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=52 time=111007048927
+private-lease event=revoking_complete mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=53 time=111007048927
+private-lease event=revoked mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=54 time=111007048927
+private-lease event=ready mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=55 time=111007048927
+private-apc event=completed op=REVOKE id=8 apc=0x5d843f1ad850 lease=5 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=32 time=111007049051 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=56 time=111007049051
+private-lease event=apc_count mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=57 time=111007049051
+private-lease event=ready mapping_id=16 lease=5 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=58 time=111007049051
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=5 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=22 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: create auxiliary consumer thread before admission
+a1b-live-private-view: pid=356 command=23 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: terminate auxiliary thread while consumer main survives
+private-lease event=queue mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=59 time=111007070834
+private-apc event=queued op=MAP id=9 apc=0x5d843f1ad850 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=33 time=111007070834 result_type=0
+private-apc event=dequeued op=MAP id=9 apc=0x5d843f1ad850 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=34 time=111007071023 result_type=0
+private-apc event=delivered op=MAP id=9 apc=0x5d843f1ad850 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=35 time=111007071023 result_type=0
+private-lease event=confirm mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=60 time=111007071857
+private-lease event=ready mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=61 time=111007071857
+private-apc event=completed op=MAP id=9 apc=0x5d843f1ad850 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=36 time=111007071936 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=62 time=111007071936
+private-lease event=apc_count mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=63 time=111007071936
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=6 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: surviving consumer acquires ordinary live view after auxiliary thread exit
+a1b-live-private-view: pid=356 command=22 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: create auxiliary consumer thread while lease is live
+a1b-live-private-view: pid=356 command=23 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: auxiliary thread exit does not destroy process-owned live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: consumer ordinary pointer stays coherent after auxiliary thread exit
+private-lease event=revoking mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=64 time=111007087786
+private-lease event=queue mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=65 time=111007087786
+private-apc event=queued op=REVOKE id=10 apc=0x5d843f1adc00 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=37 time=111007087786 result_type=0
+private-apc event=dequeued op=REVOKE id=10 apc=0x5d843f1adc00 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=38 time=111007087924 result_type=0
+private-apc event=delivered op=REVOKE id=10 apc=0x5d843f1adc00 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=39 time=111007087924 result_type=0
+private-lease event=ack mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=66 time=111007088218
+private-lease event=revoking_complete mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=67 time=111007088218
+private-lease event=revoked mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=68 time=111007088218
+private-lease event=ready mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=69 time=111007088218
+private-apc event=completed op=REVOKE id=10 apc=0x5d843f1adc00 lease=6 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=40 time=111007088347 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=70 time=111007088347
+private-lease event=apc_count mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=71 time=111007088347
+private-lease event=ready mapping_id=16 lease=6 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=72 time=111007088347
+a1b-live-private-view: pid=312 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: owner mutation revokes surviving consumer after auxiliary thread exit
+a1b-live-private-view: PASS: surviving consumer was not terminated as a revocation shortcut
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: surviving consumer pointer faults after owner mutation
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=6 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=312 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after consumer thread lifetime case
+a1b-live-private-view: pid=356 command=12 status=0 value=0x3 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: private-lease event=queue mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=73 time=111007118685
+private-apc event=queued op=MAP id=11 apc=0x5d843f8d7970 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=41 time=111007118685 result_type=0
+private-apc event=dequeued op=MAP id=11 apc=0x5d843f8d7970 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=42 time=111007118861 result_type=0
+private-apc event=delivered op=MAP id=11 apc=0x5d843f8d7970 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=43 time=111007118861 result_type=0
+start asynchronous lease acquisition before native map gate
+a1b-live-private-view: pid=312 command=17 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: private-lease event=revoking mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=3 status=00000103 apc_count=1 mapping_leases=1 detail=ready_reset seq=74 time=111007135478
+private-lease event=queue mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=3 status=00000103 apc_count=2 mapping_leases=1 detail=REVOKE seq=75 time=111007135478
+private-apc event=queued op=REVOKE id=12 apc=0x5d843f182260 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=44 time=111007135478 result_type=0
+start target mutation while lease MAP remains pending
+a1b-live-private-view: PASS: authoritative owner transaction fences pending acquisition before map resumes
+a1b-live-private-view: PASS: owner mutation waits for pending lease revocation
+private-lease event=ack mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=3 status=00000103 apc_count=2 mapping_leases=1 detail=revoke_client seq=76 time=111007152416
+private-lease event=revoking_complete mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=3 status=00000103 apc_count=2 mapping_leases=1 detail=before_state_change seq=77 time=111007152416
+private-lease event=revoked mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=2 mapping_leases=0 detail=after_list_remove seq=78 time=111007152416
+private-lease event=ready mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=2 mapping_leases=0 detail=mapping_no_leases seq=79 time=111007152416
+private-apc event=completed op=MAP id=11 apc=0x5d843f8d7970 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=45 time=111007152571 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=2 mapping_leases=0 detail=completed_before_count_drop seq=80 time=111007152571
+private-lease event=apc_count mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=1 mapping_leases=0 detail=after_count_drop seq=81 time=111007152571
+private-apc event=dequeued op=REVOKE id=12 apc=0x5d843f182260 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=46 time=111007152571 result_type=0
+private-apc event=delivered op=REVOKE id=12 apc=0x5d843f182260 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=47 time=111007152571 result_type=0
+private-lease event=ack mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=1 mapping_leases=0 detail=revoke_client seq=82 time=111007152750
+private-apc event=completed op=REVOKE id=12 apc=0x5d843f182260 lease=7 generation=7 handle=005c recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=48 time=111007152894 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=83 time=111007152894
+private-lease event=apc_count mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=0 mapping_leases=0 detail=after_count_drop seq=84 time=111007152894
+private-lease event=ready mapping_id=16 lease=7 generation=7 owner_pid=0138 consumer_pid=0164 handle=005c state=4 status=c0000120 apc_count=0 mapping_leases=0 detail=apcs_drained seq=85 time=111007152894
+a1b-live-private-view: pid=356 command=13 status=0 value=0 state=4 result=0xc0000120 token=7 generation=7 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: raced MAP never admits live lease and revokes before ready notification
+a1b-live-private-view: pid=312 command=19 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: pending-acquire owner mutation drains after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: pending-acquire race leaves no readable alias
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: pending-acquire race leaves no writable alias
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0xc0000120 token=7 generation=7 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=312 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after pending acquire race
+private-lease event=queue mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=86 time=111007183105
+private-apc event=queued op=MAP id=13 apc=0x5d843f1ad850 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=49 time=111007183105 result_type=0
+private-apc event=dequeued op=MAP id=13 apc=0x5d843f1ad850 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=50 time=111007183356 result_type=0
+private-apc event=delivered op=MAP id=13 apc=0x5d843f1ad850 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=51 time=111007183356 result_type=0
+private-lease event=confirm mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=87 time=111007184175
+private-lease event=ready mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=88 time=111007184175
+private-apc event=completed op=MAP id=13 apc=0x5d843f1ad850 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=52 time=111007184269 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=89 time=111007184269
+private-lease event=apc_count mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=90 time=111007184269
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=8 generation=11 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=25 faults=0 native_dead=0
+a1b-live-private-view: PASS: active read-loop before withheld revoke syscall
+a1b-live-private-view: pid=312 command=17 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: private-lease event=revoking mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=91 time=111007198206
+private-lease event=queue mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=92 time=111007198206
+private-apc event=queued op=REVOKE id=14 apc=0x5d843f199d50 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=53 time=111007198206 result_type=0
+start target protection asynchronously
+private-apc event=dequeued op=REVOKE id=14 apc=0x5d843f199d50 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=54 time=111007199001 result_type=0
+private-apc event=delivered op=REVOKE id=14 apc=0x5d843f199d50 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=55 time=111007199001 result_type=0
+a1b-live-private-view: PASS: target mutation cannot complete while native revoke and ACK are withheld
+a1b-live-private-view: PASS: withheld revoke leaves mutation completion unpublished
+a1b-live-private-view: PASS: executor keeps ordinary live reads while owner mutation is blocked
+private-lease event=ack mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=93 time=111007413619
+private-lease event=revoking_complete mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=94 time=111007413619
+private-lease event=revoked mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=95 time=111007413619
+private-lease event=ready mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=96 time=111007413619
+private-apc event=completed op=REVOKE id=14 apc=0x5d843f199d50 lease=8 generation=11 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=56 time=111007413866 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=97 time=111007413866
+private-lease event=apc_count mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=98 time=111007413866
+private-lease event=ready mapping_id=16 lease=8 generation=11 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=99 time=111007413866
+a1b-live-private-view: pid=312 command=19 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target protection succeeds after permitting native revoke and ACK
+a1b-live-private-view: pid=356 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=972695 faults=1 native_dead=0
+a1b-live-private-view: PASS: acknowledged mutation makes active ordinary reader inaccessible
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=8 generation=11 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=312 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after revoke ACK barrier
+private-lease event=queue mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=100 time=111007439172
+private-apc event=queued op=MAP id=15 apc=0x5d843f1ad850 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=57 time=111007439172 result_type=0
+private-apc event=dequeued op=MAP id=15 apc=0x5d843f1ad850 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=58 time=111007439438 result_type=0
+private-apc event=delivered op=MAP id=15 apc=0x5d843f1ad850 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=59 time=111007439438 result_type=0
+private-lease event=confirm mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=101 time=111007440497
+private-lease event=ready mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=102 time=111007440497
+private-apc event=completed op=MAP id=15 apc=0x5d843f1ad850 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=60 time=111007440620 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=103 time=111007440620
+private-lease event=apc_count mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=104 time=111007440620
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=9 generation=15 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=24 faults=0 native_dead=0
+a1b-live-private-view: PASS: active loop executes successful ordinary reads
+private-lease event=revoking mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=105 time=111007448573
+private-lease event=queue mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=106 time=111007448573
+private-apc event=queued op=REVOKE id=16 apc=0x5d843f1adc00 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=61 time=111007448573 result_type=0
+private-apc event=dequeued op=REVOKE id=16 apc=0x5d843f1adc00 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=62 time=111007448701 result_type=0
+private-apc event=delivered op=REVOKE id=16 apc=0x5d843f1adc00 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=63 time=111007448701 result_type=0
+private-lease event=ack mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=107 time=111007448997
+private-lease event=revoking_complete mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=108 time=111007448997
+private-lease event=revoked mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=109 time=111007448997
+private-lease event=ready mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=110 time=111007448997
+private-apc event=completed op=REVOKE id=16 apc=0x5d843f1adc00 lease=9 generation=15 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=64 time=111007449172 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=111 time=111007449172
+private-lease event=apc_count mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=112 time=111007449172
+private-lease event=ready mapping_id=16 lease=9 generation=15 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=113 time=111007449172
+a1b-live-private-view: pid=312 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target protection completes only after active alias revoke
+a1b-live-private-view: pid=356 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=13423 faults=1 native_dead=0
+a1b-live-private-view: PASS: ordinary active executor read-loop faults following target mutation
+a1b-live-private-view: PASS: active ordinary loop observes no successful read started after mutation completion
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation leaves direct read inaccessible
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation revokes final alias byte before explicit release
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=9 generation=15 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+private-lease event=queue mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=114 time=111007476047
+private-apc event=queued op=MAP id=17 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=65 time=111007476047 result_type=0
+private-apc event=dequeued op=MAP id=17 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=66 time=111007476259 result_type=0
+private-apc event=delivered op=MAP id=17 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=67 time=111007476259 result_type=0
+private-lease event=confirm mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=115 time=111007477129
+private-lease event=ready mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=116 time=111007477129
+private-apc event=completed op=MAP id=17 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=68 time=111007477239 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=117 time=111007477239
+private-lease event=apc_count mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=118 time=111007477239
+a1b-live-private-view: pid=356 command=7 status=0 value=0x1 state=2 result=0 token=10 generation=17 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target PAGE_READONLY permits fresh read lease
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target PAGE_READONLY denies fresh alias store
+private-lease event=revoking mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=119 time=111007486324
+private-lease event=queue mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=120 time=111007486324
+private-apc event=queued op=REVOKE id=18 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=69 time=111007486324 result_type=0
+private-apc event=dequeued op=REVOKE id=18 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=70 time=111007486500 result_type=0
+private-apc event=delivered op=REVOKE id=18 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=71 time=111007486500 result_type=0
+private-lease event=ack mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=121 time=111007486774
+private-lease event=revoking_complete mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=122 time=111007486774
+private-lease event=revoked mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=123 time=111007486774
+private-lease event=ready mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=124 time=111007486774
+private-apc event=completed op=REVOKE id=18 apc=0x5d843f182260 lease=10 generation=17 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=72 time=111007486884 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=125 time=111007486884
+private-lease event=apc_count mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=126 time=111007486884
+private-lease event=ready mapping_id=16 lease=10 generation=17 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=127 time=111007486884
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=10 generation=17 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=312 command=3 status=0 value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target PAGE_NOACCESS protection
+a1b-live-private-view: pid=312 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target itself faults under PAGE_NOACCESS
+a1b-live-private-view: pid=356 command=7 status=0xc00000bb value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: PAGE_NOACCESS acquire rejects with explicit unsupported status
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: PAGE_NOACCESS target provides no readable alias
+a1b-live-private-view: pid=312 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target protection
+a1b-live-private-view: pid=312 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target writes middle page before mixed-protection proof
+a1b-live-private-view: pid=312 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target creates mixed RW/READONLY readable extent
+private-lease event=queue mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=128 time=111007524838
+private-apc event=queued op=MAP id=19 apc=0x5d843f199d50 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=73 time=111007524838 result_type=0
+private-apc event=dequeued op=MAP id=19 apc=0x5d843f199d50 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=74 time=111007525091 result_type=0
+private-apc event=delivered op=MAP id=19 apc=0x5d843f199d50 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=75 time=111007525091 result_type=0
+private-lease event=confirm mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=129 time=111007525977
+private-lease event=ready mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=130 time=111007525977
+private-apc event=completed op=MAP id=19 apc=0x5d843f199d50 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=76 time=111007526095 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=131 time=111007526095
+private-lease event=apc_count mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=132 time=111007526095
+a1b-live-private-view: pid=356 command=7 status=0 value=0x1 state=2 result=0 token=11 generation=23 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0x77 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only lease reads authoritative middle-page bytes
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only middle-page alias rejects direct store
+private-lease event=revoking mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=133 time=111007535527
+private-lease event=queue mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=134 time=111007535527
+private-apc event=queued op=REVOKE id=20 apc=0x5d843f1adc00 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=77 time=111007535527 result_type=0
+private-apc event=dequeued op=REVOKE id=20 apc=0x5d843f1adc00 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=78 time=111007535726 result_type=0
+private-apc event=delivered op=REVOKE id=20 apc=0x5d843f1adc00 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=79 time=111007535726 result_type=0
+private-lease event=ack mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=135 time=111007536188
+private-lease event=revoking_complete mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=136 time=111007536188
+private-lease event=revoked mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=137 time=111007536188
+private-lease event=ready mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=138 time=111007536188
+private-apc event=completed op=REVOKE id=20 apc=0x5d843f1adc00 lease=11 generation=23 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=80 time=111007536297 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=139 time=111007536297
+private-lease event=apc_count mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=140 time=111007536297
+private-lease event=ready mapping_id=16 lease=11 generation=23 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=141 time=111007536297
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=11 generation=23 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=7 status=0xc00000bb value=0x3 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: WRITE lease cannot override READONLY page in heterogeneous extent
+a1b-live-private-view: pid=312 command=3 status=0 value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target creates mixed readable/NOACCESS extent
+a1b-live-private-view: pid=356 command=7 status=0xc00000bb value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: whole extent containing NOACCESS page rejects acquisition explicitly
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected mixed-NOACCESS extent creates no partial alias
+a1b-live-private-view: pid=312 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target restores readable middle page
+a1b-live-private-view: pid=312 command=4 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target decommits middle page of live private reservation
+a1b-live-private-view: pid=356 command=7 status=0xc00000bb value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: whole extent containing decommitted page rejects acquisition explicitly
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected sparse extent creates no partial alias
+a1b-live-private-view: pid=312 command=5 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target recommits sparse extent
+a1b-live-private-view: pid=312 command=1 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: recommitted middle page is zero
+a1b-live-private-view: pid=312 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: recommitting middle page preserves committed first page
+private-lease event=queue mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=142 time=111007588366
+private-apc event=queued op=MAP id=21 apc=0x5d843f1adc00 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=81 time=111007588366 result_type=0
+private-apc event=dequeued op=MAP id=21 apc=0x5d843f1adc00 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=82 time=111007588774 result_type=0
+private-apc event=delivered op=MAP id=21 apc=0x5d843f1adc00 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=83 time=111007588774 result_type=0
+private-lease event=confirm mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=143 time=111007590564
+private-lease event=ready mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=144 time=111007590564
+private-apc event=completed op=MAP id=21 apc=0x5d843f1adc00 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=84 time=111007590672 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=145 time=111007590672
+private-lease event=apc_count mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=146 time=111007590672
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=12 generation=31 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=32 faults=0 native_dead=0
+a1b-live-private-view: PASS: active loop executes successful ordinary reads
+private-lease event=revoking mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=147 time=111007599037
+private-lease event=queue mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=148 time=111007599037
+private-apc event=queued op=REVOKE id=22 apc=0x5d843f182260 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=85 time=111007599037 result_type=0
+private-apc event=dequeued op=REVOKE id=22 apc=0x5d843f182260 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=86 time=111007599296 result_type=0
+private-apc event=delivered op=REVOKE id=22 apc=0x5d843f182260 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=87 time=111007599296 result_type=0
+private-lease event=ack mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=149 time=111007599559
+private-lease event=revoking_complete mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=150 time=111007599559
+private-lease event=revoked mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=151 time=111007599559
+private-lease event=ready mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=152 time=111007599559
+private-apc event=completed op=REVOKE id=22 apc=0x5d843f182260 lease=12 generation=31 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=88 time=111007599729 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=153 time=111007599729
+private-lease event=apc_count mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=154 time=111007599729
+private-lease event=ready mapping_id=16 lease=12 generation=31 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=155 time=111007599729
+a1b-live-private-view: pid=312 command=4 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: decommit waits for active alias revoke
+a1b-live-private-view: pid=356 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=14510 faults=1 native_dead=0
+a1b-live-private-view: PASS: ordinary active executor read-loop faults following target mutation
+a1b-live-private-view: PASS: active ordinary loop observes no successful read started after mutation completion
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation leaves direct read inaccessible
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation revokes final alias byte before explicit release
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=12 generation=31 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=312 command=5 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target recommits private extent
+a1b-live-private-view: pid=312 command=1 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target recommit zeroes previous backing bytes
+private-lease event=queue mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=156 time=111007632530
+private-apc event=queued op=MAP id=23 apc=0x5d843f1adc00 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=89 time=111007632530 result_type=0
+private-apc event=dequeued op=MAP id=23 apc=0x5d843f1adc00 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=90 time=111007632740 result_type=0
+private-apc event=delivered op=MAP id=23 apc=0x5d843f1adc00 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=91 time=111007632740 result_type=0
+private-lease event=confirm mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=157 time=111007633707
+private-lease event=ready mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=158 time=111007633707
+private-apc event=completed op=MAP id=23 apc=0x5d843f1adc00 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=92 time=111007633797 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=159 time=111007633797
+private-lease event=apc_count mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=160 time=111007633797
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=13 generation=35 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=356 command=1 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: fresh alias sees zeroed recommitted backing
+a1b-live-private-view: pid=356 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: fresh recommit alias remains live and writable
+a1b-live-private-view: pid=356 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=30 faults=0 native_dead=0
+a1b-live-private-view: PASS: active loop executes successful ordinary reads
+private-lease event=revoking mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=161 time=111007646732
+private-lease event=queue mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=162 time=111007646732
+private-apc event=queued op=REVOKE id=24 apc=0x5d843f182260 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=93 time=111007646732 result_type=0
+private-apc event=dequeued op=REVOKE id=24 apc=0x5d843f182260 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=94 time=111007646883 result_type=0
+private-apc event=delivered op=REVOKE id=24 apc=0x5d843f182260 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=95 time=111007646883 result_type=0
+private-lease event=ack mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=163 time=111007647377
+private-lease event=revoking_complete mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=164 time=111007647377
+private-lease event=revoked mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=165 time=111007647377
+private-lease event=ready mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=166 time=111007647377
+private-apc event=completed op=REVOKE id=24 apc=0x5d843f182260 lease=13 generation=35 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=96 time=111007647520 result_type=16
+private-lease event=apc_finished mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=167 time=111007647520
+private-lease event=apc_count mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=168 time=111007647520
+private-lease event=ready mapping_id=16 lease=13 generation=35 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=169 time=111007647520
+a1b-live-private-view: pid=312 command=6 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: release waits for active alias revoke
+a1b-live-private-view: pid=356 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=11866 faults=1 native_dead=0
+a1b-live-private-view: PASS: ordinary active executor read-loop faults following target mutation
+a1b-live-private-view: PASS: active ordinary loop observes no successful read started after mutation completion
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation leaves direct read inaccessible
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation revokes final alias byte before explicit release
+a1b-live-private-view: pid=312 command=0 status=0 value=0x91 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target reuses original address with new private mapping
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: address reuse never reactivates old alias
+a1b-live-private-view: pid=356 command=14 status=0 value=0 state=4 result=0 token=13 generation=35 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: retained old lease stays revoked after address reuse
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=13 generation=35 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+private-lease event=queue mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=170 time=111007685103
+private-apc event=queued op=MAP id=25 apc=0x5d843f1adc00 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=97 time=111007685103 result_type=0
+private-apc event=dequeued op=MAP id=25 apc=0x5d843f1adc00 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=98 time=111007685344 result_type=0
+private-apc event=delivered op=MAP id=25 apc=0x5d843f1adc00 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=99 time=111007685344 result_type=0
+private-lease event=confirm mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=171 time=111007686202
+private-lease event=ready mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=172 time=111007686202
+private-apc event=completed op=MAP id=25 apc=0x5d843f1adc00 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=100 time=111007686295 result_type=16
+private-lease event=apc_finished mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=173 time=111007686295
+private-lease event=apc_count mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=174 time=111007686295
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=14 generation=3 mapping=18 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: PASS: address reuse produces a distinct mapping identity or generation
+a1b-live-private-view: pid=356 command=1 status=0 value=0x91 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: fresh reused-address lease exposes only new target contents
+a1b-live-private-view: pid=356 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=26 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor actively reads before target exit
+a1b-live-private-view: pid=312 command=11 status=private-lease event=revoking mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=175 time=111007698892
+private-lease event=queue mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=176 time=111007698892
+private-apc event=queued op=REVOKE id=26 apc=0x5d843f199d50 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=101 time=111007698892 result_type=0
+0private-apc event=dequeued op=REVOKE id=26 apc=0x5d843f199d50 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=102 time=111007699357 result_type=0
+private-apc event=delivered op=REVOKE id=26 apc=0x5d843f199d50 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=103 time=111007699357 result_type=0
+ value=0 state=0private-lease event=ack mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=revoke_client seq=177 time=111007699770
+private-lease event=revoking_complete mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=before_state_change seq=178 time=111007699770
+private-lease event=revoked mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=after_list_remove seq=179 time=111007699770
+private-lease event=ready mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=180 time=111007699770
+private-apc event=completed op=REVOKE id=26 apc=0x5d843f199d50 lease=14 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=104 time=111007700066 result_type=16
+private-lease event=apc_finished mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=181 time=111007700066
+private-lease event=apc_count mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_count_drop seq=182 time=111007700066
+private-lease event=ready mapping_id=18 lease=14 generation=3 owner_pid=0138 consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=apcs_drained seq=183 time=111007700066
+ result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: pid=356 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=17646 faults=1 native_dead=0
+a1b-live-private-view: PASS: Wine-observable target exit revokes actively reading executor
+a1b-live-private-view: PASS: active loop observes no successful read started after target exit observation
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: observable target exit guarantees alias no longer readable
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: observable target exit guarantees alias no longer writable
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: Wine-observable target exit revokes final alias byte before explicit release
+a1b-live-private-view: pid=356 command=8 status=0 value=0 state=4 result=0 token=14 generation=3 mapping=18 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=356 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+private-lease event=queue mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=184 time=111007731777
+private-apc event=queued op=MAP id=27 apc=0x5d843f199d50 lease=15 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=105 time=111007731777 result_type=0
+private-apc event=dequeued op=MAP id=27 apc=0x5d843f199d50 lease=15 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=106 time=111007731972 result_type=0
+private-apc event=delivered op=MAP id=27 apc=0x5d843f199d50 lease=15 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=107 time=111007731972 result_type=0
+private-lease event=confirm mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=185 time=111007732879
+private-lease event=ready mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=186 time=111007732879
+private-apc event=completed op=MAP id=27 apc=0x5d843f199d50 lease=15 generation=3 handle=0054 recipient_pid=0164 recipient_tid=0168 unix_pid=126 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=108 time=111007732978 result_type=16
+private-lease event=apc_finished mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=187 time=111007732978
+private-lease event=apc_count mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=188 time=111007732978
+a1b-live-private-view: pid=356 command=7 status=0 value=0x3 state=2 result=0 token=15 generation=3 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=348 command=21 status=0 value=0x7e state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: watch original executor Linux lifetime
+a1b-live-private-view: pid=356private-lease event=revoking mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=189 time=111007739684
+private-lease event=queue mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=190 time=111007739684
+private-apc event=queue_failed op=REVOKE id=28 apc=0x5d843f8c7230 lease=15 generation=3 handle=0054 recipient_pid=0000 recipient_tid=0000 unix_pid=-1 unix_tid=-1 state=-1 suspended=-1 wait_flags=00000000 detail=no_recipient seq=109 time=111007739684 result_type=0
+private-apc event=cancelled op=REVOKE id=28 apc=0x5d843f8c7230 lease=15 generation=3 handle=0054 recipient_pid=0000 recipient_tid=0000 unix_pid=-1 unix_tid=-1 state=-1 suspended=-1 wait_flags=00000000 detail=destroy_unfinished seq=110 time=111007739684 result_type=0
+private-lease event=apc_finished mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=cancelled_before_count_drop seq=191 time=111007739684
+private-lease event=apc_count mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=192 time=111007739684
+private-lease event=queue_failed mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=REVOKE seq=193 time=111007739684
+ command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+private-lease event=death mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=pidfd_readable seq=194 time=111008740432
+private-lease event=revoking_complete mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=before_state_change seq=195 time=111008740432
+private-lease event=revoked mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_list_remove seq=196 time=111008740432
+private-lease event=ready mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=lease_revoked seq=197 time=111008740432
+private-lease event=ready mapping_id=17 lease=15 generation=3 owner_pid=015c consumer_pid=0164 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=mapping_no_leases seq=198 time=111008740432
+a1b-live-private-view: pid=348 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=1
+a1b-live-private-view: PASS: old consumer lease drains only after pidfd-confirmed native death
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: executor wine_pid=412 linux_pid=142
+private-lease event=queue mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=199 time=111008834159
+private-apc event=queued op=MAP id=29 apc=0x5d843f199d50 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=0 suspended=0 wait_flags=00000000 detail=signal seq=111 time=111008834159 result_type=0
+private-apc event=dequeued op=MAP id=29 apc=0x5d843f199d50 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=0 suspended=0 wait_flags=00000000 detail=system seq=112 time=111008834530 result_type=0
+private-apc event=delivered op=MAP id=29 apc=0x5d843f199d50 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=113 time=111008834530 result_type=0
+private-lease event=confirm mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=1 status=00000000 apc_count=1 mapping_leases=1 detail=client_status seq=200 time=111008835710
+private-lease event=ready mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=map_live seq=201 time=111008835710
+private-apc event=completed op=MAP id=29 apc=0x5d843f199d50 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=114 time=111008835822 result_type=16
+private-lease event=apc_finished mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=2 status=00000000 apc_count=1 mapping_leases=1 detail=completed_before_count_drop seq=202 time=111008835822
+private-lease event=apc_count mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=2 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=203 time=111008835822
+a1b-live-private-view: pid=412 command=7 status=0 value=0x3 state=2 result=0 token=16 generation=5 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=412 command=1 status=0 value=0x62 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: disposable executor reads target before injected revoke failure
+a1b-live-private-view: pid=348 command=21 status=0 value=0x8e state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target opens native pidfd before requesting executor revocation
+private-lease event=revoking mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=ready_reset seq=204 time=111008847881
+private-lease event=queue mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=REVOKE seq=205 time=111008847881
+private-apc event=queued op=REVOKE id=30 apc=0x5d843f1ab4f0 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=0 suspended=0 wait_flags=00000002 detail=waiting seq=115 time=111008847881 result_type=0
+private-apc event=dequeued op=REVOKE id=30 apc=0x5d843f1ab4f0 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=0 suspended=0 wait_flags=00000000 detail=system seq=116 time=111008848252 result_type=0
+private-apc event=delivered op=REVOKE id=30 apc=0x5d843f1ab4f0 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=117 time=111008848252 result_type=0
+private-apc event=cancelled op=REVOKE id=30 apc=0x5d843f1ab4f0 lease=16 generation=5 handle=0054 recipient_pid=019c recipient_tid=01a0 unix_pid=142 unix_tid=142 state=-1 suspended=-1 wait_flags=00000000 detail=destroy_unfinished seq=118 time=111008851876 result_type=0
+private-lease event=apc_finished mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=3 status=00000000 apc_count=1 mapping_leases=1 detail=cancelled_before_count_drop seq=206 time=111008851876
+private-lease event=apc_count mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=after_count_drop seq=207 time=111008851876
+private-lease event=death mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=pidfd_readable seq=208 time=111009848625
+private-lease event=revoking_complete mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=before_state_change seq=209 time=111009848625
+private-lease event=revoked mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_list_remove seq=210 time=111009848625
+private-lease event=ready mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=lease_revoked seq=211 time=111009848625
+private-lease event=ready mapping_id=17 lease=16 generation=5 owner_pid=015c consumer_pid=019c handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=mapping_no_leases seq=212 time=111009848625
+a1b-live-private-view: pid=348 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=1
+a1b-live-private-view: PASS: owner mutation completion observes native executor death through preopened pidfd
+a1b-live-private-view: PASS: failed native revoke fail-stops executor rather than acknowledging stale readable view
+a1b-live-private-view: pid=348 command=1 status=0 value=0x62 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed revoke preserves owning target's private contents
+a1b-live-private-view: pid=348 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: post-death owner mutation applies requested protection
+a1b-live-private-view: pid=348 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after executor fail-stop
+a1b-live-private-view: pid=348 command=6 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target release after OS-confirmed executor death never hangs
+a1b-live-private-view: pid=348 command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: 249 checks, 0 failures

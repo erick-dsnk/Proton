@@ -1,0 +1,27 @@
+wine: created the configuration directory '/fixture/prefix-backing-off-proof'
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+wine: failed to start L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: target wine_pid=324 linux_pid=118
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: executor wine_pid=360 linux_pid=127
+a1b-live-private-view: pid=324 command=0 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: backing-disabled target ordinary private allocation works
+a1b-live-private-view: pid=360 command=7 status=0xc0000225 value=0x3 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: backing default-off creates no eligible foreign mapping
+a1b-live-private-view: pid=360 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: backing-disabled executor ordinary read stays inaccessible
+a1b-live-private-view: pid=360 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: backing-disabled executor ordinary write stays inaccessible
+a1b-live-private-view: pid=324 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: denied default-off admission preserves target bytes
+a1b-live-private-view: pid=324 command=6 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: backing-disabled target releases normally
+a1b-live-private-view: pid=360 command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: pid=324 command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: 12 checks, 0 failures (backing default-off)

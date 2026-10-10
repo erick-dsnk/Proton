@@ -1,0 +1,38 @@
+{
+  "fixture_sources": {
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/wine-component/loader/tests/a1b-live-private-view-pe.c": "651a5c4ada49b1d6b8333f57fb9376938979e33d6857ac7b67dbe7e72a7fca14",
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/wine-component/loader/tests/a1b-live-private-view-helper.c": "5877f602af93e4e981335e9646ec69d09bfe709c76e7bd10b8514592b9cfffab",
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/wine-component/loader/tests/a1b-live-private-view-unix.c": "d40a30e65364bb1be8cf3d0a8f9fba0b2818e88af4906a79a3b2e1f34d584d8b",
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/wine-component/loader/tests/a1b-live-private-view-inject.c": "e66fef8e52038311e31096901b3f9ae0e42984ff8fbd0d7baaaa27a7d5ce0052",
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/wine-component/loader/tests/a1b-live-private-view-run.py": "7aff8f1a8c217f8ca2564a78cedd44da59a04cd1b0814b9913a4f6c2b048955f"
+  },
+  "other_inputs": {
+    "proof-runner.py": "7aff8f1a8c217f8ca2564a78cedd44da59a04cd1b0814b9913a4f6c2b048955f",
+    "runtime-source-verification.json": "bfe1826af78e003203e03b4b665241c91fa041ba4982c324c623c47b9b8624a8",
+    "fixture-build-192524-command.json": "e471af79b634742239f63d468311e144057d5588538ebeb5438dbb6eb6c98f2b",
+    "fixture-build-192524-result.json": "2310f745496f8b884296b303e68b2cace6d5704668910e53c0515104b89669a2",
+    "fixture-build-192524.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cancel-queued-4-1925-command.json": "d231ee15266443a4ada1a27698dc6ede5c6de6b48cf89706edf097c3d6c48cfc",
+    "cancel-queued-4-1925-result.json": "a298d40f9ea16d9da7f32807017b0ae6002c1e4821492c55fef78b135a0b9f24",
+    "cancel-queued-4-1925-controls.json": "dbea73e0a9ba659fc3c89ced1666d8067cf49d32eddb5f0a8436e4ab93cd99df",
+    "cancel-queued-4-1925.log": "9a69704332babb8c710454b42042635d420319606f50353bb7ec68f2532860ec",
+    "apc-trace-cooperative-1925-command.json": "aec20a2049672f86307d431e3c9e5e5484561f2d02b5d83665827ea50c980911",
+    "apc-trace-cooperative-1925-result.json": "4091f4a569d7b75e942358b1952635f9d8d496fbf5262815d8d7846bb620190e",
+    "apc-trace-cooperative-1925.log": "cf87fa19c13c53957a93d8c324a63e77ed06162633b66155d1d15e858079cf8c",
+    "cancel-queued-5-1927-command.json": "655046cc467f62658d6d791c77a908f6a0c28144ccc286679ce463857698f39c",
+    "cancel-queued-5-1927-result.json": "3422bcd41a194f782188240a1c27b2c0dc212316e040eea9970b69ca606f803b",
+    "cancel-queued-5-1927-controls.json": "7ce30febe2dc6eed796579b8b4f4392d52f0ca24fb51d7316e16b6d7f7375f4b",
+    "cancel-queued-5-1927.log": "e143621db6743409181d417ee3de357d595d4d0869d7b756926423387b6fc725",
+    "cancel-queued-6-1928-command.json": "e454507c69bc6489949304dfd81723f39f4c2d14cf8090d988d5ce2ecf370110",
+    "cancel-queued-6-1928-result.json": "40d4b7e67dc030b514b609bddde587ac62967127a148d4247f536e3eb182c035",
+    "cancel-queued-6-1928-controls.json": "388a0951e50057c57a2cb490c719879e27da1cda9c96bec07f1eef01a01fccd0",
+    "cancel-queued-6-1928.log": "897a6f38cd33f46b74c38bf4f746a6037f2dde203d52dd7bcc0d759cd2ffd590"
+  },
+  "artifacts": {
+    "fixture/a1b-live-private-view-pe.exe": "dc7bf3f982110579398e7f46d715cb7829aad58ab3af3d35fa1495096cf9e2e2",
+    "fixture/executor/a1b-live-private-view-pe.exe": "f5c8c444071bb6facc304b6e07d0d3b5028cdc41aaba44f560ae6140995a00fb",
+    "fixture/x86_64-windows/a1b-live-private-view-helper.dll": "0103bbe77effeed8c6573e37e5f78108df53ddbea0c0041bc7076b9a74739eea",
+    "fixture/x86_64-unix/a1b-live-private-view-helper.so": "619cc4b53831f96cbed5d07513e84e3b46b5f1c22269484b33b88c99d80fd250",
+    "fixture/a1b-live-private-view-inject.so": "05c569b0735d9c641efdbd7e962166a0fb712f06f53ca8f31956263a00848c45"
+  }
+}

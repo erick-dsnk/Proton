@@ -54,8 +54,16 @@ compiler scope table and return-PC ranges. These are test-only execution
 experiments; none implements Wine attach semantics or establishes Vanguard
 call-path relevance or Linux platform acceptance. A separate managed EXECUTOR
 experiment now boots canonical real ntdll in a clean Linux AMD64 Wine process,
-but has no target aliases or attach behavior; E05 retains all eight
-attachment todos. See the
+but that bootstrap alone has no target aliases or attach behavior. A separate
+[live-pointer and revocation proof](docs/evidence/2026-10-10-a1b-live-pointer-revocation/README.md)
+now passes three Linux AMD64 runs of 249 checks each after local fixture and
+error-status repairs. It demonstrates coherent ordinary TARGET → EXECUTOR
+loads/stores and bounded live revocation. It is an assembled Wine-only memory
+primitive. Three follow-up runs exercise queued MAP and REVOKE cancellation
+with trace-confirmed recipient selection, retry and native acknowledgement.
+A committed-source build and rerun from the published Wine component are
+recorded in the [integration provenance](docs/evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md).
+A1b attachment remains incomplete, and E05 retains all eight attachment todos. See the
 [implementation record](docs/vanguard-implementation-progress.md) and
 [architecture guide](docs/ARCHITECTURE.md#current-e05-result).
 

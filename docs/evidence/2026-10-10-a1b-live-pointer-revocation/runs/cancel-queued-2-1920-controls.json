@@ -1,0 +1,26 @@
+[
+  {
+    "op": "MAP",
+    "queued": {
+      "event": "queued",
+      "op": "MAP",
+      "id": "1",
+      "apc": "0x5ccb6e5b2e00",
+      "lease": "1",
+      "generation": "3",
+      "handle": "0058",
+      "recipient_pid": "0160",
+      "recipient_tid": "0164",
+      "unix_pid": "125",
+      "unix_tid": "125",
+      "state": "0",
+      "suspended": "0",
+      "wait_flags": "00000000",
+      "detail": "signal",
+      "seq": "1",
+      "time": "107717311123",
+      "result_type": "0"
+    },
+    "action": "authorize-real-recipient-termination"
+  }
+]

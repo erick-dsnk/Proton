@@ -1,0 +1,4 @@
+# Preserve captured test logs, command output and patch bytes exactly as recorded.
+*.log whitespace=-blank-at-eol
+*.stdout whitespace=-blank-at-eof
+wine-source-changes.patch whitespace=-blank-at-eol

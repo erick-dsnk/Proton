@@ -91,9 +91,22 @@ source FD observer also confirms child-exit and final-release closure at the
 recorded checkpoints. These Linux AMD64 targeted Wine checks pass with the
 corrected fatal-decommit injection command. They provide a backing and metadata
 prerequisite, not an ordinary EXECUTOR pointer view. The proposed
-managed TARGET to EXECUTOR live-view proof did not run to its pointer
-assertions; A1b remains incomplete and all eight E05 attach expectations remain
-pending.
+managed TARGET to EXECUTOR fixture did not run to its pointer assertions at
+that checkpoint. The separate [live-pointer and revocation follow-up](evidence/2026-10-10-a1b-live-pointer-revocation/README.md)
+now passes three 249-check Linux AMD64 runs after local bootstrap,
+synchronization and ENOMEM-status repairs. Ordinary pointers observe the live
+selected target backing; active revocation, pending MAP cancellation,
+permissions, collisions, address reuse and process exit pass for one complete
+readable NX private extent. Three focused Linux AMD64 runs also passed queued
+MAP and REVOKE recipient-cancellation cases with opt-in traces; REVOKE
+cancellation retried to a surviving thread and waited for a distinct native
+ACK. The fixture's native signal-mask/read barrier is an explicit scheduling
+control, not general scheduler conformance. The historical suspended-recipient
+stall remains inconclusive at the blocking-frame level. This closes the
+bounded memory and cancellation proofs, while A1b execution-chain integration
+and all eight E05 attach expectations remain pending. The published component
+retrieval and committed-source reruns are recorded in the
+[integration provenance](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md).
 
 ## A1b shared-region gate result
 

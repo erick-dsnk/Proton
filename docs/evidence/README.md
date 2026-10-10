@@ -51,6 +51,13 @@ identity/lifetime observations, and real-owner metadata lookup. The separate
 managed TARGET to EXECUTOR live-view fixture did not reach its pointer checks;
 no foreign-view revocation pass is claimed.
 
+The separate [live-pointer and revocation follow-up](2026-10-10-a1b-live-pointer-revocation/README.md)
+records the local-candidate experiment, source patch, logs and hashes. A
+separate [publication integration record](2026-10-10-a1b-live-pointer-revocation/integration-publication.md)
+verifies the published Wine commit from a clean clone, rebuilds the changed
+server and native ntdll, and reruns queued cancellation and trace-control
+fixtures from committed source. A1b and public attachment remain incomplete.
+
 The [combined backing and kernel-arena integration](2026-10-10-a1b-backing-arena-integration.md)
 records a single generic x64 run with both options off and both options on.
 The enabled settings were observed in the actual service-host processes and

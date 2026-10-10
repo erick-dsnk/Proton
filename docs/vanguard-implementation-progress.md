@@ -240,7 +240,8 @@ Together these runs close the documented phase-1 private-backing matrix for
 the bounded Wine AMD64 source snapshot. They do not establish an ordinary
 pointer into a foreign view.
 
-The managed TARGET to EXECUTOR live-view proof was not completed. Two fixture
+At the private-matrix checkpoint, the managed TARGET to EXECUTOR live-view
+proof was not completed. Two fixture
 attempts ended before alias operations with helper `LoadLibrary` error 126; one
 also reported a storage-prefix setup failure. A later execution was stopped
 by the automated safety filter after it flagged a possible cybersecurity risk.
@@ -267,6 +268,80 @@ rerun confirms the later owner-index and process-exit behavior at the recorded
 checkpoints. See the
 [fatal-decommit harness diagnosis](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md#final-runtime-fatal-decommit-harness-diagnosis)
 and local manifests.
+
+### A1b live-pointer and revocation follow-up
+
+The separate [live-pointer/revocation record](evidence/2026-10-10-a1b-live-pointer-revocation/README.md)
+closes the bounded ordinary TARGET → EXECUTOR pointer experiment. Three
+independent Linux AMD64 runs each passed **249 checks, zero failures, exit 0**.
+Direct executor load/store instructions at the original target VA observe live
+bidirectional writes while a second target's same-address contents remain
+private. The fixture verifies collision rejection, rights and stale-identity
+rejection, read-only/no-access/sparse extents, rejected executor VM mutations,
+active readers during protection/decommit/release, a withheld revoke ACK,
+pending MAP cancellation, recommit/address reuse, and target/consumer exit.
+An injected revoke failure fail-stops a disposable executor; a target-held
+Linux pidfd confirms native death before owner mutation completion.
+
+The published fixture needed Unix/Windows environment handoff, a valid
+executor-host image and a genuine helper DIR64 relocation. Observation and
+acquisition workers now start after command acknowledgement so VM-lock-bound
+pipe I/O cannot consume a native gate. During that initial pointer-proof repair
+phase, the only runtime change maps alias mmap ENOMEM to `STATUS_NO_MEMORY`.
+The later APC follow-up also adds server diagnostics and the procfs observer
+repair. Native ntdll and the fixtures were rebuilt on an
+isolated copy; other compatible modules were retained. This is assembled
+Wine-only evidence, not a full current-source Wine/Proton build.
+
+Backing-disabled managed admission passed **12 checks / 0 failures**, exit 0.
+The existing VM suite passed **2,423 / 104 todos / 0 failures / 0 skipped**
+with the repaired candidate off, **2,503 / 104 / 0 / 0** on, and
+**2,423 / 104 / 0 / 0** with the unmodified baseline; all exited 0. The off
+and baseline summaries and empty unexpected-failure payloads match. Source,
+artifact and log hashes, commands, exclusions, final logs and the local patch
+are included in the evidence bundle.
+
+The historical suspended-recipient/asynchronous-acquisition attempt stalled
+after `CMD_SUSPENDED_KILL` returned and before `CMD_END_ACQUIRE` returned
+(exit 143, no summary). The begin command acknowledged worker creation, not
+lease creation or APC queueing. A suspended Wine thread may run system APCs,
+and process-wide routing chooses an eligible thread rather than the intended
+auxiliary thread. The historical log has no routing or cancellation records,
+so the recipient and blocking frame are unknown. The later focused exercise
+uses opt-in server traces and a native SIGUSR1-mask/blocked-read fixture control
+to hold the actually selected recipient after queue insertion.
+
+Three independent Linux AMD64 queued MAP/REVOKE runs each passed **52 checks,
+zero failures, exit 0**. MAP cancellation was observed before dequeue or
+delivery; its count drained to zero, status became `STATUS_CANCELLED`, the
+lease revoked and the surviving process had no readable or writable alias.
+For REVOKE, cancellation did not acknowledge removal: the server retried to a
+surviving thread, observed a distinct native revoke ACK, then completed the
+owner mutation. A tracing-only control passed **249 / 0**, exit 0. The native
+test barrier is an explicit fixture scheduling control, not an operating-
+system scheduler conformance claim.
+
+The original local MAP exercise also found an independent Linux procfs observer
+defect: after the native group leader exited, `/proc/self/maps` returned no
+rows from the surviving executor thread, causing a later correct reservation
+check to reject MAP. The committed fix reads `/proc/thread-self/maps`; paired
+output shows the former empty and the latter reporting the live guard and probe
+mappings. Existing reservation identity, permissions, coverage and collision
+checks remain. A committed-source rerun is recorded in the integration record.
+This explains the intermediate later-MAP failure, not the earlier
+suspended-recipient stall.
+
+The original runs used a local component delta on Wine `d262e370` in a separate
+component worktree, plus an untracked proof runner. The exact change is now
+published as Wine
+[`9c389578ccc8c7111047dbb826debc102a8ddf26`](https://github.com/erick-dsnk/wine/commit/9c389578ccc8c7111047dbb826debc102a8ddf26)
+on `vanguard-a1b-apc-cancellation`; a fresh clone retrieved it and the
+committed-source rebuild and fixture reruns are recorded in the
+[publication integration record](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md).
+This supersedes the earlier unverified memory-proof status, but A1b
+execution-chain integration, public attach/detach, all eight E05 attachment
+expectations, native Windows, i386, full Proton, Vanguard acceptance and
+gameplay remain open.
 
 ### A1b combined backing and arena integration
 
@@ -362,8 +437,10 @@ plus `RtlUnwindEx`/cleanup for three described mapped frames, compiler-
 generated finally execution in a linked x64 helper, process-local section-
 backed kernel allocations, focused wineserver backing for eligible private
 mappings, a managed TARGET guest layout, and a clean managed EXECUTOR
-host-runtime bootstrap. None of these results supplies live cross-process
-aliases or ordinary Wine attach behavior. Broader G2
+host-runtime bootstrap. A later separate live-pointer/revocation proof now
+supplies bounded live cross-process aliases in the published component commit.
+Ordinary Wine
+attach behavior remains unimplemented. Broader G2
 execution-context behavior, compiler scope-boundary generality, compiler-frame
 migration, native Windows reference, i386 build, genuine Linux verifier
 acceptance, and Vanguard execution remain unresolved.
@@ -652,7 +729,8 @@ do not replace the initial comparison with results from different inputs.
 The accumulated E05/A1b prerequisites are published in Wine commit
 [`084fc093b4eaec9f66a942f5d902496318762abb`](https://github.com/erick-dsnk/wine/commit/084fc093b4eaec9f66a942f5d902496318762abb),
 on `vanguard-attachment-prerequisites`, and was referenced by the Proton gitlink
-at that checkpoint. The current gitlink is recorded in the follow-up below.
+at that checkpoint. The successive gitlinks are recorded in the later
+publication checkpoints below.
 A clean remote clone retrieved the component commit and matched all 28 source
 hashes in the final [executor manifest record](evidence/2026-10-10-a1b-managed-executor.md#publication-provenance).
 This publishes the tested source bytes; it adds no runtime or acceptance claim.
@@ -663,7 +741,10 @@ remain open.
 
 The matrix fixtures and experimental managed-view implementation are published
 in Wine [`d262e37075efc5ce8c7be8e85a547fbb6c03ad3d`](https://github.com/erick-dsnk/wine/commit/d262e37075efc5ce8c7be8e85a547fbb6c03ad3d)
-on `vanguard-a1b-private-backing`, and referenced by the current Proton gitlink.
+on `vanguard-a1b-private-backing`, and was referenced by the Proton gitlink at
+that checkpoint. The current integration advances the gitlink to Wine
+[`9c389578ccc8c7111047dbb826debc102a8ddf26`](https://github.com/erick-dsnk/wine/commit/9c389578ccc8c7111047dbb826debc102a8ddf26)
+after clean-clone retrieval and committed-source validation.
 A fresh remote clone retrieved the exact commit, matched all 22 changed source
 files, and matched all 13 runtime source hashes in the frozen rebuild2
 manifest. See the [publication provenance](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md#publication-provenance-2026-10-10).
@@ -671,6 +752,11 @@ manifest. See the [publication provenance](evidence/2026-10-10-a1b-private-backi
 This publishes the existing tested source bytes and the unverified live-view
 fixture scaffolding. It adds no new runtime evidence. The bounded phase-1
 private-backing matrix passes; the ordinary TARGET to EXECUTOR pointer and
-revocation proof remains unverified, A1b remains incomplete, and all eight E05
-attachment todos remain open. Full Proton, native Windows, i386 runtime,
-Vanguard acceptance, and gameplay are not demonstrated by this publication.
+revocation proof was unverified at publication. The later
+[live-pointer/revocation follow-up](evidence/2026-10-10-a1b-live-pointer-revocation/README.md)
+passes the bounded memory proof after local repairs. Its follow-up
+[publication and committed-source check](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md)
+documents the later Wine commit and integration reruns. A1b remains
+incomplete, and all eight E05 attachment todos remain open. Full Proton,
+native Windows, i386 runtime, Vanguard acceptance, and gameplay remain
+unverified.

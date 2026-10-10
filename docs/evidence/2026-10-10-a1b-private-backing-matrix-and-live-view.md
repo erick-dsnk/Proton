@@ -55,7 +55,7 @@ Inputs and provenance:
 | Parent base for protocol and owner-lookup runs | `1b0a3946a44630f0601c7c60a8cd308758477458` |
 | Wine component source base | `084fc093b4eaec9f66a942f5d902496318762abb` |
 | Unmodified Wine baseline | `e60892cc2398b0a83c332a2078c7b85e47bdb42b` |
-| Component state for integrated runtime | The experiment ran as a 13-file uncommitted delta on Wine `084fc093`. The same runtime source bytes are now published in Wine [`d262e37075efc5ce8c7be8e85a547fbb6c03ad3d`](https://github.com/erick-dsnk/wine/commit/d262e37075efc5ce8c7be8e85a547fbb6c03ad3d) on `vanguard-a1b-private-backing`, and the current Proton gitlink references that commit. Per-file tested hashes remain in the frozen `runtime-sources-rebuild2.json`, SHA-256 `84da7024702a377c09630c7d50f7d55f2fc81cb919168131c40e1efa87a2aa4e`. Publication adds no new runtime result. |
+| Component state for integrated runtime | The experiment ran as a 13-file uncommitted delta on Wine `084fc093`. The same runtime source bytes were published in Wine [`d262e37075efc5ce8c7be8e85a547fbb6c03ad3d`](https://github.com/erick-dsnk/wine/commit/d262e37075efc5ce8c7be8e85a547fbb6c03ad3d) on `vanguard-a1b-private-backing`; Proton referenced it at that checkpoint. The current integration advances the gitlink to Wine [`9c389578ccc8c7111047dbb826debc102a8ddf26`](https://github.com/erick-dsnk/wine/commit/9c389578ccc8c7111047dbb826debc102a8ddf26). Per-file tested hashes remain in the frozen `runtime-sources-rebuild2.json`, SHA-256 `84da7024702a377c09630c7d50f7d55f2fc81cb919168131c40e1efa87a2aa4e`. Publication of `d262e370` added no new runtime result. |
 | SDK | `registry.gitlab.steamos.cloud/proton/steamrt4/sdk/x86_64@sha256:97526b794ce1a9bed5f891084462260b3a02399569f7438a3a57b5a253001db9` |
 | Architecture/configuration | x86_64, `--enable-win64` |
 | Scratch directory | `/home/eric/repos/proton-build-vanguard/a1b-private-matrix-20261010T1925Z` |
@@ -193,6 +193,15 @@ source hashes and runtime artifact hashes. The earlier two-attempt regression
 manifest remains retained separately for provenance.
 
 ## Phase 2: managed TARGET to EXECUTOR live view
+
+**Follow-up:** the [live-pointer/revocation proof](2026-10-10-a1b-live-pointer-revocation/README.md)
+now passes three 249-check Linux AMD64 runs after local repairs, plus a
+backing-disabled admission run and default-off/on/baseline VM regressions.
+That separate record supersedes the unverified bounded pointer/revocation
+status below. Its later APC follow-up also passes three queued MAP/REVOKE
+cancellation runs with trace-confirmed recipient identity and native ACK. It
+does not complete A1b or public attachment. The paragraphs below preserve the
+earlier attempts and publication scope.
 
 **Status:** the scoped runtime source has two successful targeted rebuilds, a
 source review, an EXECUTOR descriptor/FD regression, unchanged TARGET-v1

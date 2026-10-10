@@ -1,0 +1,488 @@
+wine: created the configuration directory '/fixture/prefix-final-proof-1'
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+wine: failed to start L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: target wine_pid=324 linux_pid=118
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: target wine_pid=360 linux_pid=127
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: executor wine_pid=368 linux_pid=129
+a1b-live-private-view: pid=324 command=0 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target A reserves private bytes at original address
+a1b-live-private-view: pid=360 command=0 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target B reserves different private bytes at same address
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor guest address initially inaccessible
+a1b-live-private-view: pid=368 command=15 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: install separate benign native collision in reserved guest range
+a1b-live-private-view: pid=368 command=1 status=0 value=0xcc state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary executor pointer sees native collision sentinel
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=4 result=0xc0000018 token=1 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: existing mapping collision rejects acquisition explicitly
+a1b-live-private-view: pid=368 command=1 status=0 value=0xcc state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed alias admission preserves existing collision bytes
+a1b-live-private-view: pid=324 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: collision rejection preserves original target bytes
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0xc0000018 token=1 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed collision lease cleans up without overwriting existing native mapping
+a1b-live-private-view: pid=368 command=1 status=0 value=0xcc state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed lease cleanup preserves existing collision mapping
+a1b-live-private-view: pid=368 command=16 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: remove owned native collision and restore noaccess reservation
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: removed collision leaves original guest range inaccessible
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=4 result=0xc0000017 token=2 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: native injected alias mmap failure is explicit and never admits a live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed native mmap restores inaccessible executor reservation
+a1b-live-private-view: pid=324 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed alias mmap preserves owning target contents
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0xc0000017 token=2 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=26 status=0xc0000022 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: insufficient target process handle rights deny alias admission
+a1b-live-private-view: PASS: ordinary default-mode consumer cannot acquire managed target alias
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=27 status=0xc000000d value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: stale lease token is rejected
+a1b-live-private-view: pid=368 command=27 status=0xc000000d value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: stale lease generation is rejected
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected stale requests preserve the acknowledged live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary executor pointer sees A's live byte
+a1b-live-private-view: pid=368 command=1 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary alias read reaches final backing byte
+a1b-live-private-view: pid=368 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary alias write reaches final backing byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x63 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target final byte sees executor store
+a1b-live-private-view: pid=360 command=1 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: other target final byte stays private
+a1b-live-private-view: pid=368 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary executor store writes A's backing
+a1b-live-private-view: pid=324 command=1 status=0 value=0x61 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: A immediately sees executor store
+a1b-live-private-view: pid=360 command=1 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: same-VA B remains private after executor store
+a1b-live-private-view: pid=324 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: A stores through its original pointer
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor immediately sees A's later store
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: pid=368 command=25 status=0xc000000d value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: COMMIT
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=25 status=0xc000000d value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: RESET
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=25 status=0xc0000022 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: EXECUTE protection
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=25 status=0xc0000018 value=0x3 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: overlapping section
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=25 status=0xc00000bb value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: dirty-state reset
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=25 status=0xc0000022 value=0x5 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: RELEASE
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=25 status=0xc0000022 value=0x6 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: DECOMMIT
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=25 status=0xc0000022 value=0x7 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: unmap
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves ordinary live alias byte
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves target private byte
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=2 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected executor VM operation preserves live lease identity and generation
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=3 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=4 generation=3 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x42 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: switching lease sees B's distinct live contents
+a1b-live-private-view: pid=368 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor writes B's backing
+a1b-live-private-view: pid=360 command=1 status=0 value=0x62 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: B sees executor store
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: A remains isolated from B's store
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=4 generation=3 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=7 status=0 value=0x1 state=2 result=0 token=5 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only admitted lease reads ordinary memory
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only lease rejects ordinary write
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed read-only alias write preserves target bytes
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=5 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=22 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: create auxiliary consumer thread before admission
+a1b-live-private-view: pid=368 command=23 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: terminate auxiliary thread while consumer main survives
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=6 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: surviving consumer acquires ordinary live view after auxiliary thread exit
+a1b-live-private-view: pid=368 command=22 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: create auxiliary consumer thread while lease is live
+a1b-live-private-view: pid=368 command=23 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: auxiliary thread exit does not destroy process-owned live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: consumer ordinary pointer stays coherent after auxiliary thread exit
+a1b-live-private-view: pid=324 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: owner mutation revokes surviving consumer after auxiliary thread exit
+a1b-live-private-view: PASS: surviving consumer was not terminated as a revocation shortcut
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: surviving consumer pointer faults after owner mutation
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=6 generation=3 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=324 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after consumer thread lifetime case
+a1b-live-private-view: pid=368 command=12 status=0 value=0x3 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: start asynchronous lease acquisition before native map gate
+a1b-live-private-view: pid=324 command=17 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: start target mutation while lease MAP remains pending
+a1b-live-private-view: PASS: authoritative owner transaction fences pending acquisition before map resumes
+a1b-live-private-view: PASS: owner mutation waits for pending lease revocation
+a1b-live-private-view: pid=368 command=13 status=0 value=0 state=4 result=0xc0000120 token=7 generation=7 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: raced MAP never admits live lease and revokes before ready notification
+a1b-live-private-view: pid=324 command=19 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: pending-acquire owner mutation drains after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: pending-acquire race leaves no readable alias
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: pending-acquire race leaves no writable alias
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0xc0000120 token=7 generation=7 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=324 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after pending acquire race
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=8 generation=11 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=17 faults=0 native_dead=0
+a1b-live-private-view: PASS: active read-loop before withheld revoke syscall
+a1b-live-private-view: pid=324 command=17 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: start target protection asynchronously
+a1b-live-private-view: PASS: target mutation cannot complete while native revoke and ACK are withheld
+a1b-live-private-view: PASS: withheld revoke leaves mutation completion unpublished
+a1b-live-private-view: PASS: executor keeps ordinary live reads while owner mutation is blocked
+a1b-live-private-view: pid=324 command=19 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target protection succeeds after permitting native revoke and ACK
+a1b-live-private-view: pid=368 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=934010 faults=1 native_dead=0
+a1b-live-private-view: PASS: acknowledged mutation makes active ordinary reader inaccessible
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=8 generation=11 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=324 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after revoke ACK barrier
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=9 generation=15 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=15 faults=0 native_dead=0
+a1b-live-private-view: PASS: active loop executes successful ordinary reads
+a1b-live-private-view: pid=324 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target protection completes only after active alias revoke
+a1b-live-private-view: pid=368 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=16119 faults=1 native_dead=0
+a1b-live-private-view: PASS: ordinary active executor read-loop faults following target mutation
+a1b-live-private-view: PASS: active ordinary loop observes no successful read started after mutation completion
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation leaves direct read inaccessible
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation revokes final alias byte before explicit release
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=9 generation=15 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=7 status=0 value=0x1 state=2 result=0 token=10 generation=17 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target PAGE_READONLY permits fresh read lease
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target PAGE_READONLY denies fresh alias store
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=10 generation=17 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=324 command=3 status=0 value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target PAGE_NOACCESS protection
+a1b-live-private-view: pid=324 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target itself faults under PAGE_NOACCESS
+a1b-live-private-view: pid=368 command=7 status=0xc00000bb value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: PAGE_NOACCESS acquire rejects with explicit unsupported status
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: PAGE_NOACCESS target provides no readable alias
+a1b-live-private-view: pid=324 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target protection
+a1b-live-private-view: pid=324 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target writes middle page before mixed-protection proof
+a1b-live-private-view: pid=324 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target creates mixed RW/READONLY readable extent
+a1b-live-private-view: pid=368 command=7 status=0 value=0x1 state=2 result=0 token=11 generation=23 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0x77 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only lease reads authoritative middle-page bytes
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: read-only middle-page alias rejects direct store
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=11 generation=23 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=7 status=0xc00000bb value=0x3 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: WRITE lease cannot override READONLY page in heterogeneous extent
+a1b-live-private-view: pid=324 command=3 status=0 value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target creates mixed readable/NOACCESS extent
+a1b-live-private-view: pid=368 command=7 status=0xc00000bb value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: whole extent containing NOACCESS page rejects acquisition explicitly
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected mixed-NOACCESS extent creates no partial alias
+a1b-live-private-view: pid=324 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target restores readable middle page
+a1b-live-private-view: pid=324 command=4 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target decommits middle page of live private reservation
+a1b-live-private-view: pid=368 command=7 status=0xc00000bb value=0x1 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: whole extent containing decommitted page rejects acquisition explicitly
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: rejected sparse extent creates no partial alias
+a1b-live-private-view: pid=324 command=5 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target recommits sparse extent
+a1b-live-private-view: pid=324 command=1 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: recommitted middle page is zero
+a1b-live-private-view: pid=324 command=1 status=0 value=0x71 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: recommitting middle page preserves committed first page
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=12 generation=31 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=6 faults=0 native_dead=0
+a1b-live-private-view: PASS: active loop executes successful ordinary reads
+a1b-live-private-view: pid=324 command=4 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: decommit waits for active alias revoke
+a1b-live-private-view: pid=368 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=9449 faults=1 native_dead=0
+a1b-live-private-view: PASS: ordinary active executor read-loop faults following target mutation
+a1b-live-private-view: PASS: active ordinary loop observes no successful read started after mutation completion
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation leaves direct read inaccessible
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation revokes final alias byte before explicit release
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=12 generation=31 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=324 command=5 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target recommits private extent
+a1b-live-private-view: pid=324 command=1 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target recommit zeroes previous backing bytes
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=13 generation=35 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=368 command=1 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: fresh alias sees zeroed recommitted backing
+a1b-live-private-view: pid=368 command=2 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: fresh recommit alias remains live and writable
+a1b-live-private-view: pid=368 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=2 faults=0 native_dead=0
+a1b-live-private-view: PASS: active loop executes successful ordinary reads
+a1b-live-private-view: pid=324 command=6 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: release waits for active alias revoke
+a1b-live-private-view: pid=368 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=15231 faults=1 native_dead=0
+a1b-live-private-view: PASS: ordinary active executor read-loop faults following target mutation
+a1b-live-private-view: PASS: active ordinary loop observes no successful read started after mutation completion
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation leaves direct read inaccessible
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: completed target mutation revokes final alias byte before explicit release
+a1b-live-private-view: pid=324 command=0 status=0 value=0x91 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target reuses original address with new private mapping
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: address reuse never reactivates old alias
+a1b-live-private-view: pid=368 command=14 status=0 value=0 state=4 result=0 token=13 generation=35 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: retained old lease stays revoked after address reuse
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=13 generation=35 mapping=16 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=14 generation=3 mapping=18 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: PASS: address reuse produces a distinct mapping identity or generation
+a1b-live-private-view: pid=368 command=1 status=0 value=0x91 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: fresh reused-address lease exposes only new target contents
+a1b-live-private-view: pid=368 command=9 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=18 faults=0 native_dead=0
+a1b-live-private-view: PASS: executor actively reads before target exit
+a1b-live-private-view: pid=324 command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: pid=368 command=10 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=29409 faults=1 native_dead=0
+a1b-live-private-view: PASS: Wine-observable target exit revokes actively reading executor
+a1b-live-private-view: PASS: active loop observes no successful read started after target exit observation
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: observable target exit guarantees alias no longer readable
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: observable target exit guarantees alias no longer writable
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: Wine-observable target exit revokes final alias byte before explicit release
+a1b-live-private-view: pid=368 command=8 status=0 value=0 state=4 result=0 token=14 generation=3 mapping=18 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+a1b-live-private-view: pid=368 command=7 status=0 value=0x3 state=2 result=0 token=15 generation=3 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=360 command=21 status=0 value=0x81 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: watch original executor Linux lifetime
+a1b-live-private-view: pid=368 command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: pid=360 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=1
+a1b-live-private-view: PASS: old consumer lease drains only after pidfd-confirmed native death
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: executor wine_pid=424 linux_pid=145
+a1b-live-private-view: pid=424 command=7 status=0 value=0x3 state=2 result=0 token=16 generation=5 mapping=17 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: acknowledged live lease
+a1b-live-private-view: pid=424 command=1 status=0 value=0x62 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: disposable executor reads target before injected revoke failure
+a1b-live-private-view: pid=360 command=21 status=0 value=0x91 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target opens native pidfd before requesting executor revocation
+a1b-live-private-view: pid=360 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=1
+a1b-live-private-view: PASS: owner mutation completion observes native executor death through preopened pidfd
+a1b-live-private-view: PASS: failed native revoke fail-stops executor rather than acknowledging stale readable view
+a1b-live-private-view: pid=360 command=1 status=0 value=0x62 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed revoke preserves owning target's private contents
+a1b-live-private-view: pid=360 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: post-death owner mutation applies requested protection
+a1b-live-private-view: pid=360 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after executor fail-stop
+a1b-live-private-view: pid=360 command=6 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target release after OS-confirmed executor death never hangs
+a1b-live-private-view: pid=360 command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: 249 checks, 0 failures

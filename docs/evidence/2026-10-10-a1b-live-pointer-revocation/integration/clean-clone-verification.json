@@ -1,0 +1,16 @@
+{
+  "clone_url": "https://github.com/erick-dsnk/wine.git",
+  "commands": [
+    "git clone --filter=blob:none --no-checkout https://github.com/erick-dsnk/wine.git /tmp/wine-clean-retrieve-9c38957",
+    "git -C /tmp/wine-clean-retrieve-9c38957 fetch origin 9c389578ccc8c7111047dbb826debc102a8ddf26",
+    "git -C /tmp/wine-clean-retrieve-9c38957 checkout --detach 9c389578ccc8c7111047dbb826debc102a8ddf26",
+    "git -C /tmp/wine-clean-retrieve-9c38957 fsck --connectivity-only --no-reflogs"
+  ],
+  "fetched_commit": "9c389578ccc8c7111047dbb826debc102a8ddf26",
+  "checked_out_commit": "9c389578ccc8c7111047dbb826debc102a8ddf26",
+  "clean_checkout": true,
+  "fsck_connectivity_only_exit": 0,
+  "tracked_path_count": 11163,
+  "canonical_path_sha256": "7af759389cb030176ea212641d3b9b301b4a58adc0848668d170c82e5be4f62a",
+  "scratch_matches_all_tracked_paths": true
+}
