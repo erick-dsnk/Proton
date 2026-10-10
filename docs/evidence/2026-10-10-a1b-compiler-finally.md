@@ -162,6 +162,6 @@ read behavior. Vanguard acceptance and gameplay remain unknown.
 ## References
 
 - [Microsoft: x64 exception handling](https://learn.microsoft.com/en-us/cpp/build/exception-handling-x64?view=msvc-170), accessed 10 October 2026.
-- [Wine x64 `_C_specific_handler`](../../wine/dlls/ntdll/unwind.c) contains the runtime scope-table dispatch exercised by this fixture.
+- [Wine x64 `_C_specific_handler`](https://github.com/erick-dsnk/wine/blob/084fc093b4eaec9f66a942f5d902496318762abb/dlls/ntdll/unwind.c) contains the runtime scope-table dispatch exercised by this fixture.
 - [Previous mapped frame-unwind experiment](2026-10-10-a1b-frame-unwind.md) documents the raw parent frames and `RtlUnwindEx` landing.
 - [E05 attachment falsifier](2026-10-10-e05-attachment-falsifier.md) documents the separate unimplemented attachment contract.

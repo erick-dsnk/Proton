@@ -118,5 +118,5 @@ gameplay remain open.
 
 - [Microsoft: Vectored Exception Handling](https://learn.microsoft.com/en-us/windows/win32/debug/vectored-exception-handling), accessed 10 October 2026.
 - [Microsoft: AddVectoredExceptionHandler](https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-addvectoredexceptionhandler), accessed 10 October 2026.
-- [Wine exception dispatch](../../wine/dlls/ntdll/exception.c) runs vectored handlers before table-based exception dispatch.
+- [Wine exception dispatch](https://github.com/erick-dsnk/wine/blob/084fc093b4eaec9f66a942f5d902496318762abb/dlls/ntdll/exception.c) runs vectored handlers before table-based exception dispatch.
 - [Previous A1b continuation record](2026-10-10-a1b-continuation-migration.md) describes the serial migration fixture and its supported register state.

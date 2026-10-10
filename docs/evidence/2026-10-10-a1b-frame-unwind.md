@@ -144,5 +144,5 @@ remain unmet.
 - [Microsoft: `RtlAddFunctionTable`](https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-rtladdfunctiontable), accessed 10 October 2026.
 - [Microsoft: `RtlUnwindEx`](https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-rtlunwindex), accessed 10 October 2026.
 - [Microsoft: `RtlDeleteFunctionTable`](https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-rtldeletefunctiontable), accessed 10 October 2026.
-- [Wine dynamic-function-table tests](../../wine/dlls/ntdll/tests/exception.c) provide benign registration and target-unwind examples.
+- [Wine dynamic-function-table tests](https://github.com/erick-dsnk/wine/blob/084fc093b4eaec9f66a942f5d902496318762abb/dlls/ntdll/tests/exception.c) provide benign registration and target-unwind examples.
 - [Previous caught-fault record](2026-10-10-a1b-caught-fault-recovery.md) documents VEH abort and cleanup, a separate mechanism.
