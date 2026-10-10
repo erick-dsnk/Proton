@@ -318,7 +318,17 @@ Define virtual IRQL, processor model, APC types/disable state, thread lifetime a
 
 **Depends on:** E01/E02; E03 lifetime and E04 context. **Addresses:** K18–K23, S03/S09. **Owner/files:** `wine/dlls/ntoskrnl.exe/ntoskrnl.c`, private allocation/MDL state; relevant `wine/dlls/ntdll/unix/` memory and `wine/server/` paths after design approval.
 
-First implement owned-buffer MDL allocation/build/map/unmap/free with coherent boundaries and failure behavior. Add probe/exception handling with boundary and concurrent-unmap tests, preserving the distinct read range/alignment versus legacy write-access contract. Track MDL storage separately from allocated pages and test separate page/MDL release, offsets, flags, partial allocation, alias visibility and read-only/NX behavior. Separately prototype attachment using target-only mappings and direct dereferences, plus restore/nesting/lifetime. A remote-memory copy helper cannot substitute for ordinary pointer accesses after attachment. Do not invent physical/PFN state where required operations expose it.
+The first E05 checkpoint is the test-only attachment falsifier, before memory
+exports that depend on attached-address-space behavior. The 10 October 2026
+result is recorded in the [implementation register](vanguard-implementation-progress.md)
+and [architecture guide](ARCHITECTURE.md#current-e05-result): the current x64
+Wine A1 implementation raised access violations in all five direct-read phases
+around attach/detach. This generic fixture does not establish a Vanguard call
+path or rule out other user-space architectures. Next, test collision-safe
+shared regions and same-continuation nested attach/detach under the proposed
+A1b hypothesis before expanding the memory work below.
+
+After the address-space model is established, implement owned-buffer MDL allocation/build/map/unmap/free with coherent boundaries and failure behavior. Add probe/exception handling with boundary and concurrent-unmap tests, preserving the distinct read range/alignment versus legacy write-access contract. Track MDL storage separately from allocated pages and test separate page/MDL release, offsets, flags, partial allocation, alias visibility and read-only/NX behavior. A remote-memory copy helper cannot substitute for ordinary pointer accesses after attachment. Do not invent physical/PFN state where required operations expose it.
 
 **Exit:** reference-comparison memory lifecycle, protection, faults, direct attached access and cleanup pass for reached contracts. **Falsification:** bookkeeping-only attachment fails the target-only pointer test; inconsistent mapping/ownership; required physical/private state cannot be implemented. **Blocked by:** G2 architecture decision; A2/A3 work requires a separate design if needed.
 
@@ -392,7 +402,18 @@ E10: evidence register runs throughout; E09 only if observed
 G1 + G2 + E07 + E08 + E10 --------------------> E11 --> E12
 ```
 
-**First sprint deliverables:** (1) frozen target/reference/mode evidence; (2) minimal Wine test build and actual baseline results; (3) decisive benign process-attachment and execution-context tests; (4) ordinary rundown and data-export conformance patches as the first bounded implementation increments; (5) a written G1/G2 decision before a larger campaign. Do not fetch/build every Proton component merely to learn that a driver contract or required trust identity is incompatible with A1.
+**First sprint deliverables:** (1) frozen target/reference/mode evidence; (2) a
+minimal Wine test build and baseline results; (3) decisive benign
+process-attachment and execution-context tests; (4) a written G1/G2 decision
+before a larger campaign. The ordinary rundown increment and the test-only E05
+attachment falsifier are recorded in the implementation register. E05 found
+that the current Wine A1 implementation fails ordinary pointer reads around
+attach/detach; it does not establish a Vanguard call path or rule out other
+user-space designs. Next, specify and test A1b's shared-region and continuation
+prerequisites before expanding memory or data exports that depend on
+attached-address-space behavior. Do not fetch/build every Proton component
+merely to learn that a driver contract or required trust identity is
+incompatible with A1.
 
 There is no evidence-based calendar estimate or percentage completion for actual Vanguard playability. API counts are interface inventory, not outcome progress. Keep generic compatibility improvements independently useful while reporting G4/G5 as unachieved until directly tested.
 

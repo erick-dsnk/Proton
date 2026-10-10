@@ -35,11 +35,29 @@ Native Windows comparison, i386 execution, attached-process address-space
 semantics, genuine platform acceptance, and Vanguard execution remain open.
 A Wine-only build does not establish a complete Proton build or game support.
 
-The next priority is a benign driver test that attaches to two processes with
-different bytes at the same virtual address. The test must observe each
-process's own memory through ordinary pointer access. Platform acceptance is a
-separate dependency: implementing an API does not create accepted evidence of
-Windows security properties on Linux.
+The test-only E05 attachment falsifier now shows that the current x64 Wine
+implementation raises access violations for ordinary pointer reads around
+attach/detach, including a target-only mapping. This result falsifies that
+implementation's modeled attach behavior; it does not establish that Vanguard
+reaches the API or rule out every user-space design. The bounded A1b
+shared-region prerequisite now passes for three cooperative processes with
+serial fresh leaf calls, coherent shared state and distinct private mappings.
+The same continuation now resumes through caller/A/B/A/caller, and a narrow
+VEH test catches one deliberate fault on the migrated stack. A separate
+frame-based x64 experiment then runs table handlers and `RtlUnwindEx` through
+three mapped frames, returns through the native bridge, cleans up, and permits
+a later healthy continuation. A Clang x64 follow-up executes nested
+compiler-generated `__finally` funclets after the continuation arrives in B,
+unwinds through the mapped frames and returns through B's native bridge; the
+same run preserves the E05 attachment todos. This only covers the recorded
+compiler scope table and return-PC ranges. These are test-only execution
+experiments; none implements Wine attach semantics or establishes Vanguard
+call-path relevance or Linux platform acceptance. A separate managed EXECUTOR
+experiment now boots canonical real ntdll in a clean Linux AMD64 Wine process,
+but has no target aliases or attach behavior; E05 retains all eight
+attachment todos. See the
+[implementation record](docs/vanguard-implementation-progress.md) and
+[architecture guide](docs/ARCHITECTURE.md#current-e05-result).
 
 ## Start here
 
