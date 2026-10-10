@@ -1,0 +1,10 @@
+wine: created the configuration directory '/fixture/prefix-host-image-fixed'
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+wine: failed to start L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+a1b-live-private-view: target wine_pid=316 linux_pid=116
+a1b-live-private-view: target wine_pid=352 linux_pid=125
+a1b-live-private-view: fail-stop: native fixture companion failed to report Linux PID, winerr=193
+a1b-live-private-view: fail-stop: fixed-size pipe transfer, winerr=109
+a1b-live-private-view: fail-stop: fixed-size pipe transfer, winerr=109
+a1b-live-private-view: fail-stop: fixed-size pipe transfer, winerr=109

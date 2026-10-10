@@ -16,7 +16,7 @@ epic, source ownership, prerequisites, and exit evidence.
 |---|---|---|
 | G0: reproducible scope | Linux/source/vendor baseline and SDK digest recorded; mode and Windows reference missing | Exact inputs, selected mode, and ordinary Windows reference for each experiment |
 | G1: authentic platform acceptance | Unknown; Linux acceptance has not been demonstrated | Genuine platform evidence accepted by the selected mode's verifier |
-| G2: execution architecture | E05 falsified attach behavior in tested x64 Wine A1; A1b shared-region, serial raw-continuation, bounded VEH abort/native-cleanup, scoped three-frame table unwind, and one Clang compiler-finally fixture passed; broader context gates remain open | Benign tests establish required attach/detach behavior and each required address-space/context/privileged-state contract |
+| G2: execution architecture | E05 falsified attach behavior in tested x64 Wine A1; A1b shared-region, serial raw-continuation, bounded VEH abort/native-cleanup, scoped three-frame table unwind, compiler-finally, live-pointer/revocation, and three queued MAP/REVOKE cancellation runs passed; public attach and broader context gates remain open | Benign tests establish required attach/detach behavior and each required address-space/context/privileged-state contract |
 | G3: generic conformance | First x64 rundown increment exercised; baseline has 21 failures; Windows/i386 comparisons pending | Required API families, loader and transport pass scoped native-reference and failure/race tests |
 | G4: local Vanguard operation | Not demonstrated | Unmodified driver entry, stable service/driver lifecycle and real device communication |
 | G5: session and gameplay | Not demonstrated | Accepted anti-cheat session and completed connected League match without anti-cheat disconnect |
@@ -70,12 +70,17 @@ cannot be closed merely by implementing more Wine exports.
    loader. The separate [managed EXECUTOR bootstrap](evidence/2026-10-10-a1b-managed-executor.md)
    now boots canonical real ntdll in the disjoint host range, with two
    explicitly owned low-page mappings. This validates a physical executor
-   layout only. The scoped live-view implementation remains unverified at
-   runtime: the fixture stopped before its ordinary pointer assertions. The
-   next gate is a completed and audited TARGET→EXECUTOR live view with safe
-   revocation, followed by ordinary pointer loads through the unchanged E05
-   continuation and proof of shared kernel state and correct attached-process
-   identity. Native Windows and i386 remain unproven.
+   layout only. The separate [live-pointer/revocation proof](evidence/2026-10-10-a1b-live-pointer-revocation/README.md)
+   passes three 249-check Linux AMD64 runs on the published Wine component.
+   A separate [publication integration check](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md)
+   verifies clean retrieval and reruns from the committed source. The proof
+   closes the bounded memory primitive for one readable NX private extent.
+   Three further 52-check runs exercise queued MAP and REVOKE cancellation with
+   trace-confirmed recipient identity, retry and native ACK; a 249-check
+   tracing-only control also passes. The native SIGUSR1-mask/read barrier is a
+   fixture scheduling control. The next gates are ordinary pointer loads
+   through the unchanged E05 continuation, shared kernel state and correct
+   attached-process identity. Native Windows and i386 remain unproven.
 3. **E02/E03/G3: rundown reference and i386.** Compare the published x64 increment
    on ordinary Windows and execute its 32-bit calling conventions and lifetime
    cases. Preserve baseline failures and todos, even when the new block passes.

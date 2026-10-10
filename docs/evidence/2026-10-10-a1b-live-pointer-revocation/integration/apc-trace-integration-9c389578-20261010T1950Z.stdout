@@ -1,0 +1,21 @@
+apc-trace-integration-9c389578-20261010T1950Z exit 0 log /home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/apc-trace-integration-9c389578-20261010T1950Z.log
+private-lease event=death mapping_id=17 lease=16 generation=5 owner_pid=0160 consumer_pid=01a0 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=pidfd_readable seq=208 time=123260261569
+private-lease event=revoking_complete mapping_id=17 lease=16 generation=5 owner_pid=0160 consumer_pid=01a0 handle=0054 state=3 status=00000000 apc_count=0 mapping_leases=1 detail=before_state_change seq=209 time=123260261569
+private-lease event=revoked mapping_id=17 lease=16 generation=5 owner_pid=0160 consumer_pid=01a0 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=after_list_remove seq=210 time=123260261569
+private-lease event=ready mapping_id=17 lease=16 generation=5 owner_pid=0160 consumer_pid=01a0 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=lease_revoked seq=211 time=123260261569
+private-lease event=ready mapping_id=17 lease=16 generation=5 owner_pid=0160 consumer_pid=01a0 handle=0054 state=4 status=00000000 apc_count=0 mapping_leases=0 detail=mapping_no_leases seq=212 time=123260261569
+a1b-live-private-view: pid=352 command=3 status=0 value=0x2 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=1
+a1b-live-private-view: PASS: owner mutation completion observes native executor death through preopened pidfd
+a1b-live-private-view: PASS: failed native revoke fail-stops executor rather than acknowledging stale readable view
+a1b-live-private-view: pid=352 command=1 status=0 value=0x62 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: failed revoke preserves owning target's private contents
+a1b-live-private-view: pid=352 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: post-death owner mutation applies requested protection
+a1b-live-private-view: pid=352 command=3 status=0 value=0x4 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: restore target after executor fail-stop
+a1b-live-private-view: pid=352 command=6 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target release after OS-confirmed executor death never hangs
+a1b-live-private-view: pid=352 command=11 status=0 value=0 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: child requests clean process termination
+a1b-live-private-view: PASS: Wine-observable child process termination
+a1b-live-private-view: 249 checks, 0 failures

@@ -14,10 +14,16 @@ remain unproven. A separate opt-in x64 kernel-allocation experiment now passes
 its added generic checks against the retained baseline; it backs allocations
 within one driver-host process and does not provide cross-process executor
 aliasing. A Linux x64 wineserver-backed private-mapping prototype also passes a
-focused virtual-memory fixture, while foreign aliases and actual E05 reads
-remain unsupported. The managed EXECUTOR bootstrap now validates a separate
+focused virtual-memory fixture. Actual E05 reads remain unsupported. The
+managed EXECUTOR bootstrap validates a separate
 physical host-runtime process with canonical ntdll and a bounded address
-layout; foreign target aliases and E05 attach behavior remain unimplemented.
+layout. A separate live-pointer/revocation follow-up passes three 249-check
+Linux AMD64 runs and three queued MAP/REVOKE cancellation runs. The change is
+published in Wine commit `9c389578`; its committed-source build, fresh-clone
+retrieval and reruns are recorded with the
+[integration provenance](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md).
+This closes only the bounded foreign-alias memory proof; E05 attachment remains
+open.
 The project is independent of Riot Games,
 Valve, and Wine upstream.
 
@@ -34,6 +40,7 @@ Valve, and Wine upstream.
 | [Process-local kernel allocation experiment](evidence/2026-10-10-a1b-kernel-arena.md) | Opt-in section-backed x64 kernel allocations; no cross-process alias or attach behavior |
 | [Private-mapping backing experiment](evidence/2026-10-10-a1b-private-backing.md) | Focused opt-in `MEM_PRIVATE` backing tests; no foreign aliases or E05 attach behavior |
 | [A1b backing matrix and live-view experiment](evidence/2026-10-10-a1b-private-backing-matrix-and-live-view.md) | Private-backing matrix passed; managed TARGET to EXECUTOR live-view proof did not reach pointer checks |
+| [A1b live-pointer and revocation proof](evidence/2026-10-10-a1b-live-pointer-revocation/README.md) | Pointer/revocation and queued MAP/REVOKE cancellation evidence; [publication integration](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md) verifies clean retrieval and committed-source reruns; full attach remains open |
 | [Combined backing and kernel-arena integration](evidence/2026-10-10-a1b-backing-arena-integration.md) | Both opt-ins reach the service host in one assembled-artifact run; E05 attachment remains unimplemented |
 | [Managed TARGET layout experiment](evidence/2026-10-10-a1b-managed-target-layout.md) | Strict Linux AMD64 guest-range admission and runtime descriptor; no executor role or attach behavior |
 | [Managed EXECUTOR bootstrap experiment](evidence/2026-10-10-a1b-managed-executor.md) | Canonical host ntdll in a separate Linux AMD64 process; no target aliases or attach behavior |

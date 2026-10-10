@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--cpus=2",
+    "--memory=4g",
+    "--user",
+    "1000:1000",
+    "-v",
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/wine-src:/src:ro",
+    "-v",
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/wine-obj:/build",
+    "-v",
+    "/home/eric/repos/proton-build-vanguard/a1b-live-proof-20261010T184236Z/fixture:/fixture",
+    "-w",
+    "/build",
+    "-e",
+    "HOME=/build/home",
+    "-e",
+    "XDG_CACHE_HOME=/build/cache",
+    "registry.gitlab.steamos.cloud/proton/steamrt4/sdk/x86_64@sha256:97526b794ce1a9bed5f891084462260b3a02399569f7438a3a57b5a253001db9",
+    "bash",
+    "-lc",
+    "mkdir -p /fixture/x86_64-windows /fixture/x86_64-unix &&\ngcc -shared -fPIC -Wall -Wextra -o /fixture/a1b-live-private-view-inject.so /src/loader/tests/a1b-live-private-view-inject.c &&\ngcc -shared -fPIC -Wall -Wextra -D__WINESRC__ -I/src/include -I/build/include -o /fixture/x86_64-unix/a1b-live-private-view-helper.so /src/loader/tests/a1b-live-private-view-unix.c &&\ntools/winegcc/winegcc -shared -o /fixture/x86_64-windows/a1b-live-private-view-helper.dll --wine-objdir /build -b x86_64-w64-mingw32 -D_MSVCR_VER=0 -D__WINESRC__ -I/src/include -I/src/include/msvcrt -I/build/include -Wl,--entry,DllMain -Wl,--wine-builtin /src/loader/tests/a1b-live-private-view-helper.c -lntdll -lkernel32 &&\ntools/winegcc/winegcc -o /fixture/a1b-live-private-view-pe.exe --wine-objdir /build -b x86_64-w64-mingw32 -mconsole -Wall -Wextra -D_MSVCR_VER=0 -D__WINESRC__ -I/src/include -I/src/include/msvcrt -I/build/include -Wl,--large-address-aware /src/loader/tests/a1b-live-private-view-pe.c -lmsvcrt -lntdll -lkernel32 &&\nmkdir -p /fixture/executor &&\ntools/winegcc/winegcc -o /fixture/executor/a1b-live-private-view-pe.exe --wine-objdir /build -b x86_64-w64-mingw32 -mconsole -Wall -Wextra -D_MSVCR_VER=0 -D__WINESRC__ -I/src/include -I/src/include/msvcrt -I/build/include -Wl,--large-address-aware -Wl,--image-base,0x400002000000 -Wl,--disable-dynamicbase /src/loader/tests/a1b-live-private-view-pe.c -lmsvcrt -lntdll -lkernel32"
+  ]
+}

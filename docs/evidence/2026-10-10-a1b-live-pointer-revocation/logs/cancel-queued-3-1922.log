@@ -1,0 +1,61 @@
+wine: created the configuration directory '/fixture/prefix-cancel-queued-3-1922'
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+wine: failed to start L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: target wine_pid=316 linux_pid=116
+a1b-live-private-view: pid=316 command=0 status=0 value=0x41 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: target allocates coherent backing for cancellation cases
+a1b-live-private-view: PASS: child managed-role boot and PID handshake
+a1b-live-private-view: executor wine_pid=352 linux_pid=125
+a1b-live-private-view: pid=352 command=28 status=a1b-cancellation: native-main SIGUSR1_blocked=1 SIGQUIT_blocked=0
+a1b-cancellation: native-survivor action=6 SIGUSR1_blocked=0 SIGQUIT_blocked=0
+0 value=private-lease event=queue mapping_id=6 lease=1 generation=3 owner_pid=013c consumer_pid=0160 handle=0058 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=1 time=108728617762
+private-apc event=queued op=MAP id=1 apc=0x5e58bdb89bc0 lease=1 generation=3 handle=0058 recipient_pid=0160 recipient_tid=0164 unix_pid=125 unix_tid=125 state=0 suspended=0 wait_flags=00000000 detail=signal seq=1 time=108728617762 result_type=0
+0x3 state=a1b-cancellation: native-survivor action=7 SIGUSR1_blocked=0 SIGQUIT_blocked=0
+0 result=0 token=0 generation=0 mapping=0 reads=356 faults=0 native_dead=0
+a1b-live-private-view: PASS: cancellation fixture advertises exact oldest recipient TID
+a1b-live-private-view: cancellation-armed op=MAP recipient_pid=0160 recipient_tid=0164
+a1b-live-private-view: cancelled-recipient phase=map main_tid=0private-apc event=cancelled op=MAP id=1 apc=0x5e58bdb89bc0 lease=1 generation=3 handle=0058 recipient_pid=0160 recipient_tid=0164 unix_pid=125 unix_tid=125 state=1 suspended=0 wait_flags=00000000 detail=thread_queue_cleared seq=2 time=108728672137 result_type=0
+private-lease event=apc_finished mapping_id=6 lease=1 generation=3 owner_pid=013c consumer_pid=0160 handle=0058 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=cancelled_before_count_drop seq=2 time=108728672137
+private-lease event=apc_count mapping_id=6 lease=1 generation=3 owner_pid=013c consumer_pid=0160 handle=0058 state=1 status=00000103 apc_count=0 mapping_leases=1 detail=after_count_drop seq=3 time=108728672137
+private-lease event=revoking_complete mapping_id=6 lease=1 generation=3 owner_pid=013c consumer_pid=0160 handle=0058 state=1 status=c0000120 apc_count=0 mapping_leases=1 detail=before_state_change seq=4 time=108728672137
+private-lease event=revoked mapping_id=6 lease=1 generation=3 owner_pid=013c consumer_pid=0160 handle=0058 state=4 status=c0000120 apc_count=0 mapping_leases=0 detail=after_list_remove seq=5 time=108728672137
+private-lease event=ready mapping_id=6 lease=1 generation=3 owner_pid=013c consumer_pid=0160 handle=0058 state=4 status=c0000120 apc_count=0 mapping_leases=0 detail=lease_revoked seq=6 time=108728672137
+private-lease event=ready mapping_id=6 lease=1 generation=3 owner_pid=013c consumer_pid=0160 handle=0058 state=4 status=c0000120 apc_count=0 mapping_leases=0 detail=mapping_no_leases seq=7 time=108728672137
+164 survivor_tid=0168
+a1b-live-private-view: pid=352 command=29 status=0 value=0 state=4 result=0xc0000120 token=1 generation=3 mapping=6 reads=356 faults=0 native_dead=0
+a1b-live-private-view: PASS: survivor command controller responds after queued recipient death
+a1b-live-private-view: PASS: queued recipient cancellation preserves surviving executor process
+a1b-live-private-view: PASS: queued MAP recipient death cancels lease instead of admitting an alias
+a1b-live-private-view: pid=352 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: queued recipient cancellation leaves no readable alias
+a1b-live-private-view: pid=352 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: queued recipient cancellation leaves no writable alias
+a1b-live-private-view: pid=352 command=8 status=0 value=0 state=4 result=0xc0000120 token=1 generation=3 mapping=6 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: explicit lease release waits for acknowledged revoke
+a1b-live-private-view: pid=352 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary read faults after acknowledged revoke
+a1b-live-private-view: pid=352 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: ordinary write faults after acknowledged revoke
+a1b-live-private-view: pid=352 command=1 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte read faults after acknowledged revoke
+a1b-live-private-view: pid=352 command=2 status=0 value=0x10000 state=0 result=0 token=0 generation=0 mapping=0 reads=0 faults=0 native_dead=0
+a1b-live-private-view: PASS: final-byte write faults after acknowledged revoke
+private-lease event=queue mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=1 status=00000103 apc_count=1 mapping_leases=1 detail=MAP seq=8 time=108728704213
+private-apc event=queued op=MAP id=2 apc=0x5e58bdb89bc0 lease=2 generation=3 handle=0054 recipient_pid=0160 recipient_tid=0168 unix_pid=125 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=signal seq=3 time=108728704213 result_type=0
+private-apc event=dequeued op=MAP id=2 apc=0x5e58bdb89bc0 lease=2 generation=3 handle=0054 recipient_pid=0160 recipient_tid=0168 unix_pid=125 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=system seq=4 time=108728704571 result_type=0
+private-apc event=delivered op=MAP id=2 apc=0x5e58bdb89bc0 lease=2 generation=3 handle=0054 recipient_pid=0160 recipient_tid=0168 unix_pid=125 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_handle seq=5 time=108728704571 result_type=0
+private-lease event=confirm mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=1 status=c0000018 apc_count=1 mapping_leases=1 detail=client_status seq=9 time=108728704988
+private-lease event=revoking_complete mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=1 status=c0000018 apc_count=1 mapping_leases=1 detail=before_state_change seq=10 time=108728704988
+private-lease event=revoked mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=4 status=c0000018 apc_count=1 mapping_leases=0 detail=after_list_remove seq=11 time=108728704988
+private-lease event=ready mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=4 status=c0000018 apc_count=1 mapping_leases=0 detail=mapping_no_leases seq=12 time=108728704988
+private-apc event=completed op=MAP id=2 apc=0x5e58bdb89bc0 lease=2 generation=3 handle=0054 recipient_pid=0160 recipient_tid=0168 unix_pid=125 unix_tid=126 state=0 suspended=0 wait_flags=00000000 detail=client_result seq=6 time=108728705112 result_type=16
+private-lease event=apc_finished mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=4 status=c0000018 apc_count=1 mapping_leases=0 detail=completed_before_count_drop seq=13 time=108728705112
+private-lease event=apc_count mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=4 status=c0000018 apc_count=0 mapping_leases=0 detail=after_count_drop seq=14 time=108728705112
+private-lease event=ready mapping_id=6 lease=2 generation=3 owner_pid=013c consumer_pid=0160 handle=0054 state=4 status=c0000018 apc_count=0 mapping_leases=0 detail=apcs_drained seq=15 time=108728705112
+a1b-live-private-view: pid=352 command=7 status=0 value=0x3 state=4 result=0xc0000018 token=2 generation=3 mapping=6 reads=0 faults=0 native_dead=0
+a1b-live-private-view: FAIL: acknowledged live lease
+a1b-live-private-view: fail-stop: lease failed admission, winerr=0
+a1b-live-private-view: fail-stop: fixed-size pipe transfer, winerr=109
+a1b-live-private-view: fail-stop: fixed-size pipe transfer, winerr=109

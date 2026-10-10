@@ -1,0 +1,50 @@
+[
+  {
+    "op": "MAP",
+    "queued": {
+      "event": "queued",
+      "op": "MAP",
+      "id": "1",
+      "apc": "0x5bfd29928b20",
+      "lease": "1",
+      "generation": "3",
+      "handle": "0058",
+      "recipient_pid": "0160",
+      "recipient_tid": "0164",
+      "unix_pid": "125",
+      "unix_tid": "125",
+      "state": "0",
+      "suspended": "0",
+      "wait_flags": "00000000",
+      "detail": "signal",
+      "seq": "1",
+      "time": "110838350903",
+      "result_type": "0"
+    },
+    "action": "authorize-real-recipient-termination"
+  },
+  {
+    "op": "REVOKE",
+    "queued": {
+      "event": "queued",
+      "op": "REVOKE",
+      "id": "5",
+      "apc": "0x5bfd29356930",
+      "lease": "3",
+      "generation": "3",
+      "handle": "0054",
+      "recipient_pid": "016c",
+      "recipient_tid": "0170",
+      "unix_pid": "130",
+      "unix_tid": "130",
+      "state": "0",
+      "suspended": "0",
+      "wait_flags": "00000000",
+      "detail": "signal",
+      "seq": "15",
+      "time": "110838637044",
+      "result_type": "0"
+    },
+    "action": "authorize-real-recipient-termination"
+  }
+]

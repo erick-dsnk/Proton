@@ -1,0 +1,24 @@
+gcc -m64 -c -o dlls/ntdll/unix/virtual.o /src/dlls/ntdll/unix/virtual.c -Idlls/ntdll -I/src/dlls/ntdll -Iinclude \
+  -I/src/include -D__WINESRC__ -DLTC_NO_PROTOTYPES -DLTC_SOURCE -D_NTSYSTEM_ -D_ACRTIMP= \
+  -DWINBASEAPI= -DWINE_UNIX_LIB -Wall -pipe -fcf-protection=none -fvisibility=hidden \
+  -fno-stack-protector -fno-strict-aliasing -Wdeclaration-after-statement -Wempty-body \
+  -Wignored-qualifiers -Winit-self -Wlogical-op -Wno-packed-not-aligned -Wpointer-arith \
+  -Wshift-overflow=2 -Wstrict-prototypes -Wtype-limits -Wunused-but-set-parameter -Wvla \
+  -Wwrite-strings -Wno-misleading-indentation -gdwarf-4 -fPIC -fasynchronous-unwind-tables -g -O2
+In file included from /src/include/windef.h:24,
+                 from /src/dlls/ntdll/unix/virtual.c:101:
+/src/dlls/ntdll/unix/virtual.c: In function 'map_view':
+/src/include/minwindef.h:318:20: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  318 | #define min(a,b)   (((a) < (b)) ? (a) : (b))
+      |                    ^
+/src/dlls/ntdll/unix/virtual.c:2885:21: note: in expansion of macro 'min'
+ 2885 |         void *end = min( effective_user_space_limit, host_addr_space_limit );
+      |                     ^~~
+gcc -m64 -o dlls/ntdll/ntdll.so -shared -Wl,-Bsymbolic -Wl,-soname,ntdll.so -Wl,-z,defs dlls/ntdll/unix/cdrom.o \
+  dlls/ntdll/unix/debug.o dlls/ntdll/unix/env.o dlls/ntdll/unix/file.o dlls/ntdll/unix/fsync.o \
+  dlls/ntdll/unix/loader.o dlls/ntdll/unix/loadorder.o dlls/ntdll/unix/process.o \
+  dlls/ntdll/unix/registry.o dlls/ntdll/unix/security.o dlls/ntdll/unix/serial.o \
+  dlls/ntdll/unix/server.o dlls/ntdll/unix/signal_arm.o dlls/ntdll/unix/signal_arm64.o \
+  dlls/ntdll/unix/signal_i386.o dlls/ntdll/unix/signal_x86_64.o dlls/ntdll/unix/socket.o \
+  dlls/ntdll/unix/sync.o dlls/ntdll/unix/system.o dlls/ntdll/unix/tape.o dlls/ntdll/unix/thread.o \
+  dlls/ntdll/unix/virtual.o dlls/ntdll/unix/version.o 

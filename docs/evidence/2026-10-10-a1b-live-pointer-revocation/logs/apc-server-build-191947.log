@@ -1,0 +1,21 @@
+gcc -m64 -c -o server/mapping.o /src/server/mapping.c -Iserver -I/src/server -Iinclude -I/src/include -D__WINESRC__ \
+  -DWINE_UNIX_LIB -Wall -pipe -fcf-protection=none -fvisibility=hidden -fno-stack-protector \
+  -fno-strict-aliasing -Wdeclaration-after-statement -Wempty-body -Wignored-qualifiers -Winit-self \
+  -Wlogical-op -Wno-packed-not-aligned -Wpointer-arith -Wshift-overflow=2 -Wstrict-prototypes \
+  -Wtype-limits -Wunused-but-set-parameter -Wvla -Wwrite-strings -Wno-misleading-indentation \
+  -gdwarf-4 -g -O2
+gcc -m64 -c -o server/thread.o /src/server/thread.c -Iserver -I/src/server -Iinclude -I/src/include -D__WINESRC__ \
+  -DWINE_UNIX_LIB -Wall -pipe -fcf-protection=none -fvisibility=hidden -fno-stack-protector \
+  -fno-strict-aliasing -Wdeclaration-after-statement -Wempty-body -Wignored-qualifiers -Winit-self \
+  -Wlogical-op -Wno-packed-not-aligned -Wpointer-arith -Wshift-overflow=2 -Wstrict-prototypes \
+  -Wtype-limits -Wunused-but-set-parameter -Wvla -Wwrite-strings -Wno-misleading-indentation \
+  -gdwarf-4 -g -O2
+gcc -m64 -o server/wineserver server/async.o server/atom.o server/change.o server/class.o server/clipboard.o \
+  server/completion.o server/console.o server/d3dkmt.o server/debugger.o server/device.o \
+  server/directory.o server/event.o server/fd.o server/file.o server/fsync.o server/handle.o \
+  server/hook.o server/inproc_sync.o server/mach.o server/mailslot.o server/main.o server/mapping.o \
+  server/mutex.o server/named_pipe.o server/object.o server/process.o server/procfs.o \
+  server/ptrace.o server/queue.o server/region.o server/registry.o server/request.o \
+  server/semaphore.o server/serial.o server/signal.o server/sock.o server/symlink.o server/thread.o \
+  server/timer.o server/token.o server/trace.o server/unicode.o server/user.o server/window.o \
+  server/winstation.o 

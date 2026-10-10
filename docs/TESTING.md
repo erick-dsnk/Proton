@@ -243,6 +243,34 @@ Therefore this matrix does not demonstrate ordinary cross-process pointer
 loads/stores, revocation while access is active, public attach semantics, or
 E05 conformance. All eight E05 attachment expectations remain `todo_wine`.
 
+The later [live-pointer/revocation proof](evidence/2026-10-10-a1b-live-pointer-revocation/README.md)
+passes three independent **249 checks / 0 failures** runs, all exit 0, after
+local fixture and one runtime ENOMEM-status repair. Its backing-disabled
+admission run passes **12 / 0**, exit 0. The same VM PE against the repaired
+candidate off/on and the unmodified baseline passes **2,423 / 104 / 0 / 0**,
+**2,503 / 104 / 0 / 0**, and **2,423 / 104 / 0 / 0** respectively. Ordinary
+executor instructions access the original target VA; gated MAP/revoke races,
+active readers, protections, collision, identity/address reuse and process
+exit are checked. Final commands, logs and hashes are included in the evidence
+bundle. This closes that bounded memory proof, not public E05 attachment.
+The historical suspended-recipient attempt stalled after the auxiliary-thread
+termination command and before acquisition completion; its log has no routing
+events and cannot identify the recipient or blocking frame. Three later
+Linux AMD64 runs each passed 52 checks for queued MAP cancellation and queued
+REVOKE cancellation followed by retry to a surviving recipient and native ACK.
+The follow-up [publication integration check](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md)
+retrieved the published component commit from a fresh clone, rebuilt its
+changed server and native ntdll, and reran queued cancellation (52/0) plus the
+trace-control fixture (249/0) from committed source.
+The opt-in trace records queue, dequeue, delivery, client completion,
+cancellation, lease counters/readiness, retry and native revoke ACK as separate
+events. `delivered` means the server supplied an APC handle, not that its
+callback executed. The fixture holds the actual selected native thread with a
+SIGUSR1 mask and blocked native read after trace-confirmed queue insertion;
+this is a test scheduling control, not general scheduler conformance. The
+tracing-only control also passed. No native Windows, i386, full Proton or
+accepted Vanguard session is established.
+
 ## Record distinct outcomes
 
 1. Source/build identity and artifact export presence.

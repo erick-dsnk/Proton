@@ -1,0 +1,1274 @@
+diff --git a/dlls/ntdll/unix/virtual.c b/dlls/ntdll/unix/virtual.c
+index 3adc3d4..e11912a 100644
+--- a/dlls/ntdll/unix/virtual.c
++++ b/dlls/ntdll/unix/virtual.c
+@@ -2928,7 +2928,9 @@ static BOOL private_guest_reservation( void *base, size_t size )
+     LIST_FOR_EACH_ENTRY( area, &reserved_areas, struct reserved_area, entry )
+         if ((ULONG_PTR)area->base <= cursor && area->size >= limit - (ULONG_PTR)area->base)
+         { owned = TRUE; break; }
+-    if (!owned || !(file = fopen( "/proc/self/maps", "r" ))) return FALSE;
++    /* /proc/self resolves through the thread-group leader, which may have
++     * exited while this surviving thread still owns the shared address space. */
++    if (!owned || !(file = fopen( "/proc/thread-self/maps", "r" ))) return FALSE;
+     while (fgets( line, sizeof(line), file ))
+     {
+         if (sscanf( line, "%lx-%lx %4s %lx %x:%x %lu", &start, &end, perms, &offset,
+@@ -3029,7 +3031,7 @@ void virtual_private_mapping_apc( const union apc_call *call )
+ #endif
+     if (mapped != base)
+     {
+-        status = mapped == MAP_FAILED ? errno_to_status( errno ) : STATUS_NOT_SUPPORTED;
++        status = mapped == MAP_FAILED ? (errno == ENOMEM ? STATUS_NO_MEMORY : errno_to_status( errno )) : STATUS_NOT_SUPPORTED;
+         if (mapped != MAP_FAILED) munmap( mapped, size );
+         /* Restore only still-free pages; do not replace a native collision. */
+ #ifdef MAP_FIXED_NOREPLACE
+diff --git a/loader/tests/a1b-live-private-view-helper.c b/loader/tests/a1b-live-private-view-helper.c
+index ca23c48..2a9a848 100644
+--- a/loader/tests/a1b-live-private-view-helper.c
++++ b/loader/tests/a1b-live-private-view-helper.c
+@@ -3,8 +3,11 @@
+ #include <stdarg.h>
+ #include "windef.h"
+ #include "winbase.h"
++BOOL WINAPI DllMain( HINSTANCE instance, DWORD reason, void *reserved );
++/* Keep a real AMD64 relocation and verify it when the host loader moves us. */
++static BOOL (WINAPI * volatile relocation_anchor)( HINSTANCE, DWORD, void * ) = DllMain;
+ BOOL WINAPI DllMain( HINSTANCE instance, DWORD reason, void *reserved )
+ {
+     (void)instance; (void)reason; (void)reserved;
+-    return TRUE;
++    return relocation_anchor == DllMain;
+ }
+diff --git a/loader/tests/a1b-live-private-view-pe.c b/loader/tests/a1b-live-private-view-pe.c
+index 303255b..1b10b67 100644
+--- a/loader/tests/a1b-live-private-view-pe.c
++++ b/loader/tests/a1b-live-private-view-pe.c
+@@ -34,7 +34,7 @@
+ 
+ enum command { CMD_ALLOC, CMD_READ, CMD_WRITE, CMD_PROTECT, CMD_DECOMMIT,
+                CMD_COMMIT, CMD_FREE, CMD_ACQUIRE, CMD_DROP, CMD_LOOP,
+-               CMD_LOOP_RESULT, CMD_EXIT, CMD_BEGIN_ACQUIRE, CMD_END_ACQUIRE, CMD_QUERY, CMD_COLLISION_INSTALL, CMD_COLLISION_REMOVE, CMD_MUTATION_BEGIN, CMD_MUTATION_POLL, CMD_MUTATION_WAIT, CMD_OWNER_STATE, CMD_WATCH_NATIVE_PID, CMD_SUSPENDED_CREATE, CMD_SUSPENDED_KILL, CMD_CPU_BARRIER, CMD_NEGATIVE_VM };
++               CMD_LOOP_RESULT, CMD_EXIT, CMD_BEGIN_ACQUIRE, CMD_END_ACQUIRE, CMD_QUERY, CMD_COLLISION_INSTALL, CMD_COLLISION_REMOVE, CMD_MUTATION_BEGIN, CMD_MUTATION_POLL, CMD_MUTATION_WAIT, CMD_OWNER_STATE, CMD_WATCH_NATIVE_PID, CMD_SUSPENDED_CREATE, CMD_SUSPENDED_KILL, CMD_CPU_BARRIER, CMD_NEGATIVE_VM, CMD_DENIED_ACQUIRE, CMD_STALE_QUERY, CMD_CANCEL_BEGIN, CMD_CANCEL_END };
+ struct packet
+ {
+     unsigned int command, value, target_pid, status;
+@@ -46,16 +46,22 @@ struct lease { HANDLE handle, ready; unsigned __int64 token, generation, mapping
+ static struct lease lease;
+ static LONG checks, failures;
+ static volatile LONG loop_stop, loop_reads, loop_faults;
+-static HANDLE loop_thread, mutation_thread, suspended_thread;
++static HANDLE loop_thread, mutation_thread, mutation_observer, acquire_thread, suspended_thread;
+ static unsigned int mutation_protection;
+-static NTSTATUS mutation_status;
++static NTSTATUS mutation_status, acquire_status;
++static struct packet acquire_packet;
+ static BOOL watch_native_death;
+-struct loop_observation { volatile LONG completed, successful_after_completion, reads, faults, cpu_active, release_cpu; };
++static HANDLE cancelled_main, cancel_pipe;
++static DWORD cancelled_main_tid;
++static struct packet cancel_packet;
++static int child_loop( HANDLE pipe );
++struct loop_observation { volatile LONG completed, successful_after_completion, reads, faults, cpu_active, release_cpu, mutation_go, mutation_done, owner_updating, observer_ready, acquire_go; };
+ static struct loop_observation *loop_observation;
+ 
+ static void check( int ok, const char *description )
+ {
+     ++checks;
++    if (ok && getenv( "A1B_VERBOSE_CHECKS" )) printf( "a1b-live-private-view: PASS: %s\n", description );
+     if (!ok)
+     {
+         ++failures;
+@@ -124,12 +130,34 @@ static DWORD WINAPI suspended_worker( void *unused )
+     (void)unused;
+     return 0x5a;
+ }
++static NTSTATUS owner_state( struct packet *packet );
++static DWORD WINAPI observe_mutation( void *unused )
++{
++    struct packet packet;
++    DWORD start = GetTickCount();
++    (void)unused;
++    InterlockedExchange( &loop_observation->observer_ready, 1 );
++    while (!InterlockedCompareExchange( &loop_observation->mutation_done, 0, 0 ) &&
++           GetTickCount() - start < TIMEOUT)
++    {
++        memset( &packet, 0, sizeof(packet) );
++        if (owner_state( &packet )) fatal( "observe authoritative owner fence" );
++        if (packet.state) InterlockedExchange( &loop_observation->owner_updating, 1 );
++        Sleep( 0 );
++    }
++    return 0;
++}
+ static DWORD WINAPI mutation_worker( void *unused )
+ {
+-    DWORD old;
++    DWORD old, start = GetTickCount();
+     (void)unused;
++    while ((!loop_observation->mutation_go || !loop_observation->observer_ready) &&
++           GetTickCount() - start < TIMEOUT) YieldProcessor();
++    if (!loop_observation->mutation_go || !loop_observation->observer_ready)
++        fatal( "parent did not start asynchronous mutation" );
+     mutation_status = VirtualProtect( PROBE_ADDRESS, PROBE_SIZE, mutation_protection, &old ) ?
+                       STATUS_SUCCESS : STATUS_UNSUCCESSFUL;
++    InterlockedExchange( &loop_observation->mutation_done, 1 );
+     return 0;
+ }
+ static NTSTATUS query_lease( struct packet *packet )
+@@ -188,6 +216,45 @@ static NTSTATUS acquire_lease( struct packet *packet, BOOL wait )
+     if (!status && wait) status = wait_lease( packet );
+     return status;
+ }
++static DWORD WINAPI acquire_worker( void *unused )
++{
++    DWORD start = GetTickCount();
++    (void)unused;
++    while (!loop_observation->acquire_go && GetTickCount() - start < TIMEOUT) YieldProcessor();
++    if (!loop_observation->acquire_go) fatal( "parent did not start asynchronous acquisition" );
++    acquire_status = acquire_lease( &acquire_packet, FALSE );
++    return 0;
++}
++static NTSTATUS denied_acquire( struct packet *packet )
++{
++    HANDLE target = OpenProcess( PROCESS_QUERY_INFORMATION | SYNCHRONIZE, FALSE, packet->target_pid );
++    NTSTATUS status;
++    if (!target) return STATUS_INVALID_CID;
++    SERVER_START_REQ( acquire_private_mapping )
++    {
++        req->process = wine_server_obj_handle( target );
++        req->address = (ULONG_PTR)PROBE_ADDRESS;
++        req->size = PROBE_SIZE;
++        req->access = FILE_READ_DATA | FILE_WRITE_DATA;
++        status = wine_server_call( req );
++    }
++    SERVER_END_REQ;
++    CloseHandle( target );
++    return status;
++}
++static NTSTATUS stale_query( unsigned int field )
++{
++    NTSTATUS status;
++    SERVER_START_REQ( query_private_mapping_lease )
++    {
++        req->handle = wine_server_obj_handle( lease.handle );
++        req->token = lease.token + !field;
++        req->generation = lease.generation + !!field;
++        status = wine_server_call( req );
++    }
++    SERVER_END_REQ;
++    return status;
++}
+ static NTSTATUS drop_lease( struct packet *packet )
+ {
+     NTSTATUS status;
+@@ -254,6 +321,28 @@ static NTSTATUS native_helper( unsigned int action, ULONG_PTR value, unsigned in
+     if (!status && output) *output = args.address;
+     return status;
+ }
++/* Fixture-only queue-before-dequeue control. The oldest main thread is parked
++ * in a native helper with SIGUSR1 blocked. This earlier-created survivor keeps
++ * its original signal mask and makes no Wine SELECT wait before cancellation.
++ * The external runner authorizes termination only after a queued trace names
++ * that exact main TID; neither thread assumes CREATE_SUSPENDED inhibits APCs. */
++static DWORD WINAPI cancel_survivor( void *unused )
++{
++    unsigned int phase = cancel_packet.offset;
++    (void)unused;
++    if (native_helper( 6, phase, NULL )) fatal( "recipient never entered native signal barrier" );
++    if (!phase) acquire_status = acquire_lease( &cancel_packet, FALSE );
++    if (native_helper( 7, phase, NULL )) fatal( "authoritative queued recipient kill was never authorized" );
++    if (!TerminateThread( cancelled_main, 0x51 )) fatal( "terminate authoritative queued APC recipient" );
++    if (WaitForSingleObject( cancelled_main, TIMEOUT ) != WAIT_OBJECT_0)
++        fatal( "authoritative recipient termination did not finish" );
++    printf( "a1b-live-private-view: cancelled-recipient phase=%s main_tid=%04lx survivor_tid=%04lx\n",
++            phase ? "revoke" : "map", cancelled_main_tid, GetCurrentThreadId() );
++    CloseHandle( cancelled_main ); cancelled_main = NULL;
++    if (native_helper( 8, 0, NULL )) fatal( "dump survivor native probe reservation" );
++    ExitProcess( child_loop( cancel_pipe ) );
++    return 0;
++}
+ static NTSTATUS negative_alias_vm( unsigned int operation )
+ {
+     void *base = PROBE_ADDRESS;
+@@ -296,16 +385,14 @@ static int child_main( const char *role, const char *pipe_name, const char *obse
+ {
+     struct packet packet;
+     HANDLE pipe;
+-    DWORD old;
+-    void *pointer;
+-    if (!strcmp( role, "executor" ))
+     {
+         HANDLE observation = OpenFileMappingA( FILE_MAP_ALL_ACCESS, FALSE, observation_name );
+         if (!observation || !(loop_observation = MapViewOfFile( observation, FILE_MAP_ALL_ACCESS, 0, 0, 0 )))
+             fatal( "map shared completion observation" );
+         CloseHandle( observation );
+-        if ((ULONG_PTR)loop_observation < WINE_MANAGED_HOST_ALLOC_START ||
+-            (ULONG_PTR)loop_observation >= WINE_MANAGED_HOST_END)
++        if (!strcmp( role, "executor" ) &&
++            ((ULONG_PTR)loop_observation < WINE_MANAGED_HOST_ALLOC_START ||
++             (ULONG_PTR)loop_observation >= WINE_MANAGED_HOST_END))
+             fatal( "executor observation escaped host domain" );
+     }
+     if (!AddVectoredExceptionHandler( 1, fault_handler )) fatal( "install actual exception observer" );
+@@ -320,6 +407,13 @@ static int child_main( const char *role, const char *pipe_name, const char *obse
+                     (ULONG_PTR)GetModuleHandleA( "ntdll.dll" ) != WINE_MANAGED_HOST_NTDLL_START ?
+                     STATUS_INVALID_ADDRESS : STATUS_SUCCESS;
+     pipe_transfer( pipe, &packet, TRUE );
++    return child_loop( pipe );
++}
++static int child_loop( HANDLE pipe )
++{
++    struct packet packet;
++    DWORD old;
++    void *pointer;
+     for (;;)
+     {
+         pipe_transfer( pipe, &packet, FALSE );
+@@ -362,14 +456,49 @@ static int child_main( const char *role, const char *pipe_name, const char *obse
+             if (!VirtualFree( PROBE_ADDRESS, 0, MEM_RELEASE )) packet.status = STATUS_UNSUCCESSFUL;
+             break;
+         case CMD_ACQUIRE: packet.status = acquire_lease( &packet, TRUE ); break;
+-        case CMD_BEGIN_ACQUIRE: packet.status = acquire_lease( &packet, FALSE ); break;
+-        case CMD_END_ACQUIRE: packet.status = wait_lease( &packet ); break;
++        case CMD_BEGIN_ACQUIRE:
++            if (acquire_thread || lease.handle) { packet.status = STATUS_INVALID_HANDLE; break; }
++            acquire_packet = packet; acquire_status = STATUS_PENDING;
++            InterlockedExchange( &loop_observation->acquire_go, 0 );
++            acquire_thread = CreateThread( NULL, 0, acquire_worker, NULL, 0, NULL );
++            if (!acquire_thread) packet.status = STATUS_UNSUCCESSFUL;
++            break;
++        case CMD_END_ACQUIRE:
++            if (!acquire_thread) { packet.status = STATUS_INVALID_HANDLE; break; }
++            if (WaitForSingleObject( acquire_thread, TIMEOUT ) != WAIT_OBJECT_0)
++                fatal( "async acquisition did not finish" );
++            CloseHandle( acquire_thread ); acquire_thread = NULL;
++            packet.status = acquire_status ? acquire_status : wait_lease( &packet );
++            break;
+         case CMD_DROP: packet.status = drop_lease( &packet ); break;
+         case CMD_QUERY: packet.status = query_lease( &packet ); break;
+         case CMD_OWNER_STATE: packet.status = owner_state( &packet ); break;
+         case CMD_COLLISION_INSTALL: packet.status = native_helper( 0, (ULONG_PTR)PROBE_ADDRESS, NULL ); break;
+         case CMD_COLLISION_REMOVE: packet.status = native_helper( 1, (ULONG_PTR)PROBE_ADDRESS, NULL ); break;
++        case CMD_DENIED_ACQUIRE: packet.status = denied_acquire( &packet ); break;
++        case CMD_STALE_QUERY: packet.status = stale_query( packet.value ); break;
+         case CMD_NEGATIVE_VM: packet.status = negative_alias_vm( packet.value ); break;
++        case CMD_CANCEL_BEGIN:
++            if (cancelled_main || packet.offset > 1) { packet.status = STATUS_INVALID_PARAMETER; break; }
++            if (!DuplicateHandle( GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(),
++                                  &cancelled_main, 0, FALSE, DUPLICATE_SAME_ACCESS ))
++                fatal( "duplicate native-barrier recipient handle" );
++            cancelled_main_tid = GetCurrentThreadId(); cancel_pipe = pipe; cancel_packet = packet;
++            packet.count = cancelled_main_tid;
++            {
++                HANDLE survivor = CreateThread( NULL, 0, cancel_survivor, NULL, 0, NULL );
++                if (!survivor) fatal( "create independent cancellation survivor" );
++                CloseHandle( survivor );
++            }
++            pipe_transfer( pipe, &packet, TRUE );
++            if (native_helper( 5, packet.offset, NULL )) fatal( "native recipient barrier failed" );
++            fatal( "native recipient barrier returned without termination" );
++            break;
++        case CMD_CANCEL_END:
++            packet.count = cancelled_main_tid;
++            packet.status = cancel_packet.offset ? STATUS_SUCCESS :
++                            (acquire_status ? acquire_status : wait_lease( &packet ));
++            break;
+         case CMD_SUSPENDED_CREATE:
+             if (suspended_thread) { packet.status = STATUS_INVALID_HANDLE; break; }
+             suspended_thread = CreateThread( NULL, 0, suspended_worker, NULL, CREATE_SUSPENDED, NULL );
+@@ -396,6 +525,10 @@ static int child_main( const char *role, const char *pipe_name, const char *obse
+         case CMD_MUTATION_BEGIN:
+             if (mutation_thread) { packet.status = STATUS_INVALID_HANDLE; break; }
+             mutation_protection = packet.value; mutation_status = STATUS_PENDING;
++            loop_observation->mutation_go = loop_observation->mutation_done = 0;
++            loop_observation->owner_updating = loop_observation->observer_ready = 0;
++            mutation_observer = CreateThread( NULL, 0, observe_mutation, NULL, 0, NULL );
++            if (!mutation_observer) fatal( "create owner fence observer" );
+             mutation_thread = CreateThread( NULL, 0, mutation_worker, NULL, 0, NULL );
+             if (!mutation_thread) packet.status = STATUS_UNSUCCESSFUL;
+             break;
+@@ -409,6 +542,9 @@ static int child_main( const char *role, const char *pipe_name, const char *obse
+             if (WaitForSingleObject( mutation_thread, TIMEOUT ) != WAIT_OBJECT_0)
+                 fatal( "async target mutation did not finish" );
+             packet.status = mutation_status;
++            if (WaitForSingleObject( mutation_observer, TIMEOUT ) != WAIT_OBJECT_0)
++                fatal( "owner fence observer did not finish" );
++            CloseHandle( mutation_observer ); mutation_observer = NULL;
+             CloseHandle( mutation_thread ); mutation_thread = NULL;
+             break;
+         case CMD_LOOP:
+@@ -455,22 +591,38 @@ static struct child spawn_child( const char *role, unsigned int index )
+     PROCESS_INFORMATION info;
+     char exe[MAX_PATH], pipe_name[128], observation_name[128], command_line[2 * MAX_PATH + 512];
+     DWORD length;
++    const char *setting, *backing = getenv( "A1B_DISABLE_BACKING" ) ? NULL : "1";
++    NTSTATUS (WINAPI *set_unix_env)( const char *, const char * );
+     memset( &child, 0, sizeof(child) );
+     memset( &startup, 0, sizeof(startup) ); startup.cb = sizeof(startup);
+     length = GetModuleFileNameA( NULL, exe, sizeof(exe) );
+     if (!length || length >= sizeof(exe)) fatal( "obtain complete executable path" );
++    if (!strcmp( role, "executor" ))
++    {
++        char *name = strrchr( exe, '\\' );
++        if (!name || strlen(exe) + strlen("executor\\") >= sizeof(exe))
++            fatal( "executor host-image path unavailable" );
++        memmove( name + 1 + strlen("executor\\"), name + 1, strlen(name + 1) + 1 );
++        memcpy( name + 1, "executor\\", strlen("executor\\") );
++    }
+     sprintf( observation_name, "a1b-live-view-observation-%lu", GetCurrentProcessId() );
+     sprintf( pipe_name, "\\\\.\\pipe\\a1b-live-view-%lu-%u", GetCurrentProcessId(), index );
+     child.pipe = CreateNamedPipeA( pipe_name, PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE | PIPE_WAIT,
+                                   1, 4096, 4096, TIMEOUT, NULL );
+     if (child.pipe == INVALID_HANDLE_VALUE) fatal( "create parent pipe" );
+     sprintf( command_line, "\"%s\" %s \"%s\" \"%s\"", exe, role, pipe_name, observation_name );
+-    SetEnvironmentVariableA( "WINE_MANAGED_LAYOUT", !strcmp( role, "executor" ) ?
+-                             WINE_MANAGED_EXECUTOR_SETTING : WINE_MANAGED_LAYOUT_SETTING );
+-    SetEnvironmentVariableA( "WINE_SHARED_PRIVATE_BACKING", "1" );
++    setting = !strcmp( role, "executor" ) ? WINE_MANAGED_EXECUTOR_SETTING : WINE_MANAGED_LAYOUT_SETTING;
++    set_unix_env = (void *)GetProcAddress( GetModuleHandleA( "ntdll.dll" ), "__wine_set_unix_env" );
++    if (!set_unix_env || set_unix_env( "WINE_MANAGED_LAYOUT", setting ) ||
++        set_unix_env( "WINE_SHARED_PRIVATE_BACKING", backing ) ||
++        !SetEnvironmentVariableA( "WINE_MANAGED_LAYOUT", setting ) ||
++        !SetEnvironmentVariableA( "WINE_SHARED_PRIVATE_BACKING", backing ))
++        fatal( "set actual preloader and Wine backing environments" );
+     if (!CreateProcessA( NULL, command_line, NULL, NULL, FALSE, 0, NULL, NULL, &startup, &info ))
+         fatal( "start preloader-managed child" );
+-    SetEnvironmentVariableA( "WINE_MANAGED_LAYOUT", NULL );
++    if (set_unix_env( "WINE_MANAGED_LAYOUT", NULL ) ||
++        !SetEnvironmentVariableA( "WINE_MANAGED_LAYOUT", NULL ))
++        fatal( "clear actual preloader role after child launch" );
+     CloseHandle( info.hThread );
+     child.process = info.hProcess; child.pid = info.dwProcessId; child.role = role;
+     if (!ConnectNamedPipe( child.pipe, NULL ) && GetLastError() != ERROR_PIPE_CONNECTED)
+@@ -497,6 +649,10 @@ static struct packet request_range( struct child *child, unsigned int command, u
+             "token=%I64u generation=%I64u mapping=%I64u reads=%u faults=%u native_dead=%u\n", child->pid, command,
+             packet.status, packet.value, packet.state, packet.lease_status,
+             packet.token, packet.generation, packet.mapping_id, packet.count, packet.faults, packet.native_dead );
++    if (command == CMD_BEGIN_ACQUIRE && !packet.status)
++        InterlockedExchange( &loop_observation->acquire_go, 1 );
++    if (command == CMD_MUTATION_BEGIN && !packet.status)
++        InterlockedExchange( &loop_observation->mutation_go, 1 );
+     return packet;
+ }
+ static struct packet request( struct child *child, unsigned int command, unsigned int value, DWORD target_pid )
+@@ -589,6 +745,19 @@ static void marker_create( const char *name, const char *phase )
+     if (file == INVALID_HANDLE_VALUE) fatal( "create native test marker" );
+     CloseHandle( file );
+ }
++static void marker_identity( const char *phase, DWORD pid, DWORD tid )
++{
++    char path[MAX_PATH], identity[64];
++    DWORD count, length;
++    HANDLE file;
++    marker_path( path, "armed", phase );
++    length = sprintf( identity, "%04lx %04lx\n", pid, tid );
++    file = CreateFileA( path, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
++                        CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
++    if (file == INVALID_HANDLE_VALUE || !WriteFile( file, identity, length, &count, NULL ) || count != length)
++        fatal( "write authoritative cancellation identity marker" );
++    CloseHandle( file );
++}
+ static void marker_wait( const char *name, const char *phase )
+ {
+     char path[MAX_PATH];
+@@ -621,10 +790,9 @@ static void revoke_ack_barrier( struct child *executor, struct child *target )
+     marker_create( "gate", "revoke" );
+     operation( target, CMD_MUTATION_BEGIN, PAGE_READONLY, "start target protection asynchronously" );
+     marker_wait( "entered", "revoke" );
+-    packet = request( target, CMD_MUTATION_POLL, 0, 0 );
+-    check( packet.status == (unsigned int)STATUS_PENDING,
++    check( !loop_observation->mutation_done,
+            "target mutation cannot complete while native revoke and ACK are withheld" );
+-    read_value( target, 0x71, "withheld revoke preserves target's previous accessible byte" );
++    check( !loop_observation->completed, "withheld revoke leaves mutation completion unpublished" );
+     before = InterlockedCompareExchange( &loop_observation->reads, 0, 0 );
+     Sleep( 20 );
+     check( InterlockedCompareExchange( &loop_observation->reads, 0, 0 ) > before &&
+@@ -661,50 +829,100 @@ static void rejected_executor_vm( struct child *executor, struct child *target )
+                "rejected executor VM operation preserves live lease identity and generation" );
+     }
+ }
+-static void queued_apc_thread_death( struct child *executor, struct child *target )
++/* Process-wide system APC routing does not guarantee that a suspended
++ * auxiliary thread receives a particular MAP/REVOKE. This fixture checks
++ * surviving-process lifetime without claiming deterministic queued-APC
++ * cancellation. The separate native-barrier cases below test that contract. */
++static void consumer_thread_lifetime( struct child *executor, struct child *target )
+ {
+-    struct packet packet;
+-    DWORD start;
+-    operation( executor, CMD_SUSPENDED_CREATE, 0, "create suspended consumer MAP APC recipient" );
+-    packet = request( executor, CMD_BEGIN_ACQUIRE, FILE_READ_DATA | FILE_WRITE_DATA, target->pid );
+-    check( !packet.status, "pending MAP queued to suspended consumer thread" );
+-    if (packet.status) fatal( "begin suspended recipient acquire" );
+-    operation( executor, CMD_SUSPENDED_KILL, 0, "kill suspended MAP recipient while main consumer thread survives" );
+-    packet = request( executor, CMD_END_ACQUIRE, 0, 0 );
+-    check( !packet.status && packet.state == PRIVATE_MAPPING_LEASE_REVOKED &&
+-           packet.lease_status == (unsigned int)STATUS_CANCELLED,
+-           "cancelled queued MAP drains counts and signals revoked lease readiness" );
+-    drop( executor );
++    operation( executor, CMD_SUSPENDED_CREATE, 0, "create auxiliary consumer thread before admission" );
++    operation( executor, CMD_SUSPENDED_KILL, 0, "terminate auxiliary thread while consumer main survives" );
+     acquire( executor, target, FILE_READ_DATA | FILE_WRITE_DATA );
+-    read_value( executor, 0x71, "surviving consumer later acquires ordinary live view" );
+-    operation( executor, CMD_SUSPENDED_CREATE, 0, "create suspended consumer REVOKE APC recipient" );
+-    memset( &packet, 0, sizeof(packet) ); packet.command = CMD_CPU_BARRIER;
+-    InterlockedExchange( &loop_observation->cpu_active, 0 );
+-    InterlockedExchange( &loop_observation->release_cpu, 0 );
+-    pipe_transfer( executor->pipe, &packet, TRUE );
+-    start = GetTickCount();
+-    while (!InterlockedCompareExchange( &loop_observation->cpu_active, 0, 0 ) &&
+-           GetTickCount() - start < TIMEOUT) Sleep( 1 );
+-    if (!loop_observation->cpu_active) fatal( "executor main failed to enter CPU barrier" );
+-    operation( target, CMD_MUTATION_BEGIN, PAGE_READONLY, "start revoke while only suspended consumer accepts APC wait" );
+-    start = GetTickCount();
+-    do
+-    {
+-        packet = request( target, CMD_OWNER_STATE, 0, 0 );
+-        if (packet.status) fatal( "query owner fence during queued revoke recipient test" );
+-        if (!packet.state) Sleep( 1 );
+-    } while (!packet.state && GetTickCount() - start < 1000);
+-    check( packet.state, "owner fence is active with REVOKE queued to suspended thread" );
+-    InterlockedExchange( &loop_observation->release_cpu, 1 );
+-    pipe_transfer( executor->pipe, &packet, FALSE );
+-    check( !packet.status && packet.command == CMD_CPU_BARRIER, "consumer main leaves CPU barrier alive" );
+-    operation( executor, CMD_SUSPENDED_KILL, 0, "kill suspended REVOKE recipient while main thread survives" );
+-    operation( target, CMD_MUTATION_WAIT, 0, "cancelled queued REVOKE requeues and drains on surviving consumer" );
++    read_value( executor, 0x71, "surviving consumer acquires ordinary live view after auxiliary thread exit" );
++    operation( executor, CMD_SUSPENDED_CREATE, 0, "create auxiliary consumer thread while lease is live" );
++    operation( executor, CMD_SUSPENDED_KILL, 0, "auxiliary thread exit does not destroy process-owned live lease" );
++    read_value( executor, 0x71, "consumer ordinary pointer stays coherent after auxiliary thread exit" );
++    operation( target, CMD_PROTECT, PAGE_READONLY, "owner mutation revokes surviving consumer after auxiliary thread exit" );
+     check( WaitForSingleObject( executor->process, 0 ) == WAIT_TIMEOUT,
+-           "consumer process stays live; queued APC cleanup cannot use process-death shortcut" );
+-    read_value( executor, PROBE_FAULT, "surviving consumer ordinary pointer faults after requeued revoke" );
++           "surviving consumer was not terminated as a revocation shortcut" );
++    read_value( executor, PROBE_FAULT, "surviving consumer pointer faults after owner mutation" );
+     drop( executor );
+-    operation( target, CMD_PROTECT, PAGE_READWRITE, "restore target after queued consumer thread death" );
++    operation( target, CMD_PROTECT, PAGE_READWRITE, "restore target after consumer thread lifetime case" );
++}
++static void queued_recipient_cancel( struct child *target, unsigned int phase )
++{
++    struct child executor = spawn_child( "executor", 20 + phase );
++    struct packet packet;
++    const char *name = phase ? "revoke" : "map";
++    marker_delete( "parked", name ); marker_delete( "kill", name );
++    marker_delete( "queued", name ); marker_delete( "verified", name ); marker_delete( "armed", name );
++    if (phase) acquire( &executor, target, FILE_READ_DATA | FILE_WRITE_DATA );
++    packet = request_range( &executor, CMD_CANCEL_BEGIN, FILE_READ_DATA | FILE_WRITE_DATA,
++                            target->pid, phase, 0 );
++    check( !packet.status && packet.count, "cancellation fixture advertises exact oldest recipient TID" );
++    if (packet.status || !packet.count) fatal( "begin native recipient barrier" );
++    marker_identity( name, executor.pid, packet.count );
++    printf( "a1b-live-private-view: cancellation-armed op=%s recipient_pid=%04lx recipient_tid=%04x\n",
++            phase ? "REVOKE" : "MAP", executor.pid, packet.count );
++    marker_wait( "parked", name );
++    if (phase)
++    {
++        operation( target, CMD_MUTATION_BEGIN, PAGE_READONLY, "start owner mutation for queued REVOKE cancellation" );
++        marker_wait( "queued", name );
++        {
++            DWORD start = GetTickCount();
++            while (!loop_observation->owner_updating && GetTickCount() - start < 1000) Sleep( 1 );
++        }
++        check( loop_observation->owner_updating && !loop_observation->mutation_done,
++               "queued REVOKE leaves authoritative owner fence pending before recipient death" );
++        if (!loop_observation->owner_updating || loop_observation->mutation_done)
++            fatal( "queued REVOKE did not preserve owner fence" );
++        marker_create( "verified", name );
++    }
++    packet = request( &executor, CMD_CANCEL_END, 0, 0 );
++    check( !packet.status, "survivor command controller responds after queued recipient death" );
++    check( WaitForSingleObject( executor.process, 0 ) == WAIT_TIMEOUT,
++           "queued recipient cancellation preserves surviving executor process" );
++    if (!phase)
++    {
++        check( !packet.status && packet.state == PRIVATE_MAPPING_LEASE_REVOKED &&
++               packet.lease_status == (unsigned int)STATUS_CANCELLED,
++               "queued MAP recipient death cancels lease instead of admitting an alias" );
++    }
++    else
++    {
++        operation( target, CMD_MUTATION_WAIT, 0, "owner mutation drains after REVOKE retry to survivor and native ACK" );
++        packet = request( &executor, CMD_QUERY, 0, 0 );
++        check( !packet.status && packet.state == PRIVATE_MAPPING_LEASE_REVOKED,
++               "cancelled queued REVOKE ultimately reaches acknowledged revoked lease" );
++    }
++    read_value( &executor, PROBE_FAULT, "queued recipient cancellation leaves no readable alias" );
++    write_value( &executor, 0x96, PROBE_FAULT, "queued recipient cancellation leaves no writable alias" );
++    drop( &executor );
++    if (phase) operation( target, CMD_PROTECT, PAGE_READWRITE, "restore target after queued REVOKE cancellation" );
++    acquire( &executor, target, FILE_READ_DATA | FILE_WRITE_DATA );
++    read_value( &executor, 0x41, "survivor acquires healthy later lease after queued cancellation" );
++    drop( &executor ); exit_child( &executor );
++}
++static int cancellation_main( unsigned int phases )
++{
++    struct child target;
++    HANDLE observation;
++    char name[128];
++    sprintf( name, "a1b-live-view-observation-%lu", GetCurrentProcessId() );
++    observation = CreateFileMappingA( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0,
++                                     sizeof(*loop_observation), name );
++    if (!observation || !(loop_observation = MapViewOfFile( observation, FILE_MAP_ALL_ACCESS, 0, 0, 0 )))
++        fatal( "create cancellation observation" );
++    target = spawn_child( "target", 19 );
++    operation( &target, CMD_ALLOC, 0x41, "target allocates coherent backing for cancellation cases" );
++    if (phases & 1) queued_recipient_cancel( &target, 0 );
++    if (phases & 2) queued_recipient_cancel( &target, 1 );
++    operation( &target, CMD_FREE, 0, "target releases backing after queued cancellation cases" );
++    exit_child( &target );
++    UnmapViewOfFile( loop_observation ); CloseHandle( observation );
++    printf( "a1b-live-private-view: %ld checks, %ld failures (queued cancellation)\n", checks, failures );
++    return !!failures;
+ }
+ static void pending_acquire_race( struct child *executor, struct child *target )
+ {
+@@ -714,20 +932,17 @@ static void pending_acquire_race( struct child *executor, struct child *target )
+     marker_delete( "entered", "map" ); marker_delete( "release", "map" );
+     marker_create( "gate", "map" );
+     packet = request( executor, CMD_BEGIN_ACQUIRE, FILE_READ_DATA | FILE_WRITE_DATA, target->pid );
+-    check( !packet.status, "server records pending lease before native map gate" );
++    check( !packet.status, "start asynchronous lease acquisition before native map gate" );
+     if (packet.status) fatal( "begin gated acquire" );
+     marker_wait( "entered", "map" );
+     operation( target, CMD_MUTATION_BEGIN, PAGE_READONLY, "start target mutation while lease MAP remains pending" );
+     start = GetTickCount();
+     do
+     {
+-        packet = request( target, CMD_OWNER_STATE, 0, 0 );
+-        if (packet.status) fatal( "query authoritative owner transaction fence" );
+-        if (!packet.state) Sleep( 1 );
+-    } while (!packet.state && GetTickCount() - start < 1000);
+-    check( packet.state, "authoritative owner transaction fences pending acquisition before map resumes" );
+-    packet = request( target, CMD_MUTATION_POLL, 0, 0 );
+-    check( packet.status == (unsigned int)STATUS_PENDING,
++        if (!loop_observation->owner_updating) Sleep( 1 );
++    } while (!loop_observation->owner_updating && GetTickCount() - start < 1000);
++    check( loop_observation->owner_updating, "authoritative owner transaction fences pending acquisition before map resumes" );
++    check( !loop_observation->mutation_done,
+            "owner mutation waits for pending lease revocation" );
+     marker_create( "release", "map" );
+     packet = request( executor, CMD_END_ACQUIRE, 0, 0 );
+@@ -818,7 +1033,26 @@ static int parent_main(void)
+     operation( &executor, CMD_COLLISION_REMOVE, 0, "remove owned native collision and restore noaccess reservation" );
+     read_value( &executor, PROBE_FAULT, "removed collision leaves original guest range inaccessible" );
+     injected_map_failure( &executor, &a );
++    {
++        struct packet packet = request( &executor, CMD_DENIED_ACQUIRE, 0, a.pid );
++        check( packet.status == (unsigned int)STATUS_ACCESS_DENIED,
++               "insufficient target process handle rights deny alias admission" );
++        memset( &packet, 0, sizeof(packet) );
++        packet.target_pid = a.pid; packet.value = FILE_READ_DATA;
++        check( acquire_lease( &packet, FALSE ) == STATUS_NOT_SUPPORTED,
++               "ordinary default-mode consumer cannot acquire managed target alias" );
++    }
+     initial = acquire( &executor, &a, FILE_READ_DATA | FILE_WRITE_DATA );
++    {
++        struct packet packet = request( &executor, CMD_STALE_QUERY, 0, 0 );
++        check( packet.status == (unsigned int)STATUS_INVALID_PARAMETER, "stale lease token is rejected" );
++        packet = request( &executor, CMD_STALE_QUERY, 1, 0 );
++        check( packet.status == (unsigned int)STATUS_INVALID_PARAMETER, "stale lease generation is rejected" );
++        packet = request( &executor, CMD_QUERY, 0, 0 );
++        check( !packet.status && packet.state == PRIVATE_MAPPING_LEASE_LIVE &&
++               packet.token == initial.token && packet.generation == initial.generation,
++               "rejected stale requests preserve the acknowledged live lease" );
++    }
+     read_value( &executor, 0x41, "ordinary executor pointer sees A's live byte" );
+     {
+         struct packet packet = request_range( &executor, CMD_READ, 0, 0, PROBE_SIZE - 1, 0 );
+@@ -849,7 +1083,7 @@ static int parent_main(void)
+     read_value( &a, 0x71, "failed read-only alias write preserves target bytes" );
+     drop( &executor );
+ 
+-    queued_apc_thread_death( &executor, &a );
++    consumer_thread_lifetime( &executor, &a );
+     pending_acquire_race( &executor, &a );
+     revoke_ack_barrier( &executor, &a );
+     acquire( &executor, &a, FILE_READ_DATA | FILE_WRITE_DATA );
+@@ -953,7 +1187,13 @@ static int parent_main(void)
+     }
+     drop( &executor );
+     acquire( &executor, &b, FILE_READ_DATA | FILE_WRITE_DATA );
++    operation( &b, CMD_WATCH_NATIVE_PID, executor.native_pid, "watch original executor Linux lifetime" );
+     exit_child( &executor );
++    {
++        struct packet packet = request( &b, CMD_PROTECT, PAGE_READWRITE, 0 );
++        check( !packet.status && packet.native_dead,
++               "old consumer lease drains only after pidfd-confirmed native death" );
++    }
+     injected_revoke_failure( &b );
+     operation( &b, CMD_FREE, 0, "target release after OS-confirmed executor death never hangs" );
+     exit_child( &b );
+@@ -961,9 +1201,40 @@ static int parent_main(void)
+     printf( "a1b-live-private-view: %ld checks, %ld failures\n", checks, failures );
+     return !!failures;
+ }
++static int backing_disabled_main(void)
++{
++    struct child target, executor;
++    struct packet packet;
++    HANDLE observation;
++    char name[128];
++    if (!getenv( "A1B_DISABLE_BACKING" )) fatal( "negative fixture requires backing opt-in absent" );
++    sprintf( name, "a1b-live-view-observation-%lu", GetCurrentProcessId() );
++    observation = CreateFileMappingA( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0,
++                                     sizeof(*loop_observation), name );
++    if (!observation || !(loop_observation = MapViewOfFile( observation, FILE_MAP_ALL_ACCESS, 0, 0, 0 )))
++        fatal( "create negative fixture observation" );
++    target = spawn_child( "target", 1 ); executor = spawn_child( "executor", 2 );
++    operation( &target, CMD_ALLOC, 0x41, "backing-disabled target ordinary private allocation works" );
++    packet = request( &executor, CMD_ACQUIRE, FILE_READ_DATA | FILE_WRITE_DATA, target.pid );
++    check( packet.status == (unsigned int)STATUS_NOT_FOUND,
++           "backing default-off creates no eligible foreign mapping" );
++    if (!packet.status) fatal( "disabled backing unexpectedly admitted a lease" );
++    read_value( &executor, PROBE_FAULT, "backing-disabled executor ordinary read stays inaccessible" );
++    write_value( &executor, 0x99, PROBE_FAULT, "backing-disabled executor ordinary write stays inaccessible" );
++    read_value( &target, 0x41, "denied default-off admission preserves target bytes" );
++    operation( &target, CMD_FREE, 0, "backing-disabled target releases normally" );
++    exit_child( &executor ); exit_child( &target );
++    UnmapViewOfFile( loop_observation ); CloseHandle( observation );
++    printf( "a1b-live-private-view: %ld checks, %ld failures (backing default-off)\n", checks, failures );
++    return !!failures;
++}
+ int main( int argc, char **argv )
+ {
+     setvbuf( stdout, NULL, _IONBF, 0 );
++    if (argc == 2 && !strcmp( argv[1], "--cancel-queued" )) return cancellation_main( 3 );
++    if (argc == 2 && !strcmp( argv[1], "--cancel-map" )) return cancellation_main( 1 );
++    if (argc == 2 && !strcmp( argv[1], "--cancel-revoke" )) return cancellation_main( 2 );
++    if (argc == 2 && !strcmp( argv[1], "--backing-off" )) return backing_disabled_main();
+     if (argc == 4) return child_main( argv[1], argv[2], argv[3] );
+     if (argc != 1) return 2;
+     return parent_main();
+diff --git a/loader/tests/a1b-live-private-view-unix.c b/loader/tests/a1b-live-private-view-unix.c
+index 7e9a788..e6a49f4 100644
+--- a/loader/tests/a1b-live-private-view-unix.c
++++ b/loader/tests/a1b-live-private-view-unix.c
+@@ -16,6 +16,8 @@
+ #include <unistd.h>
+ #include <poll.h>
+ #include <sys/syscall.h>
++#include <signal.h>
++#include <time.h>
+ #include "ntstatus.h"
+ #define WIN32_NO_STATUS
+ #include "windef.h"
+@@ -32,6 +34,49 @@ static size_t collision_size;
+ static int reservation_fd = -1;
+ static off_t reservation_offset;
+ static int watched_pidfd = -1;
++/* Test-only recipient control: no runtime scheduler hooks or fabricated ACK.
++ * Mask only the main's Wine system-APC notification signal. SIGQUIT stays live
++ * so TerminateThread performs the real server queue cancellation. */
++static NTSTATUS cancellation_barrier( unsigned int action, UINT64 phase )
++{
++    const char *directory = getenv( "A1B_VIEW_GATE_DIR" );
++    char path[1024];
++    struct timespec start, now, delay = { 0, 1000000 };
++    sigset_t mask;
++    int fd;
++    if (!directory || phase > 1) return STATUS_INVALID_PARAMETER;
++    if (action == 5)
++    {
++        sigemptyset( &mask ); sigaddset( &mask, SIGUSR1 );
++        if (sigprocmask( SIG_BLOCK, &mask, NULL )) return STATUS_UNSUCCESSFUL;
++        sigemptyset( &mask ); sigaddset( &mask, SIGQUIT );
++        if (sigprocmask( SIG_UNBLOCK, &mask, NULL )) return STATUS_UNSUCCESSFUL;
++        snprintf( path, sizeof(path), "%s/parked-%s", directory, phase ? "revoke" : "map" );
++        if ((fd = open( path, O_WRONLY | O_CREAT | O_TRUNC, 0600 )) == -1) return STATUS_UNSUCCESSFUL;
++        close( fd );
++        sigprocmask( SIG_BLOCK, NULL, &mask );
++        fprintf( stderr, "a1b-cancellation: native-main SIGUSR1_blocked=%d SIGQUIT_blocked=%d\n",
++                 sigismember( &mask, SIGUSR1 ), sigismember( &mask, SIGQUIT ) );
++    }
++    else
++    {
++        sigprocmask( SIG_BLOCK, NULL, &mask );
++        fprintf( stderr, "a1b-cancellation: native-survivor action=%u SIGUSR1_blocked=%d SIGQUIT_blocked=%d\n",
++                 action, sigismember( &mask, SIGUSR1 ), sigismember( &mask, SIGQUIT ) );
++        snprintf( path, sizeof(path), "%s/%s-%s", directory,
++                  action == 6 ? "parked" : "kill", phase ? "revoke" : "map" );
++    }
++    clock_gettime( CLOCK_MONOTONIC, &start );
++    do
++    {
++        if (action != 5 && !access( path, F_OK )) return STATUS_SUCCESS;
++        nanosleep( &delay, NULL );
++        clock_gettime( CLOCK_MONOTONIC, &now );
++    } while (now.tv_sec - start.tv_sec < 10);
++    fprintf( stderr, "a1b-cancellation: native barrier timed out action=%u phase=%s\n",
++             action, phase ? "revoke" : "map" );
++    return STATUS_TIMEOUT;
++}
+ static NTSTATUS collision_call( void *arguments )
+ {
+     struct collision_args *args = arguments;
+@@ -42,6 +87,27 @@ static NTSTATUS collision_call( void *arguments )
+     unsigned long start, end, offset, inode;
+     unsigned int device_major, device_minor;
+     BOOL reserved = FALSE;
++    if (args->action == 8)
++    {
++        static const char *paths[] = { "/proc/self/maps", "/proc/thread-self/maps" };
++        unsigned int index, count;
++        for (index = 0; index < sizeof(paths) / sizeof(paths[0]); ++index)
++        {
++            count = 0;
++            if (!(maps = fopen( paths[index], "r" ))) return STATUS_UNSUCCESSFUL;
++            while (fgets( line, sizeof(line), maps ))
++            {
++                ++count;
++                if (sscanf( line, "%lx-%lx", &start, &end ) == 2 && start <= 0x23010000 && end > 0x23000000)
++                    fprintf( stderr, "a1b-cancellation: native-survivor %s PROBE mapping %s", paths[index], line );
++            }
++            fclose( maps );
++            fprintf( stderr, "a1b-cancellation: native-survivor %s mapping_count=%u\n", paths[index], count );
++        }
++        return STATUS_SUCCESS;
++    }
++    if (args->action >= 5 && args->action <= 7)
++        return cancellation_barrier( args->action, args->address );
+     if (args->action == 2)
+     {
+         args->address = getpid();
+diff --git a/server/mapping.c b/server/mapping.c
+index 798e22c..263fe0d 100644
+--- a/server/mapping.c
++++ b/server/mapping.c
+@@ -257,6 +257,32 @@ struct private_mapping_lease
+     int pidfd;
+ };
+ 
++static unsigned __int64 private_lease_trace_sequence;
++static int private_lease_trace_enabled = -1;
++
++static void trace_private_lease( struct private_mapping_lease *lease, const char *event,
++                                 const char *detail )
++{
++    struct private_mapping_lease *other;
++    unsigned int leases = 0;
++
++    if (private_lease_trace_enabled == -1)
++    {
++        const char *value = getenv( "WINE_PRIVATE_MAPPING_TRACE" );
++        private_lease_trace_enabled = value && !strcmp( value, "1" );
++    }
++    if (!debug_level && !private_lease_trace_enabled) return;
++    LIST_FOR_EACH_ENTRY( other, &lease->mapping->leases, struct private_mapping_lease, entry ) ++leases;
++    fprintf( stderr, "private-lease event=%s mapping_id=%llu lease=%llu generation=%llu "
++             "owner_pid=%04x consumer_pid=%04x handle=%04x state=%u status=%08x apc_count=%u "
++             "mapping_leases=%u detail=%s seq=%llu time=%llu\n",
++             event, (unsigned long long)lease->mapping->id, (unsigned long long)lease->token,
++             (unsigned long long)lease->generation, lease->mapping->owner->id,
++             lease->consumer->id, lease->handle, lease->state, lease->status, lease->apc_count,
++             leases, detail, (unsigned long long)++private_lease_trace_sequence,
++             (unsigned long long)monotonic_time );
++}
++
+ static void private_mapping_dump( struct object *obj, int verbose );
+ static struct fd *private_mapping_get_fd( struct object *obj );
+ static void private_mapping_destroy( struct object *obj );
+@@ -1476,15 +1502,22 @@ static void private_lease_revoked( struct private_mapping_lease *lease )
+ {
+     struct private_mapping *mapping = lease->mapping;
+     if (lease->state == PRIVATE_MAPPING_LEASE_REVOKED) return;
++    trace_private_lease( lease, "revoking_complete", "before_state_change" );
+     lease->state = PRIVATE_MAPPING_LEASE_REVOKED;
+     if (lease->status == STATUS_PENDING) lease->status = STATUS_CANCELLED;
+     if (lease->death_timer) remove_timeout_user( lease->death_timer );
+     lease->death_timer = NULL;
+     list_remove( &lease->entry );
+-    if (!lease->apc_count) set_event( lease->ready );
++    trace_private_lease( lease, "revoked", "after_list_remove" );
++    if (!lease->apc_count)
++    {
++        set_event( lease->ready );
++        trace_private_lease( lease, "ready", "lease_revoked" );
++    }
+     if (list_empty( &mapping->leases ))
+     {
+         set_event( mapping->ready );
++        trace_private_lease( lease, "ready", "mapping_no_leases" );
+         if (mapping->exit_waiting)
+         {
+             mapping->exit_waiting = 0;
+@@ -1499,13 +1532,19 @@ void private_mapping_apc_finished( struct object *obj, int cancelled )
+ {
+     struct private_mapping_lease *lease = (struct private_mapping_lease *)obj;
+     assert( lease->apc_count );
++    trace_private_lease( lease, "apc_finished", cancelled ? "cancelled_before_count_drop" : "completed_before_count_drop" );
+     --lease->apc_count;
++    trace_private_lease( lease, "apc_count", "after_count_drop" );
+     if (cancelled && lease->state == PRIVATE_MAPPING_LEASE_PENDING)
+     {
+         lease->status = STATUS_CANCELLED;
+         private_lease_revoked( lease );
+     }
+-    else if (!lease->apc_count && lease->state == PRIVATE_MAPPING_LEASE_REVOKED) set_event( lease->ready );
++    else if (!lease->apc_count && lease->state == PRIVATE_MAPPING_LEASE_REVOKED)
++    {
++        set_event( lease->ready );
++        trace_private_lease( lease, "ready", "apcs_drained" );
++    }
+ }
+ 
+ static int queue_private_lease_apc( struct private_mapping_lease *lease, int revoke )
+@@ -1519,8 +1558,10 @@ static int queue_private_lease_apc( struct private_mapping_lease *lease, int rev
+     call.private_mapping.generation = lease->generation;
+     call.private_mapping.revoke = revoke;
+     ++lease->apc_count;
++    trace_private_lease( lease, "queue", revoke ? "REVOKE" : "MAP" );
+     if (thread_queue_apc( lease->consumer, NULL, &lease->obj, &call )) return 1;
+     if (lease->apc_count > previous) --lease->apc_count;
++    trace_private_lease( lease, "queue_failed", revoke ? "REVOKE" : "MAP" );
+     return 0;
+ }
+ 
+@@ -1529,10 +1570,18 @@ static void private_lease_check_death( void *private )
+     struct private_mapping_lease *lease = private;
+     struct pollfd fd = { lease->pidfd, POLLIN, 0 };
+     lease->death_timer = NULL;
+-    if (poll( &fd, 1, 0 ) == 1 && (fd.revents & POLLIN)) private_lease_revoked( lease );
++    if (poll( &fd, 1, 0 ) == 1 && (fd.revents & POLLIN))
++    {
++        trace_private_lease( lease, "death", "pidfd_readable" );
++        private_lease_revoked( lease );
++    }
+     else
+     {
+-        if (!lease->apc_count) queue_private_lease_apc( lease, 1 );
++        if (!lease->apc_count)
++        {
++            trace_private_lease( lease, "retry", "no_apc_pidfd_not_readable" );
++            queue_private_lease_apc( lease, 1 );
++        }
+         lease->death_timer = add_timeout_user( -TICKS_PER_SEC / 10, private_lease_check_death, lease );
+     }
+ }
+@@ -1542,6 +1591,7 @@ static void revoke_private_lease( struct private_mapping_lease *lease )
+     if (lease->state >= PRIVATE_MAPPING_LEASE_REVOKING) return;
+     reset_event( lease->ready );
+     lease->state = PRIVATE_MAPPING_LEASE_REVOKING;
++    trace_private_lease( lease, "revoking", "ready_reset" );
+     /* Queue failure is not successful revocation. Keep the lease fenced until
+      * a genuine acknowledgement or observed OS process death. */
+     queue_private_lease_apc( lease, 1 );
+@@ -1843,11 +1893,13 @@ DECL_HANDLER(confirm_private_mapping_lease)
+     else
+     {
+         lease->status = req->status;
++        trace_private_lease( lease, "confirm", "client_status" );
+         if (req->status) private_lease_revoked( lease );
+         else
+         {
+             lease->state = PRIVATE_MAPPING_LEASE_LIVE;
+             set_event( lease->ready );
++            trace_private_lease( lease, "ready", "map_live" );
+         }
+     }
+     release_object( lease );
+@@ -1868,7 +1920,11 @@ DECL_HANDLER(ack_private_mapping_revoke)
+     if (!(lease = get_private_lease( req->handle, req->token, req->generation ))) return;
+     if (lease->state != PRIVATE_MAPPING_LEASE_REVOKING && lease->state != PRIVATE_MAPPING_LEASE_REVOKED)
+         set_error( STATUS_INVALID_PARAMETER );
+-    else private_lease_revoked( lease );
++    else
++    {
++        trace_private_lease( lease, "ack", "revoke_client" );
++        private_lease_revoked( lease );
++    }
+     release_object( lease );
+ }
+ 
+diff --git a/server/thread.c b/server/thread.c
+index 35b0129..aaa80f0 100644
+--- a/server/thread.c
++++ b/server/thread.c
+@@ -92,14 +92,52 @@ struct thread_apc
+     struct object      *owner;    /* object that queued this apc */
+     struct reserve     *reserve;  /* reserve object associated with apc object */
+     int                 executed; /* has it been executed by the client? */
++    unsigned __int64    trace_id; /* server-local private APC correlation */
++    process_id_t        recipient_pid;
++    thread_id_t         recipient_tid;
++    int                 recipient_unix_pid, recipient_unix_tid;
+     union apc_call      call;     /* call arguments */
+     union apc_result    result;   /* call results once executed */
+ };
+ 
++static unsigned __int64 private_apc_trace_serial;
++static unsigned __int64 private_apc_trace_sequence;
++static int private_apc_trace_enabled = -1;
++static inline int is_thread_suspended( struct thread *thread );
++
++/* Use wineserver's ordinary debug switch (+server), or opt into only these
++ * experimental diagnostics. Retain IDs rather than a thread reference so
++ * teardown is observable; tracing has no scheduling side effects. */
++static void trace_private_apc( struct thread_apc *apc, struct thread *thread,
++                               const char *event, const char *detail )
++{
++    if (apc->call.type != APC_PRIVATE_MAPPING) return;
++    if (private_apc_trace_enabled == -1)
++    {
++        const char *value = getenv( "WINE_PRIVATE_MAPPING_TRACE" );
++        private_apc_trace_enabled = value && !strcmp( value, "1" );
++    }
++    if (!debug_level && !private_apc_trace_enabled) return;
++    fprintf( stderr, "private-apc event=%s op=%s id=%llu apc=%p lease=%llu generation=%llu "
++             "handle=%04x recipient_pid=%04x recipient_tid=%04x unix_pid=%d unix_tid=%d "
++             "state=%d suspended=%d wait_flags=%08x detail=%s seq=%llu time=%llu result_type=%u\n",
++             event, apc->call.private_mapping.revoke ? "REVOKE" : "MAP",
++             (unsigned long long)apc->trace_id, apc,
++             (unsigned long long)apc->call.private_mapping.token,
++             (unsigned long long)apc->call.private_mapping.generation,
++             apc->call.private_mapping.handle, apc->recipient_pid, apc->recipient_tid,
++             apc->recipient_unix_pid, apc->recipient_unix_tid,
++             thread ? thread->state : -1,
++             thread ? is_thread_suspended( thread ) : -1,
++             thread && thread->wait ? thread->wait->flags : 0, detail,
++             (unsigned long long)++private_apc_trace_sequence, (unsigned long long)monotonic_time,
++             apc->result.type );
++}
++
+ static void dump_thread_apc( struct object *obj, int verbose );
+ static struct object *thread_apc_get_sync( struct object *obj );
+ static void thread_apc_destroy( struct object *obj );
+-static void clear_apc_queue( struct list *queue );
++static void clear_apc_queue( struct thread *thread, struct list *queue );
+ 
+ static const struct object_ops thread_apc_ops =
+ {
+@@ -622,8 +660,8 @@ static void cleanup_thread( struct thread *thread )
+         release_object( thread->context );
+         thread->context = NULL;
+     }
+-    clear_apc_queue( &thread->system_apc );
+-    clear_apc_queue( &thread->user_apc );
++    clear_apc_queue( thread, &thread->system_apc );
++    clear_apc_queue( thread, &thread->user_apc );
+     free( thread->req_data );
+     free( thread->reply_data );
+     if (thread->request_fd) release_object( thread->request_fd );
+@@ -719,7 +757,10 @@ static void thread_apc_destroy( struct object *obj )
+         else if (apc->call.type == APC_ASYNC_IO)
+             async_set_result( apc->owner, apc->call.async_io.status, 0 );
+         else if (apc->call.type == APC_PRIVATE_MAPPING && !apc->executed)
++        {
++            trace_private_apc( apc, NULL, "cancelled", "destroy_unfinished" );
+             private_mapping_apc_finished( apc->owner, 1 );
++        }
+         release_object( apc->owner );
+     }
+     if (apc->sync) release_object( apc->sync );
+@@ -740,6 +781,9 @@ static struct thread_apc *create_apc( struct object *owner, const union apc_call
+         apc->owner       = owner;
+         apc->reserve     = NULL;
+         apc->executed    = 0;
++        apc->trace_id    = apc->call.type == APC_PRIVATE_MAPPING ? ++private_apc_trace_serial : 0;
++        apc->recipient_pid = apc->recipient_tid = 0;
++        apc->recipient_unix_pid = apc->recipient_unix_tid = -1;
+         apc->result.type = APC_NONE;
+         if (owner) grab_object( owner );
+ 
+@@ -1460,6 +1504,7 @@ static inline int is_in_apc_wait( struct thread *thread )
+ static int queue_apc( struct process *process, struct thread *thread, struct thread_apc *apc )
+ {
+     struct list *queue;
++    const char *route = "explicit";
+ 
+     if (thread && thread->state == TERMINATED && process)
+         thread = NULL;
+@@ -1475,6 +1520,7 @@ static int queue_apc( struct process *process, struct thread *thread, struct thr
+             if (is_in_apc_wait( candidate ))
+             {
+                 thread = candidate;
++                route = "waiting";
+                 break;
+             }
+         }
+@@ -1486,21 +1532,34 @@ static int queue_apc( struct process *process, struct thread *thread, struct thr
+                 if (send_thread_signal( candidate, SIGUSR1 ))
+                 {
+                     thread = candidate;
++                    route = "signal";
+                     break;
+                 }
+             }
+         }
+-        if (!thread) return 0;  /* nothing found */
++        if (!thread)
++        {
++            trace_private_apc( apc, NULL, "queue_failed", "no_recipient" );
++            return 0;
++        }
+         if (!(queue = get_apc_queue( thread, apc->call.type ))) return 1;
+     }
+     else
+     {
+-        if (thread->state == TERMINATED) return 0;
++        if (thread->state == TERMINATED)
++        {
++            trace_private_apc( apc, thread, "queue_failed", "terminated" );
++            return 0;
++        }
+         if (!(queue = get_apc_queue( thread, apc->call.type ))) return 1;
+         /* send signal for system APCs if needed */
+         if (queue == &thread->system_apc && list_empty( queue ) && !is_in_apc_wait( thread ))
+         {
+-            if (!send_thread_signal( thread, SIGUSR1 )) return 0;
++            if (!send_thread_signal( thread, SIGUSR1 ))
++            {
++                trace_private_apc( apc, thread, "queue_failed", "signal_failed" );
++                return 0;
++            }
+         }
+         /* cancel a possible previous APC with the same owner */
+         if (apc->owner) thread_cancel_apc( thread, apc->owner, apc->call.type );
+@@ -1508,6 +1567,11 @@ static int queue_apc( struct process *process, struct thread *thread, struct thr
+ 
+     grab_object( apc );
+     list_add_tail( queue, &apc->entry );
++    apc->recipient_pid = thread->process->id;
++    apc->recipient_tid = thread->id;
++    apc->recipient_unix_pid = thread->unix_pid;
++    apc->recipient_unix_tid = thread->unix_tid;
++    trace_private_apc( apc, thread, "queued", route );
+     if (!list_prev( queue, &apc->entry ))  /* first one */
+     {
+         if (apc->call.type == APC_USER && thread->alert_sync)
+@@ -1542,6 +1606,7 @@ void thread_cancel_apc( struct thread *thread, struct object *owner, enum apc_ty
+     {
+         if (apc->owner != owner) continue;
+         list_remove( &apc->entry );
++        trace_private_apc( apc, thread, "cancelled", "owner_replaced" );
+         if (apc->call.type == APC_PRIVATE_MAPPING) private_mapping_apc_finished( apc->owner, 1 );
+         apc->executed = 1;
+         signal_sync( apc->sync );
+@@ -1562,6 +1627,7 @@ static struct thread_apc *thread_dequeue_apc( struct thread *thread, int system
+     {
+         apc = LIST_ENTRY( ptr, struct thread_apc, entry );
+         list_remove( ptr );
++        trace_private_apc( apc, thread, "dequeued", system ? "system" : "user" );
+         if (list_empty( &thread->user_apc ) && thread->alert_sync)
+             reset_inproc_sync( thread->alert_sync );
+     }
+@@ -1569,7 +1635,7 @@ static struct thread_apc *thread_dequeue_apc( struct thread *thread, int system
+ }
+ 
+ /* clear an APC queue, cancelling all the APCs on it */
+-static void clear_apc_queue( struct list *queue )
++static void clear_apc_queue( struct thread *thread, struct list *queue )
+ {
+     struct list *ptr;
+ 
+@@ -1577,6 +1643,7 @@ static void clear_apc_queue( struct list *queue )
+     {
+         struct thread_apc *apc = LIST_ENTRY( ptr, struct thread_apc, entry );
+         list_remove( &apc->entry );
++        trace_private_apc( apc, thread, "cancelled", "thread_queue_cleared" );
+         if (apc->call.type == APC_PRIVATE_MAPPING) private_mapping_apc_finished( apc->owner, 1 );
+         apc->executed = 1;
+         signal_sync( apc->sync );
+@@ -2088,6 +2155,7 @@ DECL_HANDLER(select)
+         if (!(apc = (struct thread_apc *)get_handle_obj( current->process, req->prev_apc,
+                                                          0, &thread_apc_ops ))) return;
+         apc->result = *result;
++        trace_private_apc( apc, current, "completed", "client_result" );
+         if (apc->call.type == APC_PRIVATE_MAPPING) private_mapping_apc_finished( apc->owner, 0 );
+         apc->executed = 1;
+         if (apc->result.type == APC_CREATE_THREAD)  /* transfer the handle to the caller process */
+@@ -2117,9 +2185,11 @@ DECL_HANDLER(select)
+         if ((reply->apc_handle = alloc_handle( current->process, apc, SYNCHRONIZE, 0 )))
+         {
+             set_reply_data( &apc->call, sizeof(apc->call) );
++            trace_private_apc( apc, current, "delivered", "client_handle" );
+         }
+         else
+         {
++            trace_private_apc( apc, current, "cancelled", "handle_allocation_failed" );
+             if (apc->call.type == APC_PRIVATE_MAPPING) private_mapping_apc_finished( apc->owner, 1 );
+             apc->executed = 1;
+             signal_sync( apc->sync );
+
+diff --git a/loader/tests/a1b-live-private-view-run.py b/loader/tests/a1b-live-private-view-run.py
+new file mode 100644
+index 0000000..2fd3f86
+--- /dev/null
++++ b/loader/tests/a1b-live-private-view-run.py
+@@ -0,0 +1,175 @@
++#!/usr/bin/env python3
++# Benign disposable AMD64 proof runner. LGPL 2.1 or later.
++import datetime, hashlib, json, os, pathlib, subprocess, sys, time, re
++
++root = pathlib.Path(os.environ['A1B_PROOF_ROOT']).resolve()
++sdk = 'registry.gitlab.steamos.cloud/proton/steamrt4/sdk/x86_64@sha256:97526b794ce1a9bed5f891084462260b3a02399569f7438a3a57b5a253001db9'
++common = ['docker','run','--rm','--cpus=2','--memory=4g','--user',str(os.getuid())+':'+str(os.getgid()),
++          '-v',str(root/'wine-src')+':/src:ro','-v',str(root/'wine-obj')+':/build',
++          '-v',str(root/'fixture')+':/fixture','-w','/build',
++          '-e','HOME=/build/home','-e','XDG_CACHE_HOME=/build/cache']
++
++def input_hashes():
++    sources = json.loads((root/'runtime-source-verification.json').read_text())['source_hashes']
++    paths = [root/'wine-src'/name for name in sources]
++    paths += [root/'wine-src/loader/tests'/name for name in
++              ['a1b-live-private-view-pe.c','a1b-live-private-view-helper.c','a1b-live-private-view-unix.c','a1b-live-private-view-inject.c']]
++    paths += [root/'wine-obj'/name for name in
++              ['config.status','loader/wine','loader/wine-preloader','server/wineserver','dlls/ntdll/ntdll.so',
++               'dlls/ntdll/x86_64-windows/ntdll.dll','dlls/ntdll/tests/x86_64-windows/ntdll_test.exe']]
++    paths += [root/'proof-runner.py', root/'wine-src/loader/tests/a1b-live-private-view-run.py']
++    paths += [root/'fixture'/name for name in
++              ['a1b-live-private-view-pe.exe','executor/a1b-live-private-view-pe.exe',
++               'x86_64-windows/a1b-live-private-view-helper.dll','x86_64-unix/a1b-live-private-view-helper.so',
++               'a1b-live-private-view-inject.so']]
++    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths if p.is_file()}
++
++def cancellation_trace_contracts(name, controls):
++    events = []
++    for line in (root/(name+'.log')).read_text(errors='replace').splitlines():
++        match = re.search(r'(private-apc|private-lease) (event=.*)', line)
++        if match:
++            fields = dict(re.findall(r'(\w+)=(\S+)', match[2]))
++            fields['kind'] = match[1]; events.append(fields)
++    evidence = []; errors = []
++    expected = 1 if name.startswith(('cancel-map','cancel-revoke')) else 2
++    if len(controls) != expected: errors.append('missing authoritative recipient termination controls')
++    for control in controls:
++        queued = control['queued']; identifier = queued['id']; op = control['op']
++        matching = [(i,e) for i,e in enumerate(events) if e['kind'] == 'private-apc' and e.get('id') == identifier]
++        cancelled = next(((i,e) for i,e in matching if e.get('event') == 'cancelled'), None)
++        if not cancelled or cancelled[1].get('detail') != 'thread_queue_cleared':
++            errors.append(op+': missing real thread queue cancellation'); continue
++        if any(e.get('event') in ('dequeued','delivered','completed') for _,e in matching):
++            errors.append(op+': cancelled original APC reached dequeue/delivery/completion')
++        cancel_index = cancelled[0]
++        lease_events = [(i,e) for i,e in enumerate(events) if e['kind'] == 'private-lease' and
++                        e.get('lease') == queued['lease'] and e.get('generation') == queued['generation'] and
++                        e.get('consumer_pid') == queued['recipient_pid']]
++        if not any(i > cancel_index and e.get('event') == 'apc_count' and e.get('apc_count') == '0' for i,e in lease_events):
++            errors.append(op+': cancelled APC count did not drain')
++        result = {'op':op, 'cancelled_id':identifier, 'recipient_tid':queued['recipient_tid']}
++        if op == 'MAP':
++            if not any(i > cancel_index and e.get('event') == 'revoked' and e.get('status') == 'c0000120' for i,e in lease_events):
++                errors.append('MAP: cancelled lease missing STATUS_CANCELLED')
++        else:
++            retry = next(((i,e) for i,e in enumerate(events) if i > cancel_index and e['kind'] == 'private-apc' and
++                          e.get('event') == 'queued' and e.get('op') == 'REVOKE' and e.get('lease') == queued['lease'] and
++                          e.get('recipient_pid') == queued['recipient_pid'] and e.get('recipient_tid') != queued['recipient_tid']), None)
++            ack = next(((i,e) for i,e in lease_events if i > cancel_index and e.get('event') == 'ack'), None)
++            if not retry or not ack: errors.append('REVOKE: missing survivor retry or real client ACK')
++            else:
++                retry_index, retry_event = retry; ack_index = ack[0]
++                retry_events = [(i,e) for i,e in enumerate(events) if e['kind'] == 'private-apc' and e.get('id') == retry_event['id']]
++                if not any(retry_index < i < ack_index and e.get('event') == 'delivered' for i,e in retry_events):
++                    errors.append('REVOKE: native ACK did not follow survivor delivery')
++                if not any(e.get('event') == 'completed' and e.get('result_type') == '16' for _,e in retry_events):
++                    errors.append('REVOKE: survivor APC result did not finish')
++                if any(cancel_index < i < ack_index and e.get('event') in ('ready','revoked') for i,e in lease_events):
++                    errors.append('REVOKE: cancellation falsely completed revoke before native ACK')
++                result.update(retry_id=retry_event['id'], survivor_tid=retry_event['recipient_tid'], ack_sequence=ack[1]['seq'])
++        evidence.append(result)
++    return {'passed':not errors, 'evidence':evidence, 'errors':errors}
++
++def execute(name, argv):
++    before = input_hashes()
++    (root/(name+'-command.json')).write_text(json.dumps({'argv':argv},indent=2)+'\n')
++    start = datetime.datetime.now(datetime.timezone.utc).isoformat()
++    controls = []
++    with (root/(name+'.log')).open('w') as log:
++        p = subprocess.Popen(argv, stdout=log, stderr=subprocess.STDOUT)
++        if name.startswith('cancel-'):
++            armed = {}; queued = {}; seen = []; position = 0; killed = set()
++            directory = root/'fixture'/('gate-'+name)
++            while p.poll() is None:
++                with (root/(name+'.log')).open() as trace:
++                    trace.seek(position)
++                    data = trace.read()
++                    boundary = data.rfind('\n') + 1
++                    lines = data[:boundary].splitlines()
++                    position += boundary
++                for line in lines:
++                    if 'private-apc ' in line: seen.append(line.strip())
++                    match = re.search(r'cancellation-armed op=(MAP|REVOKE) recipient_pid=([0-9a-f]+) recipient_tid=([0-9a-f]+)', line)
++                    if match: armed[match[1]] = (int(match[2],16), int(match[3],16))
++                    if 'private-apc event=queued ' in line:
++                        fields = dict(re.findall(r'(\w+)=(\S+)', line))
++                        if fields.get('op') in ('MAP','REVOKE'):
++                            queued.setdefault(fields['op'], []).append(fields)
++                for op in ('MAP', 'REVOKE'):
++                    identity = directory/('armed-'+op.lower())
++                    if identity.exists():
++                        fields = identity.read_text().split()
++                        if len(fields) == 2: armed[op] = tuple(int(field,16) for field in fields)
++                for op, expected in armed.items():
++                    if op in killed: continue
++                    selected = next((f for f in queued.get(op, [])
++                                     if (int(f['recipient_pid'],16), int(f['recipient_tid'],16)) == expected), None)
++                    phase = op.lower()
++                    if not selected or not (directory/('parked-'+phase)).exists(): continue
++                    if any('event=dequeued ' in event and 'id='+selected['id']+' ' in event for event in seen):
++                        raise RuntimeError('Cancellation APC already dequeued; refuse invalid recipient kill')
++                    (directory/('queued-'+phase)).touch()
++                    if op == 'REVOKE' and not (directory/('verified-'+phase)).exists(): continue
++                    controls.append({'op':op, 'queued':selected, 'action':'authorize-real-recipient-termination'})
++                    (directory/('kill-'+phase)).touch(); killed.add(op)
++                time.sleep(0.005)
++        p.wait()
++    if controls:
++        (root/(name+'-controls.json')).write_text(json.dumps(controls,indent=2)+'\n')
++    after = input_hashes()
++    stable = before == after
++    invalid = 'Test inputs changed during the run; evidence invalid' if sys.argv[1] in ('run','vm') and not stable else None
++    contract = cancellation_trace_contracts(name, controls) if name.startswith('cancel-') else None
++    if contract and not contract['passed']:
++        invalid = 'Cancellation trace contract failed: '+ '; '.join(contract['errors'])
++    digest = hashlib.sha256((root/(name+'.log')).read_bytes()).hexdigest()
++    (root/(name+'-result.json')).write_text(json.dumps({'exit':p.returncode,'evidence_invalid_reason':invalid,'trace_contract':contract,'input_sha256_before':before,'input_sha256_after':after,'start':start,'end':datetime.datetime.now(datetime.timezone.utc).isoformat(),'log_sha256':digest},indent=2)+'\n')
++    print(name, 'exit',p.returncode, 'log',root/(name+'.log'),flush=True)
++    print('\n'.join((root/(name+'.log')).read_text(errors='replace').splitlines()[-20:]),flush=True)
++    return 1 if invalid else p.returncode
++
++if sys.argv[1] == 'runtime-build':
++    sys.exit(execute('runtime-build',common+[sdk,'bash','-lc','make -j1 V=1 dlls/ntdll/ntdll.so']))
++if sys.argv[1] == 'vm':
++    name = sys.argv[2]
++    env = ['-e','WINEARCH=win64','-e','WINEPREFIX=/fixture/prefix-'+name,
++           '-e','WINEDLLOVERRIDES=mscoree,mshtml=','-e','WINEDEBUG=-all']
++    tree = '/build'
++    if name == 'vm-on':
++        env += ['-e','WINE_SHARED_PRIVATE_BACKING=1']
++    if name == 'vm-baseline':
++        env += ['-v',os.environ['A1B_BASELINE_OBJECTS']+':/baseline:ro']
++        tree = '/baseline'
++    cmd = 'timeout --kill-after=15s 240s xvfb-run -a /src/tools/runtest -v -T '+tree+' -M ntdll.dll -p /build/dlls/ntdll/tests/x86_64-windows/ntdll_test.exe virtual\nfixture_status=$?\n'+tree+'/server/wineserver -k\nexit "$fixture_status"'
++    sys.exit(execute(name,common+env+[sdk,'bash','-lc',cmd]))
++if sys.argv[1] == 'build':
++    cmd = '''mkdir -p /fixture/x86_64-windows /fixture/x86_64-unix &&
++gcc -shared -fPIC -Wall -Wextra -o /fixture/a1b-live-private-view-inject.so /src/loader/tests/a1b-live-private-view-inject.c &&
++gcc -shared -fPIC -Wall -Wextra -D__WINESRC__ -I/src/include -I/build/include -o /fixture/x86_64-unix/a1b-live-private-view-helper.so /src/loader/tests/a1b-live-private-view-unix.c &&
++tools/winegcc/winegcc -shared -o /fixture/x86_64-windows/a1b-live-private-view-helper.dll --wine-objdir /build -b x86_64-w64-mingw32 -D_MSVCR_VER=0 -D__WINESRC__ -I/src/include -I/src/include/msvcrt -I/build/include -Wl,--entry,DllMain -Wl,--wine-builtin /src/loader/tests/a1b-live-private-view-helper.c -lntdll -lkernel32 &&
++tools/winegcc/winegcc -o /fixture/a1b-live-private-view-pe.exe --wine-objdir /build -b x86_64-w64-mingw32 -mconsole -Wall -Wextra -D_MSVCR_VER=0 -D__WINESRC__ -I/src/include -I/src/include/msvcrt -I/build/include -Wl,--large-address-aware /src/loader/tests/a1b-live-private-view-pe.c -lmsvcrt -lntdll -lkernel32 &&
++mkdir -p /fixture/executor &&
++tools/winegcc/winegcc -o /fixture/executor/a1b-live-private-view-pe.exe --wine-objdir /build -b x86_64-w64-mingw32 -mconsole -Wall -Wextra -D_MSVCR_VER=0 -D__WINESRC__ -I/src/include -I/src/include/msvcrt -I/build/include -Wl,--large-address-aware -Wl,--image-base,0x400002000000 -Wl,--disable-dynamicbase /src/loader/tests/a1b-live-private-view-pe.c -lmsvcrt -lntdll -lkernel32'''
++    sys.exit(execute('fixture-build-'+datetime.datetime.now(datetime.timezone.utc).strftime('%H%M%S'),common+[sdk,'bash','-lc',cmd]))
++if sys.argv[1] == 'run':
++    name = sys.argv[2]
++    debug = sys.argv[3] if len(sys.argv)>3 else '-all'
++    env = ['-e','WINEARCH=win64','-e','WINEPREFIX=/fixture/prefix-'+name,
++           '-e','WINEDLLOVERRIDES=mscoree,mshtml=','-e','WINEDEBUG='+debug,'-e','A1B_VERBOSE_CHECKS=1',
++           '-e','WINEDLLPATH=/fixture','-e','A1B_VIEW_GATE_DIR=/fixture/gate-'+name,
++           '-e','LD_PRELOAD=/fixture/a1b-live-private-view-inject.so',
++           '-e','WINE_PRIVATE_MAPPING_TRACE=1']
++    extra = ''
++    if name.startswith('cancel-'):
++        extra = ' --cancel-revoke' if name.startswith('cancel-revoke') else (' --cancel-map' if name.startswith('cancel-map') else ' --cancel-queued')
++    if name.startswith('backing-off'):
++        env += ['-e','A1B_DISABLE_BACKING=1']
++        extra = ' --backing-off'
++    cmd = '''mkdir -p "$A1B_VIEW_GATE_DIR" && timeout --kill-after=5s 180s xvfb-run -a /build/loader/wine /fixture/a1b-live-private-view-pe.exe
++fixture_status=$?
++/build/server/wineserver -k
++/build/server/wineserver -w
++exit "$fixture_status"'''
++    cmd = cmd.replace('/fixture/a1b-live-private-view-pe.exe\n', '/fixture/a1b-live-private-view-pe.exe'+extra+'\n')
++    sys.exit(execute(name,common+env+[sdk,'bash','-lc',cmd]))

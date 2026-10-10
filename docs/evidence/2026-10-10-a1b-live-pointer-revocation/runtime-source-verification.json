@@ -1,0 +1,19 @@
+{
+  "wine": "d262e37075efc5ce8c7be8e85a547fbb6c03ad3d",
+  "source_hashes": {
+    "server/protocol.def": "11e56964fb61c9b481e5d537261ef9da01336f99a3d562c38495b7dc7d660b29",
+    "server/mapping.c": "ca38df2ef9b769eba58444340c29942a3d344b2b56cd19761f6f704a3752aec0",
+    "server/process.c": "e1a3edd777321ed026f25c54a2b8a6660cab2e55c4f1c365be62bf2a5c6cefed",
+    "server/process.h": "ab9fece89620ede74614b58ad47904c52e55cf87ea3ddfa93a99e66c5cb78e7d",
+    "server/thread.c": "87204eb50edf700d7f6ac4ec6cdec5642e770332c1e94c568431888b89ea0887",
+    "dlls/ntdll/unix/virtual.c": "1111733983515b792d9100389102f5a0bdf51189c28c98db85978981056d8281",
+    "dlls/ntdll/unix/server.c": "3726a93ae5a6c9e570ae10752b82c89ce1bdc34c709eb279116b2d231d648387",
+    "dlls/ntdll/unix/unix_private.h": "f9d41d44e644aa2219acccf7687000a8e887a57bc6763f740f44c10158dd6681",
+    "include/wine/server_protocol.h": "d6bf09b16247827dc14bf646a1bf5d312c7c59a3e2f542c1cf085c3541c4be98",
+    "server/request_handlers.h": "d1f4ae2503f468b6b2eec0105704b37e59b391d9052c8f9802d7cb667ecad242",
+    "server/request_trace.h": "132c6496f48f6dbe20fc3f0dc32dce1aedf80e18868a38a389701d20c22b77b4",
+    "include/wine/managed_layout.h": "189250eacd82284c926f8a345c310838c1695012c6fb464b9f081496ae74079b",
+    "loader/preloader.c": "657c98dd218fca1ef3aaca91e0b87cbb2b7c15b1e6810897025bf8faa776b048"
+  },
+  "copied_from": "/home/eric/repos/proton-build-vanguard/a1b-live-private-view-20261010T"
+}

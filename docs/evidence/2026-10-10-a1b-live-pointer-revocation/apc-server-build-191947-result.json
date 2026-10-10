@@ -1,0 +1,11 @@
+{
+  "exit": 0,
+  "start": "2026-10-10T19:19:47.077291+00:00",
+  "end": "2026-10-10T19:19:48.856627+00:00",
+  "log_sha256": "67f40d63924989029313dde8cd10c33013781bfe6c2be700bcfe5d68996ade05",
+  "source_sha256": {
+    "server/thread.c": "7c91498fcbb9a7ce554470d3ff0180ce6e610c56fd8a35c67b354333eae8381b",
+    "server/mapping.c": "ea9d2823361f28c560304f1d8ccb2d73df9552d44e576d66e84faea29f1ca292"
+  },
+  "artifact_sha256": "3fbe5722d30ce68d61137fcdb3b3002f75ccbdf6ee72298a930702bc8d43001f"
+}

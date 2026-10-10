@@ -1,0 +1,115 @@
+wine: created the configuration directory '/fixture/prefix-vm-on'
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+wine: failed to start L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+virtual.c:4768: system page size 0x1000
+virtual.c:3235: private_backing_matrix protection_lifetime completed backing=1
+virtual.c:3360: shared_private_backing_probe state=resident parent_pid=32 child_pid=352 base=0000000000B10000 size=2000
+0160:virtual: 0 tests executed (0 marked as todo, 0 as flaky, 0 failures), 0 skipped.
+virtual.c:3379: shared_private_backing_probe state=free owner=child parent_state=resident parent_pid=32 child_pid=352 base=0000000000B10000 size=2000 exit=0
+virtual.c:1599: Test marked todo: 0: got commit 0x1fe000
+virtual.c:1599: Test marked todo: 1: got commit 0x1fe000
+virtual.c:1599: Test marked todo: 2: got commit 0x1fe000
+virtual.c:1599: Test marked todo: 3: got commit 0x1fe000
+virtual.c:1599: Test marked todo: 4: got commit 0x1fe000
+virtual.c:1599: Test marked todo: 5: got commit 0xfe000
+virtual.c:1616: Test marked todo: 5: got 0x2000.
+virtual.c:1617: Test marked todo: 5: got 0.
+virtual.c:1599: Test marked todo: 6: got commit 0xfe000
+virtual.c:1611: Test marked todo: 6: got 0x2000.
+virtual.c:1612: Test marked todo: 6: got 0.
+virtual.c:1599: Test marked todo: 7: got commit 0xfe000
+virtual.c:1599: Test marked todo: 8: got commit 0x10e000
+virtual.c:1599: Test marked todo: 9: got commit 0x13e000
+virtual.c:1599: Test marked todo: 10: got commit 0x13e000
+virtual.c:1599: Test marked todo: 11: got commit 0x13e000
+virtual.c:1599: Test marked todo: 12: got commit 0x13e000
+virtual.c:1599: Test marked todo: 13: got commit 0x3fe000
+virtual.c:1304: Test marked todo: unexpected stack committed size 1fe000, expected 4000
+virtual.c:1322: Test marked todo: unexpected stack committed size 1fe000, expected 9000
+virtual.c:1396: Test marked todo: unexpected stack committed size 1fe000, expected 6000
+virtual.c:1413: Test marked todo: unexpected RegionSize 2000, expected 6000
+virtual.c:1427: Test marked todo: unexpected stack committed size 1fe000, expected 1000
+virtual.c:1431: Test marked todo: unexpected RegionSize 1000, expected 2000
+virtual.c:1433: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1438: Test marked todo: unexpected stack committed size 1fe000, expected 2000
+virtual.c:1444: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1450: Test marked todo: unexpected Protect 0x4, expected 0x104
+virtual.c:1464: Test marked todo: unexpected RegionSize 1000, expected 2000
+virtual.c:1466: Test marked todo: unexpected Protect 0x4, expected 0x104
+virtual.c:1471: Test marked todo: unexpected stack committed size 1fc000, expected 2000
+virtual.c:1482: Test marked todo: unexpected prot 0x104, expected 0x4
+virtual.c:1485: Test marked todo: unexpected stack committed size 1fc000, expected 6000
+virtual.c:1489: Test marked todo: unexpected RegionSize 1000, expected 2000
+virtual.c:1491: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1502: Test marked todo: unexpected RegionSize 1000, expected 6000
+virtual.c:1504: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1515: Test marked todo: unexpected prot 0x104, expected 0x4
+virtual.c:1518: Test marked todo: unexpected stack committed size 1fc000, expected 6000
+virtual.c:1525: Test marked todo: unexpected stack committed size 1fc000, expected 6000
+virtual.c:1532: Test marked todo: unexpected stack committed size 1fc000, expected 6000
+virtual.c:1304: Test marked todo: unexpected stack committed size 3fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size 3fe000, expected 9000
+virtual.c:1396: Test marked todo: unexpected stack committed size 3fe000, expected 6000
+virtual.c:1413: Test marked todo: unexpected RegionSize 2000, expected 6000
+virtual.c:1427: Test marked todo: unexpected stack committed size 3fe000, expected 1000
+virtual.c:1431: Test marked todo: unexpected RegionSize 1000, expected 2000
+virtual.c:1433: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1438: Test marked todo: unexpected stack committed size 3fe000, expected 2000
+virtual.c:1444: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1450: Test marked todo: unexpected Protect 0x4, expected 0x104
+virtual.c:1464: Test marked todo: unexpected RegionSize 1000, expected 2000
+virtual.c:1466: Test marked todo: unexpected Protect 0x4, expected 0x104
+virtual.c:1471: Test marked todo: unexpected stack committed size 3fc000, expected 2000
+virtual.c:1482: Test marked todo: unexpected prot 0x104, expected 0x4
+virtual.c:1485: Test marked todo: unexpected stack committed size 3fc000, expected 6000
+virtual.c:1489: Test marked todo: unexpected RegionSize 1000, expected 2000
+virtual.c:1491: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1502: Test marked todo: unexpected RegionSize 1000, expected 6000
+virtual.c:1504: Test marked todo: unexpected Protect 0x104, expected 0x4
+virtual.c:1515: Test marked todo: unexpected prot 0x104, expected 0x4
+virtual.c:1518: Test marked todo: unexpected stack committed size 3fc000, expected 6000
+virtual.c:1525: Test marked todo: unexpected stack committed size 3fc000, expected 6000
+virtual.c:1532: Test marked todo: unexpected stack committed size 3fc000, expected 6000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:1304: Test marked todo: unexpected stack committed size fe000, expected 2000
+virtual.c:1322: Test marked todo: unexpected stack committed size fe000, expected 9000
+virtual.c:2383: XState EnabledFeatures 0xe7, EnabledSupervisorFeatures 0, EnabledVolatileFeatures e7.
+virtual.c:4342: Test marked todo: wrong size 1d1000
+virtual.c:4354: Test marked todo: wrong partial map
+virtual.c:4372: Test marked todo: wrong size 1d1000
+virtual.c:4384: Test marked todo: wrong partial map
+0020:virtual: 2503 tests executed (104 marked as todo, 0 as flaky, 0 failures), 0 skipped.
