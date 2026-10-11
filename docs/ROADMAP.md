@@ -16,7 +16,7 @@ epic, source ownership, prerequisites, and exit evidence.
 |---|---|---|
 | G0: reproducible scope | Linux/source/vendor baseline and SDK digest recorded; mode and Windows reference missing | Exact inputs, selected mode, and ordinary Windows reference for each experiment |
 | G1: authentic platform acceptance | Unknown; Linux acceptance has not been demonstrated | Genuine platform evidence accepted by the selected mode's verifier |
-| G2: execution architecture | E05 falsified attach behavior in tested x64 Wine A1; A1b shared-region, serial raw-continuation, bounded VEH abort/native-cleanup, scoped three-frame table unwind, compiler-finally, live-pointer/revocation, and three queued MAP/REVOKE cancellation runs passed; public attach and broader context gates remain open | Benign tests establish required attach/detach behavior and each required address-space/context/privileged-state contract |
+| G2: execution architecture | E05 falsified attach behavior in tested x64 Wine A1; A1b shared-region, serial raw-continuation, bounded VEH abort/native-cleanup, scoped three-frame table unwind, compiler-finally, live-pointer/revocation, and three queued MAP/REVOKE cancellation runs passed; four strict final-source runs of the opt-in concurrent buffered-dispatch experiment passed, including fail-closed same-KTHREAD admission; public attach semantics, broader lifetime and context gates remain open | Benign tests establish required attach/detach behavior and each required address-space/context/privileged-state contract |
 | G3: generic conformance | First x64 rundown increment exercised; baseline has 21 failures; Windows/i386 comparisons pending | Required API families, loader and transport pass scoped native-reference and failure/race tests |
 | G4: local Vanguard operation | Not demonstrated | Unmodified driver entry, stable service/driver lifecycle and real device communication |
 | G5: session and gameplay | Not demonstrated | Accepted anti-cheat session and completed connected League match without anti-cheat disconnect |
@@ -78,9 +78,26 @@ cannot be closed merely by implementing more Wine exports.
    Three further 52-check runs exercise queued MAP and REVOKE cancellation with
    trace-confirmed recipient identity, retry and native ACK; a 249-check
    tracing-only control also passes. The native SIGUSR1-mask/read barrier is a
-   fixture scheduling control. The next gates are ordinary pointer loads
-   through the unchanged E05 continuation, shared kernel state and correct
-   attached-process identity. Native Windows and i386 remain unproven.
+   fixture scheduling control. Three strict x64 runs of the bounded serial
+   dispatch chain and four strict final-source runs of the concurrent dispatch
+   experiment have passed. A distinct peer thread can dispatch concurrently;
+   a second outstanding request borrowing the same logical KTHREAD returns
+   `STATUS_DEVICE_BUSY`. The default-off full suite retains the same 37
+   normalized failure lines / 25 unique diagnostics as baseline. The next gates
+   are target lifetime, address reuse, native Windows and
+   i386. The immediate implementation under test is one
+   real `winedevice` managed EXECUTOR running the normal buffered driver IOCTL
+   path with declared read-only private mappings. It selects the executor with
+   `WINE_EXPERIMENTAL_DRIVER_EXECUTOR=1` and the current ranges with
+   `WINE_EXPERIMENTAL_ATTACH_RANGES=23000000:10000,24000000:10000`, alongside
+   `WINE_MANAGED_LAYOUT=v1:target:400000000000`,
+   `WINE_SHARED_PRIVATE_BACKING=1` and `WINE_SHARED_KERNEL_MEMORY=1`.
+   Its intended assertion chain is caller → A → B → A → caller with ordinary
+   same-VA pointer loads, a target-only mapping, stable creator identity,
+   changing attached-process identity, and preserved driver/kernel state. The
+   [experiment record](evidence/2026-10-10-e05-dispatch-chain.md)
+   records the three runs, one unrelated SignerSign todo per run, and the
+   baseline comparison. Native Windows and i386 remain unproven.
 3. **E02/E03/G3: rundown reference and i386.** Compare the published x64 increment
    on ordinary Windows and execute its 32-bit calling conventions and lifetime
    cases. Preserve baseline failures and todos, even when the new block passes.

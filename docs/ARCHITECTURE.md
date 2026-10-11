@@ -51,17 +51,48 @@ address-space-dependent memory exports gated and treat A1b as a hypothesis.
 The shared-region prerequisite below passed, followed by a bounded raw
 continuation prototype through caller → A → B → A → caller. A remote-memory
 copy or a target callback returning a copied value does not satisfy that
-continuation test. The prototype does not implement Wine attachment semantics.
+continuation test. The mapped-continuation prototype does not implement
+general Wine attachment semantics.
 General fault recovery, logical identity, target exit/unmap, concurrency and
 cleanup under those conditions remain open; the bounded VEH abort result below
 does not close those broader gates.
 
+The later [buffered-dispatch attachment-chain experiment](evidence/2026-10-10-e05-dispatch-chain.md)
+adds a separate opt-in path through SCM to one real `winedevice` managed
+EXECUTOR and its normal buffered IOCTL. Three strict x64 runs observed ordinary
+same-VA reads for caller → A → B → A → caller, including a target-only mapping,
+and recovered from a separate uncaught attached fault before a healthy follow-up
+IOCTL. This preserves the original E05 attach/detach sequence with added strict
+instrumentation and compiler-generated reads. It demonstrates only a bounded
+single-thread synchronous prototype with two declared 64 KiB read-only extents;
+it does not establish general/default Wine attach behavior, concurrency,
+target-lifetime safety, native Windows or i386 behavior. The default-off full
+suite has an exact normalized comparison against the retained baseline; both
+report the same failures, and the suite remains non-green.
+
+The follow-up [concurrent buffered-dispatch experiment](evidence/2026-10-11-e05-concurrent-dispatch.md)
+passes four strict x64 runs on its final source. Two distinct logical caller
+threads keep buffered IOCTLs outstanding together and use independent direct
+pointer views at the same addresses. Each view has distinct lane values and
+distinct `KTHREAD`, IRP, SystemBuffer, IO stack, `KAPC_STATE` and stack-local
+storage; a fault in one lane does not prevent the peer or a healthy follow-up
+pair. The dispatch coordinator rejects a second outstanding borrow of the
+same logical `KTHREAD` with `STATUS_DEVICE_BUSY`, preserving single-owner IRP
+completion. This is bounded to two synchronous logical threads, one in-flight
+request per logical thread, declared read-only extents and the tested shared
+driver/kernel arena. Runtime-provider writable-global coherence, async work,
+stack growth, target exit/unmap/address reuse, native Windows/i386 behavior,
+full Proton and Vanguard acceptance remain unproven. The default-off full suite
+has 21 existing failures and one skip; its normalized diagnostics match the
+retained baseline exactly.
+
 The staged proposal in the [A1b attachment-backing decision record](evidence/2026-10-10-a1b-attach-backing-design.md)
 starts with an opt-in wineserver backing primitive for eligible private
 reservations, then requires a separate executor boot and ordinary E05 pointer
-tests before enabling attach/detach. The bounded executor boot is now recorded
-in its own experiment, while the mapped-continuation prototypes still do not
-change Wine's public attachment behavior. Architecture review further narrows
+tests before enabling general attach/detach behavior. The bounded executor
+boot and the limited serial dispatch chain are now recorded in separate
+experiments; neither enables general/default Wine attachment behavior.
+Architecture review further narrows
 the executor candidate to an
 explicit managed process cohort: reserve a declared guest range and disjoint
 host-runtime slots before ELF/TEB startup, then boot a canonical host RTL using
@@ -74,9 +105,11 @@ user-address limit in the real Wine loader. The separate
 then validated a clean Linux AMD64 Wine process with canonical real ntdll,
 disjoint host bounds and declared low-page mappings. Together these results
 validate physical process layouts only; they do not provide foreign aliases,
-shared writable runtime state, logical attached-process identity or actual
-attach semantics. E05 still faults on ordinary target pointer reads and keeps
-all eight attachment expectations as todos.
+shared writable runtime state, logical attached-process identity or ordinary
+attach semantics. The original/default E05 path still faults on target pointer
+reads and retains eight `todo_wine` expectations. The later strict opt-in
+dispatch chain passes in three x64 runs within its bounded serial scope, as
+recorded above.
 
 A separate [process-local kernel allocation experiment](evidence/2026-10-10-a1b-kernel-arena.md)
 now validates an opt-in section-backed allocator within the driver-hosting
@@ -102,9 +135,10 @@ MAP and REVOKE recipient-cancellation cases with opt-in traces; REVOKE
 cancellation retried to a surviving thread and waited for a distinct native
 ACK. The fixture's native signal-mask/read barrier is an explicit scheduling
 control, not general scheduler conformance. The historical suspended-recipient
-stall remains inconclusive at the blocking-frame level. This closes the
-bounded memory and cancellation proofs, while A1b execution-chain integration
-and all eight E05 attach expectations remain pending. The published component
+stall remains inconclusive at the blocking-frame level. These A1b results close
+the bounded memory and cancellation proofs only; they did not close the E05
+attach expectations at that stage. The later opt-in serial dispatch result is
+recorded separately above. The published component
 retrieval and committed-source reruns are recorded in the
 [integration provenance](evidence/2026-10-10-a1b-live-pointer-revocation/integration-publication.md).
 
