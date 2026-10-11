@@ -271,6 +271,83 @@ this is a test scheduling control, not general scheduler conformance. The
 tracing-only control also passed. No native Windows, i386, full Proton or
 accepted Vanguard session is established.
 
+## E05 buffered dispatch attachment chain
+
+The current managed EXECUTOR prototype was evaluated with a benign compiled
+driver through the ordinary buffered-IOCTL dispatch path. The experiment and
+its evidence are tracked in the
+[dispatch-chain record](evidence/2026-10-10-e05-dispatch-chain.md). Three strict
+x64 runs have passed the bounded chain, each reporting 173 tests, one unrelated
+SignerSign todo, zero failures and zero skips. The default-off full-suite
+candidate matches the retained baseline's 37 normalized failure lines / 25
+unique messages, with no new failures. A loader/bootstrap smoke check is
+narrower evidence
+and does not count as dispatch or attachment proof.
+
+The intended first run is opt-in and bounded to one logical driver thread and
+explicit read-only private memory extents. Preserve the same compiled driver
+handler through `caller → A → B → A → caller`; use ordinary loads at the same
+virtual address to check distinct bytes in each process plus a target-only
+mapping. Check the handler's process/thread identity and kernel-owned state,
+including IRP/buffers, pool pointers, stack locals, process references, and
+`KAPC_STATE`, across the entire sequence. `PsGetCurrentProcessId()` should
+remain the creator PID; `PsGetProcessId(PsGetCurrentProcess())` should track
+caller/A/B/A/caller. Check `KAPC_STATE` contents while active and its
+canary/storage lifetime after detach. A remote-copy result does not satisfy
+these assertions. The current experiment selects the managed executor and two
+attach ranges with:
+
+```text
+WINE_MANAGED_LAYOUT=v1:target:400000000000
+WINE_SHARED_PRIVATE_BACKING=1
+WINE_SHARED_KERNEL_MEMORY=1
+WINE_EXPERIMENTAL_DRIVER_EXECUTOR=1
+WINE_EXPERIMENTAL_ATTACH_RANGES=23000000:10000,24000000:10000
+```
+
+The full run also requires the managed TARGET layout, private backing and
+kernel-memory options shown. Retain exact
+Proton/Wine/harness SHAs, SDK digest, architecture, build and runtime commands
+with separate exit statuses, artifact hashes, sanitized logs, and an equivalent
+baseline. Record pointer values and statuses at all five points, identity and
+kernel-state assertions, cleanup, and any failures. Leave native Windows,
+i386, concurrency, target exit/cancellation, full Proton, Vanguard entry,
+acceptance, and gameplay as separate open checks until directly observed.
+Keep a caught fault followed by explicit driver detach separate from an
+uncaught attached fault handled by the dispatch wrapper; only the latter,
+followed by a healthy full-chain IOCTL, exercises wrapper cleanup.
+
+## E05 concurrent buffered dispatch
+
+The [concurrent dispatch record](evidence/2026-10-11-e05-concurrent-dispatch.md)
+documents the next gate. Four strict final-source x64 runs each report 482
+tests, one existing `SignerSign` TODO, zero failures and zero skips. Two
+distinct caller threads keep their normal buffered IOCTLs outstanding together
+at a barrier, then perform compiler-generated reads through independent
+attached-process views. Both lanes read distinct bytes at the same virtual
+addresses, including peer-lane values, with separate logical TIDs, `KTHREAD`s,
+IRPs, SystemBuffers, IO stacks, `KAPC_STATE`s and stack locals. An uncaught fault
+in one lane does not prevent the peer or a healthy follow-up pair.
+
+The executor rejects a second outstanding request borrowing the same logical
+`KTHREAD` with `STATUS_DEVICE_BUSY`; strict logs verify that the active request
+remains pending and a distinct peer completes. A final-source serial regression
+reports 173 tests, one TODO, zero failures and zero skips. The default-off full
+suite reports 34,593 tests, 169 TODOs, 21 failures and one skip. Its 37
+normalized failure lines / 25 unique diagnostics match the retained baseline
+exactly, with no candidate-only or baseline-only failures. The separate
+multi-reader lease fixture passes 46 checks with zero failures, and the
+default A1b live-private-view fixture passes 249 checks with zero failures.
+
+These results cover two synchronous logical threads, one request outstanding
+per logical thread, declared read-only extents, shared driver data and the
+tested shared kernel arena. They do not establish arbitrary imported-provider
+writable-global coherence, asynchronous callbacks, automatic stack growth,
+target exit/unmap/address reuse, native Windows or i386 behavior, full Proton,
+Vanguard entry or acceptance, or gameplay. The next bounded runtime tests are
+target lifetime and address-reuse behavior; retain native Windows/i386 and
+platform acceptance as separate gates.
+
 ## Record distinct outcomes
 
 1. Source/build identity and artifact export presence.

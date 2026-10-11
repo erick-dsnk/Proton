@@ -4,7 +4,7 @@ This file tracks the open source Proton Vanguard compatibility effort after the 
 [`vanguard-linux-feasibility.md`](vanguard-linux-feasibility.md). It is a
 working register, not a claim of Vanguard or League compatibility.
 
-## Current project checkpoint — 10 October 2026
+## Current project checkpoint — 11 October 2026
 
 The first compatibility increment is ordinary Wine rundown protection. It
 implements `ExInitializeRundownProtection`, `ExAcquireRundownProtection`,
@@ -425,9 +425,79 @@ is not a full current-source Wine or Proton build.
 This closes the clean host-runtime bootstrap gate only. It does not create
 target aliases, share a kernel arena or driver image across processes, migrate
 an initialized driver/import closure, or give the executor logical attached-
-target identity. `KeStackAttachProcess` and `KeUnstackDetachProcess` remain
-stubs. Native Windows and 32-bit validation, real Vanguard execution, session
-acceptance and gameplay remain open.
+target identity. The ordinary/default Wine path still lacks general attach
+semantics; the new implementation is limited to the opt-in synchronous
+executor prototype. Native Windows and 32-bit validation, real Vanguard
+execution, session acceptance and gameplay remain open.
+
+### E05 buffered dispatch attachment-chain prototype — preliminary result
+
+The next bounded experiment is now being implemented against one physical,
+real `winedevice` managed EXECUTOR with explicitly declared read-only private
+mappings. Its intended path keeps the existing benign compiled driver and
+normal buffered-IOCTL sequence, then exercises caller → A → B → A → caller.
+The driver must use ordinary compiler-generated pointer loads to distinguish
+same-address bytes and read a target-only mapping while its code/globals,
+IRP/buffers, pool allocations, stack locals, process references and
+`KAPC_STATE` remain valid. The loader selector is
+`WINE_EXPERIMENTAL_DRIVER_EXECUTOR=1`; the current range declaration is
+`WINE_EXPERIMENTAL_ATTACH_RANGES=23000000:10000,24000000:10000`, alongside
+`WINE_MANAGED_LAYOUT=v1:target:400000000000`,
+`WINE_SHARED_PRIVATE_BACKING=1` and `WINE_SHARED_KERNEL_MEMORY=1`.
+The identity assertions distinguish the stable creator reported by
+`PsGetCurrentProcessId()` from the attached process reported by
+`PsGetProcessId(PsGetCurrentProcess())`; `KAPC_STATE` contents are checked while
+active, with its own storage canary/lifetime checked after detach.
+
+The broad `make -j8 all` attempt and forced target/test builds completed with
+exit 0 on the pinned SteamRT4 SDK. Three strict x64 runs then completed the
+buffered dispatch chain: its common bytes were `0x59/0xa1/0xb2/0xa1/0x59`, its
+target-only read faulted in the caller and returned `0xc3/0xd4/0xc3` in A/B/A,
+and an uncaught attached fault returned `ERROR_NOACCESS` with zero bytes before
+a healthy IOCTL completed. Each run reported 173 tests, one unrelated
+`SignerSign` todo, zero failures and zero skips. This is a preliminary bounded
+single-thread synchronous result; the default-off full-suite candidate matches
+the retained baseline's 37 normalized failure lines / 25 unique diagnostics.
+The suite remains non-green with its 21 baseline failures and one skip. The
+first strict attempt exited 5 due to fixture setup touching absent execution
+regions and did not reach the IOCTL. Neither result establishes general Wine
+attach semantics, concurrent or lifetime behavior, Vanguard operation or
+acceptance. Details and artifact hashes are in the
+[dispatch-chain experiment](evidence/2026-10-10-e05-dispatch-chain.md).
+
+### E05 concurrent buffered-dispatch experiment — bounded result
+
+The follow-up two-thread experiment now passes on Linux AMD64 in four fresh-
+prefix strict runs of the final source. Each reported 482 tests, one existing
+`SignerSign` TODO, zero failures and zero skips. The fixture runs two outstanding
+normal buffered IOCTLs through separate physical executors and verifies direct
+compiler-generated reads at the same virtual addresses. Both lanes reach the
+barrier together, observe their own distinct bytes and the peer's crossed bytes,
+and retain distinct logical TIDs, `KTHREAD`s, IRPs, SystemBuffers, IO stacks,
+`KAPC_STATE`s and stack locals. It also injects an uncaught fault into one lane,
+checks that the peer continues, and passes a healthy follow-up pair.
+
+The final source rejects a second outstanding request borrowing the same
+logical `KTHREAD` with `STATUS_DEVICE_BUSY`; its negative test verifies the
+original lane remains pending and a distinct peer still completes. A strict
+serial regression also passed 173 tests with one TODO and zero failures/skips.
+The tested Wine source tree is published through [Wine PR #1](https://github.com/erick-dsnk/wine/pull/1)
+and is reachable from `main` at merge commit
+[`ddf378e30bd26570821751b10b201ec546b5df18`](https://github.com/erick-dsnk/wine/commit/ddf378e30bd26570821751b10b201ec546b5df18);
+the publication merge preserved the tested tree, and the runtime was not rerun.
+The final-source default-off full suite reports 34,593 tests, 169 TODOs, 21
+failures and one skip; its 37 normalized failure lines / 25 unique messages
+exactly match the retained baseline. The suite is not green. The four final
+strict runs and their current hashes, alongside earlier failures and
+pre-guard passes, are recorded in the
+[concurrent dispatch experiment](evidence/2026-10-11-e05-concurrent-dispatch.md).
+
+The scope remains two synchronous logical caller threads, one request each at
+a time, bounded read-only private extents, shared driver data and shared kernel
+arena. It does not prove arbitrary provider writable-global coherence,
+asynchronous callbacks or stack growth, general Wine attach semantics, native
+Windows/i386 behavior, full Proton, Vanguard acceptance or gameplay. Target
+exit, unmap/address reuse, and broader lifetime tests remain open.
 
 The implementation checkpoint now reaches E02 build and runtime evidence for
 the first E03 x64 patch, the test-only E05 failure on current Wine A1 attach
@@ -439,11 +509,12 @@ backed kernel allocations, focused wineserver backing for eligible private
 mappings, a managed TARGET guest layout, and a clean managed EXECUTOR
 host-runtime bootstrap. A later separate live-pointer/revocation proof now
 supplies bounded live cross-process aliases in the published component commit.
-Ordinary Wine
-attach behavior remains unimplemented. Broader G2
-execution-context behavior, compiler scope-boundary generality, compiler-frame
-migration, native Windows reference, i386 build, genuine Linux verifier
-acceptance, and Vanguard execution remain unresolved.
+General/default Wine attach behavior remains unimplemented; the opt-in
+buffered-dispatch prototype is separately limited to the tested synchronous
+serial and two-thread cases recorded above. Broader G2 execution-context
+behavior, compiler scope-boundary generality, compiler-frame migration, native
+Windows reference, i386 build, genuine Linux verifier acceptance, and Vanguard
+execution remain unresolved.
 
 The next E05 architecture proposal is recorded in the
 [A1b attachment-backing decision](evidence/2026-10-10-a1b-attach-backing-design.md).
