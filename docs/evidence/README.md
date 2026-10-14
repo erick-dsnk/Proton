@@ -86,6 +86,15 @@ experiment. The decision remains a design proposal for the unimplemented
 foreign-view and attach phases; it does not claim that public attach/detach
 APIs work.
 
+The [first full Proton build and vgk.sys entry record](2026-10-13-first-proton-build-and-vgk-entry/README.md)
+covers the first integrated Proton build of this fork, with i386 type fixes
+proposed separately to the Wine component. It also covers the first observed
+entry of the unmodified Vanguard 1.19.1.18 driver in a full Proton session,
+with all fork options off. `DriverEntry` returned the non-standard status
+`0xD4494E49` before calling any unimplemented import. A sanitized log excerpt
+and the build-fix diff are committed. The full logs contain account data and
+remain local.
+
 Use a dated Markdown record named `YYYY-MM-DD-short-experiment-name.md` for a
 new material result, or a dated directory when public logs and comparison
 artifacts accompany it. Copy the [experiment template](experiment-template.md),
