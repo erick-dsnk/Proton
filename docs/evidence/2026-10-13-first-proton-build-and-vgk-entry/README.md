@@ -187,9 +187,11 @@ is complete. Only the tail of the full log may be incomplete.
 6. Between the relocation and the return of `init_driver`, two reads of the
    `KUSER_SHARED_DATA` kernel alias faulted. `ntoskrnl.exe/instr.c` emulated
    both and execution continued.
-   - These reads came from `DriverEntry` or from a TLS callback. Wine runs a
-     TLS callback inside the image load, before `DriverInit`, and logs it
-     only under `+relay`, which was off.
+   - These reads came from `DriverEntry` or code it called. A header-only
+     parse of the frozen `vgk.sys` (data directories, no code bytes) found
+     no TLS directory, so no TLS callback ran before `DriverInit`. The image
+     is a native-subsystem driver (`Subsystem` 1, `Characteristics` `0x22`,
+     not a DLL), and its entry RVA is `0x61C213C`.
    - `USD offset 0x320` (`TickCount`), at image offset `0x64810A4`. The
      emulated value was Wine's live tick count, `0x467E87` ms, which matches
      the log clock.
