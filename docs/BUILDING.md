@@ -205,6 +205,13 @@ rg -n '\] Error [0-9]' build.log
 Inspect the referenced component's preceding diagnostics. The last top-level
 `Error 2` usually propagates an earlier failure rather than describing its cause.
 
+When building the Wine targets individually, build `wine-x86_64` before
+`wine-i386`. The i386 tree runs the x86_64 tree's `tools/wrc/wrc`, and that
+`wrc` loads `locale.nls` from `obj-wine-x86_64/nls/`. Only the x86_64 Wine
+build creates that file. Building i386 first fails on most `.res` files with
+`Error: unable to load locale.nls`. A plain `make` or `make install` orders
+the targets itself.
+
 ### Debug builds and symbols
 
 Use `UNSTRIPPED_BUILD=1` in a clean build directory to retain symbols:
