@@ -73,16 +73,70 @@
 4619.911:0b1c:0b40:trace:ntoskrnl:ldr_notify_callback relocating from 0000000140000000-00000001467F2000 to 0000000100300000-0000000106AF2000
 4619.911:0b1c:0b40:warn:seh:dispatch_exception backtrace: --- Exception 0xc0000005.
 4619.911:0b1c:0b40:trace:seh:dispatch_exception code=c0000005 (EXCEPTION_ACCESS_VIOLATION) flags=0 addr=00000001067810A4
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[0]=0000000000000000
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[1]=FFFFF78000000320
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rip=00000001067810a4 rsp=0000000000a1f200 rbp=aaac01aafffa5e11 eflags=00010202
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rax=0000000000000000 rbx=601c042c97138440 rcx=fffff78000000320 rdx=0000000000000000
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rsi=d4fd9cb601624329 rdi=1be35983282c69be  r8=d4fd9cb601624329  r9=8400a25040c01201
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r10=e41ca67cd7d39641 r11=6b9d042e9f13a56c r12=fffff78000000004 r13=9462fbd160ec5a93
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r14=0000000000000001 r15=bb50dd0d2ad465b4 mxcsr=00001f80 cs=0033 ss=002b
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers calling handler at 00006FFFFF7AD480 code=c0000005 flags=0
 4619.911:0b1c:0b40:trace:int:emulate_instruction USD offset 0x320 at 00000001067810A4.
 4619.911:0b1c:0b40:trace:int:vectored_handler next instruction rip=1067810a8
+4619.911:0b1c:0b40:trace:int:vectored_handler   rax=0000000000000000 rbx=601c042c97138440 rcx=fffff78000000320 rdx=0000000000000000
+4619.911:0b1c:0b40:trace:int:vectored_handler   rsi=d4fd9cb601624329 rdi=1be35983282c69be rbp=aaac01aafffa5e11 rsp=0000000000a1f200
+4619.911:0b1c:0b40:trace:int:vectored_handler    r8=0000000000467e87  r9=8400a25040c01201 r10=e41ca67cd7d39641 r11=6b9d042e9f13a56c
+4619.911:0b1c:0b40:trace:int:vectored_handler   r12=fffff78000000004 r13=9462fbd160ec5a93 r14=0000000000000001 r15=bb50dd0d2ad465b4
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers handler at 00006FFFFF7AD480 returned ffffffff
 4619.911:0b1c:0b40:warn:seh:dispatch_exception backtrace: --- Exception 0xc0000005.
 4619.911:0b1c:0b40:trace:seh:dispatch_exception code=c0000005 (EXCEPTION_ACCESS_VIOLATION) flags=0 addr=00000001067817F7
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[0]=0000000000000000
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[1]=FFFFF78000000004
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rip=00000001067817f7 rsp=0000000000a1f200 rbp=ffae0a27890a078a eflags=00010202
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rax=0000000000a1f930 rbx=7eb4c6f8bbffffff rcx=0000000000a1fa28 rdx=ffffffffff5e06e6
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rsi=0000000000000001 rdi=0000000000000000  r8=fffff78000000004  r9=814b3907474eb601
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r10=0000000000000001 r11=0000000000000001 r12=0000000000000001 r13=170edb603d236c8c
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r14=0000000000000003 r15=44af22f2d52b9a4b mxcsr=00001f80 cs=0033 ss=002b
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers calling handler at 00006FFFFF7AD480 code=c0000005 flags=0
 4619.911:0b1c:0b40:trace:int:emulate_instruction USD offset 0x4 at 00000001067817F7.
 4619.911:0b1c:0b40:trace:int:vectored_handler next instruction rip=1067817fa
+4619.911:0b1c:0b40:trace:int:vectored_handler   rax=0000000000a1f930 rbx=7eb4c6f8bbffffff rcx=0000000000a1fa28 rdx=ffffffffff5e06e6
+4619.911:0b1c:0b40:trace:int:vectored_handler   rsi=0000000000000001 rdi=0000000000000000 rbp=ffae0a27890a078a rsp=0000000000a1f200
+4619.911:0b1c:0b40:trace:int:vectored_handler    r8=fffff78000000004  r9=814b390701000000 r10=0000000000000001 r11=0000000000000001
+4619.911:0b1c:0b40:trace:int:vectored_handler   r12=0000000000000001 r13=170edb603d236c8c r14=0000000000000003 r15=44af22f2d52b9a4b
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers handler at 00006FFFFF7AD480 returned ffffffff
 4619.911:0b1c:0b40:trace:ntoskrnl:init_driver init done for L"vgk" obj 0000000000A244A0
 4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - DriverInit = 00000001064C213C
 4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - DriverStartIo = 0000000000000000
 4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - DriverUnload = 0000000000000000
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[0] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[1] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[2] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[3] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[4] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[5] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[6] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[7] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[8] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[9] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[10] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[11] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[12] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[13] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[14] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[15] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[16] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[17] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[18] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[19] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[20] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[21] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[22] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[23] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[24] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[25] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[26] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[27] = 00006FFFFF7AD040
 4619.911:0b1c:0b40:trace:ntoskrnl:IoDeleteDriver (0000000000A244A0)
 4619.911:0b1c:0b40:trace:ntoskrnl:ObDereferenceObject (0000000000A244A0) ref=0
 4619.911:0b1c:0b40:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\vgk": d4494e49
@@ -95,3 +149,7 @@
 4619.913:0b1c:0b34:trace:ntoskrnl:IoDeleteDriver (000000000003FBB0)
 4619.913:0b1c:0b34:trace:ntoskrnl:ObDereferenceObject (000000000003FBB0) ref=0
 4619.913:0b1c:0b34:trace:ntoskrnl:ServiceMain service group L"Winedevice3" stopped
+4619.913:0b1c:0b34:trace:service:SetServiceStatus 000000000003F2E0 0x30 0x1 0 0 0 0 0
+4619.913:0030:0b24:trace:service:svcctl_SetServiceStatus (000000000083FF40, 000000000081E714)
+4619.913:0b1c:0b34:trace:service:CloseServiceHandle 0000000000A22210
+4619.914:0030:00cc:trace:service:process_monitor_thread_proc pid 0b1c exited.
