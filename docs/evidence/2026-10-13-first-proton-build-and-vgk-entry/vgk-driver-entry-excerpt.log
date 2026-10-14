@@ -1,0 +1,155 @@
+4619.749:0354:04bc:trace:service:StartServiceW 00000000157DF440 0 0000000000000000
+4619.750:0030:0b24:trace:service:svcctl_StartServiceW (000000000083A750, 0, 0000000000000000)
+4619.792:0b1c:0b08:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+4619.792:0b1c:0b08:trace:seh:install_bpf Seccomp filters already installed.
+4619.792:0030:0b24:trace:service:process_send_start_message 00000000008258B0 L"Winedevice3" 0000000001FFE6A0 0
+4619.793:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winedevice.exe" at 0000000140000000: builtin
+4619.793:0b1c:0b08:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+4619.793:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+4619.794:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+4619.796:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+4619.797:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+4619.797:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+4619.797:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+4619.798:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+4619.798:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ntoskrnl.exe" at 00006FFFFF780000: builtin
+4619.801:0b1c:0b08:trace:service:StartServiceCtrlDispatcherW 000000000031FED0
+4619.801:0b1c:0b08:trace:service:OpenSCManagerW (null) (null) 0x1
+4619.801:0b1c:0b08:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+4619.802:0b1c:0b08:trace:ntoskrnl:ldr_notify_callback loading L"rpcrt4.dll"
+4619.816:0b1c:0b08:trace:service:service_run_main_thread Starting 1 services running as process 2844
+4619.817:0b1c:0b40:trace:service:OpenServiceW 000000000003C930 L"Winedevice3" 0x8000
+4619.817:0b1c:0b40:trace:service:OpenServiceW 000000000003C930 L"Winedevice3" 0xc0000000
+4619.817:0b1c:0b40:trace:service:service_handle_control L"winedevice" control 0 data 000000000003F278 data_size 26
+4619.817:0b1c:0b34:trace:service:service_thread 0000000000039C90
+4619.817:0b1c:0b34:warn:threadname:NtSetInformationThread Thread renamed to L"wine_sechost_service"
+4619.818:0b1c:0b34:trace:service:OpenSCManagerW (null) (null) 0x1
+4619.818:0b1c:0b34:trace:service:RegisterServiceCtrlHandlerExW L"winedevice" 0000000140001F60 0000000000A20150
+4619.818:0b1c:0b34:trace:ntoskrnl:ServiceMain starting service group L"Winedevice3"
+4619.818:0b1c:0b34:trace:service:SetServiceStatus 000000000003F2E0 0x30 0x4 0x5 0 0 0 0
+4619.818:0030:0b24:trace:service:service_start returning 0
+4619.818:0030:0b24:trace:service:process_send_start_message 00000000008258B0 L"vgk" 0000000000000000 0
+4619.818:0b1c:0b34:trace:ntoskrnl:initialize_arena shared kernel memory opt-in 0
+4619.818:0b1c:0b40:trace:service:service_handle_control L"winedevice" control 2147483648 data 0000000000A201B2 data_size 8
+4619.818:0b1c:0b40:trace:ntoskrnl:ZwLoadDriver (L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\vgk")
+4619.818:0b1c:0b40:trace:service:OpenSCManagerW (null) (null) 0x1
+4619.818:0b1c:0b34:trace:ntoskrnl:IoCreateDriver (L"\\Driver\\PnpManager", 00006FFFFF7AC0F0)
+4619.818:0b1c:0b40:trace:service:OpenServiceW 000000000003F260 L"vgk" 0x8001
+4619.819:0b1c:0b40:trace:service:CloseServiceHandle 000000000003F260
+4619.819:0b1c:0b40:trace:service:QueryServiceConfigW 000000000003F360 0000000000000000 0 0000000000A1FDC0
+4619.819:0b1c:0b40:trace:service:QueryServiceConfigW 000000000003F360 0000000000A24490 178 0000000000A1FDC0
+4619.820:0b1c:0b40:trace:service:QueryServiceConfigW Image path           = L"C:\\Program Files\\Riot Vanguard\\vgk.sys"
+4619.820:0b1c:0b40:trace:service:QueryServiceConfigW Group                = L""
+4619.820:0b1c:0b40:trace:service:QueryServiceConfigW Dependencies         = L""
+4619.820:0b1c:0b40:trace:service:QueryServiceConfigW Service account name = L"LocalSystem"
+4619.820:0b1c:0b40:trace:service:QueryServiceConfigW Display name         = L"vgk"
+4619.820:0b1c:0b40:trace:ntoskrnl:open_driver opened service for driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\vgk"
+4619.820:0b1c:0b40:trace:service:SetServiceStatus 000000000003F360 0x30 0x2 0 0 0 0 0x2710
+4619.820:0b1c:0b40:trace:ntoskrnl:IoCreateDriver (L"\\Driver\\vgk", 00006FFFFF7A8E00)
+4619.820:0b1c:0b40:trace:ntoskrnl:load_driver loading driver L"C:\\Program Files\\Riot Vanguard\\vgk.sys"
+4619.820:0b1c:0b40:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\Program Files\\Riot Vanguard\\vgk.sys"
+4619.907:0b1c:0b40:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\cng.sys" at 00006FFFF3910000: builtin
+4619.908:0b1c:0b40:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFDEC0000: builtin
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.KeAcquireGuardedMutex imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D20000
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.KeReleaseGuardedMutex imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D20024
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExInitializePushLock imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D20048
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExAcquirePushLockExclusiveEx imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D2006C
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExReleasePushLockExclusiveEx imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D20090
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.KeGetCurrentIrql imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D200B4
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.KeIpiGenericCall imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D200D8
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.KeQuerySystemTimePrecise imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D200FC
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExAllocateCacheAwareRundownProtection imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D20120
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExFreeCacheAwareRundownProtection imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D20144
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExAcquireRundownProtectionCacheAwareEx imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D20168
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExReleaseRundownProtectionCacheAwareEx imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D2018C
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.ExWaitForRundownProtectionReleaseCacheAware imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D201B0
+4619.908:0b1c:0b40:warn:module:import_dll No implementation for ntoskrnl.exe.IoInitializeWorkItem imported from L"C:\\Program Files\\Riot Vanguard\\vgk.sys", setting to 0000000000D201D4
+4619.909:0b1c:0b40:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\HAL.dll" at 00006FFFF38F0000: builtin
+4619.909:0b1c:0b40:trace:loaddll:build_module Loaded L"C:\\Program Files\\Riot Vanguard\\vgk.sys" at 0000000100300000: native
+4619.909:0b1c:0b40:trace:ntoskrnl:ldr_notify_callback loading L"cng.sys"
+4619.909:0b1c:0b40:trace:ntoskrnl:ldr_notify_callback loading L"bcrypt.dll"
+4619.911:0b1c:0b40:trace:ntoskrnl:ldr_notify_callback loading L"HAL.dll"
+4619.911:0b1c:0b40:trace:ntoskrnl:ldr_notify_callback loading L"vgk.sys"
+4619.911:0b1c:0b40:trace:ntoskrnl:ldr_notify_callback relocating from 0000000140000000-00000001467F2000 to 0000000100300000-0000000106AF2000
+4619.911:0b1c:0b40:warn:seh:dispatch_exception backtrace: --- Exception 0xc0000005.
+4619.911:0b1c:0b40:trace:seh:dispatch_exception code=c0000005 (EXCEPTION_ACCESS_VIOLATION) flags=0 addr=00000001067810A4
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[0]=0000000000000000
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[1]=FFFFF78000000320
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rip=00000001067810a4 rsp=0000000000a1f200 rbp=aaac01aafffa5e11 eflags=00010202
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rax=0000000000000000 rbx=601c042c97138440 rcx=fffff78000000320 rdx=0000000000000000
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rsi=d4fd9cb601624329 rdi=1be35983282c69be  r8=d4fd9cb601624329  r9=8400a25040c01201
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r10=e41ca67cd7d39641 r11=6b9d042e9f13a56c r12=fffff78000000004 r13=9462fbd160ec5a93
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r14=0000000000000001 r15=bb50dd0d2ad465b4 mxcsr=00001f80 cs=0033 ss=002b
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers calling handler at 00006FFFFF7AD480 code=c0000005 flags=0
+4619.911:0b1c:0b40:trace:int:emulate_instruction USD offset 0x320 at 00000001067810A4.
+4619.911:0b1c:0b40:trace:int:vectored_handler next instruction rip=1067810a8
+4619.911:0b1c:0b40:trace:int:vectored_handler   rax=0000000000000000 rbx=601c042c97138440 rcx=fffff78000000320 rdx=0000000000000000
+4619.911:0b1c:0b40:trace:int:vectored_handler   rsi=d4fd9cb601624329 rdi=1be35983282c69be rbp=aaac01aafffa5e11 rsp=0000000000a1f200
+4619.911:0b1c:0b40:trace:int:vectored_handler    r8=0000000000467e87  r9=8400a25040c01201 r10=e41ca67cd7d39641 r11=6b9d042e9f13a56c
+4619.911:0b1c:0b40:trace:int:vectored_handler   r12=fffff78000000004 r13=9462fbd160ec5a93 r14=0000000000000001 r15=bb50dd0d2ad465b4
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers handler at 00006FFFFF7AD480 returned ffffffff
+4619.911:0b1c:0b40:warn:seh:dispatch_exception backtrace: --- Exception 0xc0000005.
+4619.911:0b1c:0b40:trace:seh:dispatch_exception code=c0000005 (EXCEPTION_ACCESS_VIOLATION) flags=0 addr=00000001067817F7
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[0]=0000000000000000
+4619.911:0b1c:0b40:trace:seh:dispatch_exception  info[1]=FFFFF78000000004
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rip=00000001067817f7 rsp=0000000000a1f200 rbp=ffae0a27890a078a eflags=00010202
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rax=0000000000a1f930 rbx=7eb4c6f8bbffffff rcx=0000000000a1fa28 rdx=ffffffffff5e06e6
+4619.911:0b1c:0b40:trace:seh:dispatch_exception rsi=0000000000000001 rdi=0000000000000000  r8=fffff78000000004  r9=814b3907474eb601
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r10=0000000000000001 r11=0000000000000001 r12=0000000000000001 r13=170edb603d236c8c
+4619.911:0b1c:0b40:trace:seh:dispatch_exception r14=0000000000000003 r15=44af22f2d52b9a4b mxcsr=00001f80 cs=0033 ss=002b
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers calling handler at 00006FFFFF7AD480 code=c0000005 flags=0
+4619.911:0b1c:0b40:trace:int:emulate_instruction USD offset 0x4 at 00000001067817F7.
+4619.911:0b1c:0b40:trace:int:vectored_handler next instruction rip=1067817fa
+4619.911:0b1c:0b40:trace:int:vectored_handler   rax=0000000000a1f930 rbx=7eb4c6f8bbffffff rcx=0000000000a1fa28 rdx=ffffffffff5e06e6
+4619.911:0b1c:0b40:trace:int:vectored_handler   rsi=0000000000000001 rdi=0000000000000000 rbp=ffae0a27890a078a rsp=0000000000a1f200
+4619.911:0b1c:0b40:trace:int:vectored_handler    r8=fffff78000000004  r9=814b390701000000 r10=0000000000000001 r11=0000000000000001
+4619.911:0b1c:0b40:trace:int:vectored_handler   r12=0000000000000001 r13=170edb603d236c8c r14=0000000000000003 r15=44af22f2d52b9a4b
+4619.911:0b1c:0b40:trace:seh:call_vectored_handlers handler at 00006FFFFF7AD480 returned ffffffff
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver init done for L"vgk" obj 0000000000A244A0
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - DriverInit = 00000001064C213C
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - DriverStartIo = 0000000000000000
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - DriverUnload = 0000000000000000
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[0] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[1] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[2] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[3] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[4] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[5] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[6] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[7] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[8] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[9] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[10] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[11] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[12] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[13] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[14] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[15] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[16] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[17] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[18] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[19] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[20] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[21] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[22] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[23] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[24] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[25] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[26] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:init_driver - MajorFunction[27] = 00006FFFFF7AD040
+4619.911:0b1c:0b40:trace:ntoskrnl:IoDeleteDriver (0000000000A244A0)
+4619.911:0b1c:0b40:trace:ntoskrnl:ObDereferenceObject (0000000000A244A0) ref=0
+4619.911:0b1c:0b40:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\vgk": d4494e49
+4619.911:0b1c:0b40:trace:service:SetServiceStatus 000000000003F360 0x30 0x1 0 0 0 0 0
+4619.912:0b1c:0b40:trace:service:CloseServiceHandle 000000000003F360
+4619.913:0030:0b24:trace:service:service_start returning 317
+4619.913:0b1c:0b40:trace:service:service_handle_control L"winedevice" control 1 data 0000000000000000 data_size 0
+4619.913:0b1c:0b40:trace:ntoskrnl:service_handler shutting down L"Winedevice3"
+4619.913:0b1c:0b40:trace:service:SetServiceStatus 000000000003F2E0 0x30 0x3 0 0 0 0 0
+4619.913:0b1c:0b34:trace:ntoskrnl:IoDeleteDriver (000000000003FBB0)
+4619.913:0b1c:0b34:trace:ntoskrnl:ObDereferenceObject (000000000003FBB0) ref=0
+4619.913:0b1c:0b34:trace:ntoskrnl:ServiceMain service group L"Winedevice3" stopped
+4619.913:0b1c:0b34:trace:service:SetServiceStatus 000000000003F2E0 0x30 0x1 0 0 0 0 0
+4619.913:0030:0b24:trace:service:svcctl_SetServiceStatus (000000000083FF40, 000000000081E714)
+4619.913:0b1c:0b34:trace:service:CloseServiceHandle 0000000000A22210
+4619.914:0030:00cc:trace:service:process_monitor_thread_proc pid 0b1c exited.

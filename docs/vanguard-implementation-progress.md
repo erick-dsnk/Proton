@@ -4,6 +4,33 @@ This file tracks the open source Proton Vanguard compatibility effort after the 
 [`vanguard-linux-feasibility.md`](vanguard-linux-feasibility.md). It is a
 working register, not a claim of Vanguard or League compatibility.
 
+## Checkpoint — 13 October 2026: first Proton build and vgk.sys entry
+
+The [first full Proton build and driver-entry record](evidence/2026-10-13-first-proton-build-and-vgk-entry/README.md)
+covers one host (Ubuntu 24.04, kernel 7.0, Secure Boot enabled), all fork
+options off, and a fresh prefix.
+
+- **Build.** It is the first complete Proton build of this fork that has been
+  observed.
+  - wine-x86_64 built clean under `-Werror`.
+  - wine-i386 needed 12 x86_64-identity type fixes in the unreachable i386
+    managed-layout code of `dlls/ntdll/unix/virtual.c`, plus the preloader
+    guard fix. These are uncommitted.
+  - wine-x86_64 must build before wine-i386, because of the shared `wrc`
+    NLS path.
+- **Driver entry.** The unmodified Vanguard 1.19.1.18 `vgk.sys` reached
+  `DriverEntry`. Its hash is identical to the frozen audit's.
+  - The Riot Client waived the restart for League (`NEW_INSTALL`) and
+    started `vgk` on Play.
+  - 14 K01–K06 imports were unresolved. The two `KUSER_SHARED_DATA` reads
+    were emulated.
+  - `DriverEntry` returned the non-standard status `0xD4494E49` within the
+    same millisecond. It called no unimplemented import first.
+- **Stage 3.** Stage 3 was reached as an observed early rejection. Stages 4–5
+  were not reached.
+- **Conclusion.** The K01–K06 imports alone can't advance stage 3 from this
+  state. This is consistent with G2 being the first gate.
+
 ## Current project checkpoint — 11 October 2026
 
 The first compatibility increment is ordinary Wine rundown protection. It
@@ -513,8 +540,9 @@ General/default Wine attach behavior remains unimplemented; the opt-in
 buffered-dispatch prototype is separately limited to the tested synchronous
 serial and two-thread cases recorded above. Broader G2 execution-context
 behavior, compiler scope-boundary generality, compiler-frame migration, native
-Windows reference, i386 build, genuine Linux verifier acceptance, and Vanguard
-execution remain unresolved.
+Windows reference, genuine Linux verifier acceptance, and accepted Vanguard
+execution remain unresolved. The i386 build was observed on 13 October with
+type fixes that are proposed to the Wine component (see the checkpoint above).
 
 The next E05 architecture proposal is recorded in the
 [A1b attachment-backing decision](evidence/2026-10-10-a1b-attach-backing-design.md).
